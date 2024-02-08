@@ -1,0 +1,15 @@
+.logo-full {
+    max-width: 133px;
+    height: 33px;
+    margin: 44px 30px 67px 30px;
+}
+.logo-hidden{
+    margin: 50px 18px 68px 18px;
+}
+.logo-clever{
+    opacity: 1;
+    transition: 0.3s;
+}
+.ant-menu-item:last-child{
+    margin-top: 60px;
+}
