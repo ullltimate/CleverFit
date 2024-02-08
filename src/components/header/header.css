@@ -1,0 +1,15 @@
+.header{
+    background: #F0F5FF;
+    padding: 16px 24px;
+}
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+.header-title{
+    max-width: 1000px;
+}
+.header-btn{
+    text-align: center;
+}

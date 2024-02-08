@@ -9,15 +9,16 @@ import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
 
 import './main-page.css';
+import { Header } from '@components/header/header';
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
         <>
-            <Layout>
+            <Layout className='back'>
                 <Sider trigger={null} collapsible collapsed={collapsed}>
                   <div className="logo" />
                   <Menu
@@ -44,9 +45,7 @@ export const MainPage: React.FC = () => {
                   />
                 </Sider>
                 <Layout className="site-layout">
-                  <Header className="site-layout-background" style={{ padding: 0 }}>
-                  
-                  </Header>
+                  <Header />
                   <div className='trapezoid'>
                           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                           className: 'trigger',
