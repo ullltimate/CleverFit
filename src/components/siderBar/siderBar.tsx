@@ -3,25 +3,50 @@ import {
     TrophyFilled,
     IdcardOutlined,
     CalendarTwoTone,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
   } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import './siderBar.css';
 import { ExitIcon } from '@components/icons/exitIcon';
 const { Sider } = Layout;
 
-type PropTypes = {
-    collapsed: boolean
-};
 
-export const SiderBar: React.FC<PropTypes> = ({collapsed}) => {
+
+export const SiderBar: React.FC = () => {
+    const [widthCollapsed, setWidthCollapsed] = useState(64);
+    const [collapsed, setCollapsed] = useState(false);
+    const [mobileWidth, setMobileWidth] = useState(false);
+
+    function changeBreakpoint(broken: boolean){
+      if(broken){
+        setWidthCollapsed(1);
+        setMobileWidth(true);
+      }else{
+        setWidthCollapsed(64);
+        setMobileWidth(false);
+      }
+    }
 
     return (
         <>
+          <div className='sider-wrapper'>
+            <div className={`trapezoid-wrapper ${mobileWidth ? collapsed ? ' ' : 'trapezoid-wrapper-collapsed': ''}`}>
+              <div className='trapezoid' data-test-id={`${mobileWidth ? 'sider-switch-mobile' : 'sider-switch'}`}>
+                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                className: 'trigger',
+                onClick: () => setCollapsed(!collapsed),
+                })}
+              </div>
+            </div>
             <Sider trigger={null} collapsible collapsed={collapsed} 
               theme='light' 
               width={208} 
-              collapsedWidth={64}
+              style={{height: '100%'}}
+              collapsedWidth={widthCollapsed}
+              breakpoint='xs'
+              onBreakpoint={(broken)=> changeBreakpoint(broken)}
             >
               <div className={`logo-${!collapsed ? 'full' : 'hidden'}`}>
                 <a href="">
@@ -63,6 +88,7 @@ export const SiderBar: React.FC<PropTypes> = ({collapsed}) => {
                 ]}
               />
             </Sider>
+          </div>
         </>
     );
 };

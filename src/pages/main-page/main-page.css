@@ -1,28 +1,3 @@
-.trapezoid{
-    height: 66px;
-    position: fixed;
-    top: 50%;
-    border-left: 20px solid #fff;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-}
-
-.trigger {
-    position: absolute;
-    top: 18px;
-    left: -17px;
-    width: 14px;
-    height: 14px;
-    font-size: 18px;
-    line-height: 64px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
- 
-.trigger:hover {
-    color: #1890ff;
-}
- 
 .site-layout .site-layout-background {
     background: #fff;
 }

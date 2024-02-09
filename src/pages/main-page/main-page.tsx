@@ -1,9 +1,5 @@
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-  } from '@ant-design/icons';
 import { Card, Col, Layout, Row } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 
 import './main-page.css';
 import { Header } from '@components/header/header';
@@ -13,20 +9,13 @@ import { Footer } from '@components/footer/footer';
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
 
     return (
         <>
             <Layout>
-                <SiderBar collapsed={collapsed}/>
+                <SiderBar />
                 <Layout className="site-layout">
                     <Header />
-                    <div className='trapezoid' data-test-id='sider-switch'>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                        className: 'trigger',
-                        onClick: () => setCollapsed(!collapsed),
-                        })}
-                    </div>
                     <Content style={{margin: 24}}>
                         <Card bordered={false} className='content-discription'>
                           <p className='content-text'>
@@ -62,7 +51,7 @@ export const MainPage: React.FC = () => {
                             </Row>
                         </div>
                     </Content>
-					<Footer />
+                    <Footer />
                 </Layout>
             </Layout>
         </>
