@@ -10,6 +10,6 @@
     opacity: 1;
     transition: 0.3s;
 }
-.ant-menu-item:last-child{
-    margin-top: 60px;
+.menu .ant-menu-item:last-child{
+    margin-top: 624px;
 }

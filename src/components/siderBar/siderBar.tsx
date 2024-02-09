@@ -7,6 +7,7 @@ import {
 import { Layout, Menu } from 'antd';
 import React from 'react';
 import './siderBar.css';
+import { ExitIcon } from '@components/icons/exitIcon';
 const { Sider } = Layout;
 
 type PropTypes = {
@@ -32,6 +33,7 @@ export const SiderBar: React.FC<PropTypes> = ({collapsed}) => {
                 theme="light"
                 mode="inline"
                 inlineIndent={16}
+                className='menu'
                 items={[
                   {
                     key: '1',
@@ -55,8 +57,8 @@ export const SiderBar: React.FC<PropTypes> = ({collapsed}) => {
                   },
                   {
                     key: '5',
-                    icon: <IdcardOutlined style={{color: '#061178'}}/>,
-                    label: 'Профиль',
+                    icon: <ExitIcon />,
+                    label: 'Выход',
                   },
                 ]}
               />
