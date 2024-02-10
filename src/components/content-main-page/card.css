@@ -7,6 +7,13 @@
 .card-wrap .ant-card{
     text-align: center;
 }
+.card-wrap .ant-card p{
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #262626;
+}
 .card-wrap .ant-card-body{
-    padding: 12px;
+    padding: 12px 14px;
 }

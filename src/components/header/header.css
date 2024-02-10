@@ -14,7 +14,7 @@
 .header-btn{
     text-align: center;
 }
-.ant-btn{
+.header-wrapper .ant-btn{
     padding: 4px 5px;
 }
 .ant-btn .header-btn__icon{

@@ -1,5 +1,5 @@
 .footer{
-    margin: 156px 24px 42px;
+    margin: 362px 24px 42px;
 }
 .footer-card .ant-card-actions > li:not(:last-child) {
     border-right: none;
@@ -15,4 +15,9 @@
 }
 .footer a{
     color: #2F54EB;
+}
+@media screen and (max-width: 850px) {
+    .footer{
+        margin: 237px 24px 42px;
+    }
 }
