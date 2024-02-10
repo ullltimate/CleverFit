@@ -59,7 +59,8 @@
 }
 
 .menu .ant-menu-item:last-child{
-    margin-top: 630px;
+    position: absolute;
+    bottom: 0;
     border-top: 1px solid #F0F0F0;
 }
 .menu .ant-menu-item:last-child .ant-menu-title-content{
