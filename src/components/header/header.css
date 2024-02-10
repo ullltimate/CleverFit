@@ -14,3 +14,33 @@
 .header-btn{
     text-align: center;
 }
+.ant-btn{
+    padding: 4px 5px;
+}
+.ant-btn .header-btn__icon{
+    display: inline-block;
+}
+.ant-btn .header-btn__text{
+    display: inline-block;
+}
+
+@media screen and (max-width: 850px) {
+    .header-wrapper .header-title{
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 31px;
+        margin-bottom: 2px;
+    }
+    .ant-btn .header-btn__icon{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ant-btn .header-btn__icon{
+        display: inline-block;
+    }
+    .ant-btn .header-btn__text{
+        display: none;
+    }
+}
