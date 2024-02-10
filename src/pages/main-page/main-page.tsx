@@ -1,14 +1,34 @@
-import { Card, Col, Layout, Row } from 'antd';
+import { Card, Layout, Row } from 'antd';
 import React from 'react';
-
 import './main-page.css';
 import { Header } from '@components/header/header';
 import { SiderBar } from '@components/siderBar/siderBar';
 import { Footer } from '@components/footer/footer';
+import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
+import { ICardInfo } from '../../types/types';
+import { ContentCard } from '@components/content-main-page/card';
 
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
+
+    const contentCards: ICardInfo[] = [
+      {
+        title: "Расписать тренировки",
+        btnText: 'Тренировки',
+        btnIcon: <HeartFilled />,
+      },
+      {
+        title: "Назначить календарь",
+        btnText: 'Календарь',
+        btnIcon: <CalendarTwoTone twoToneColor='#2F54EB'/>,
+      },
+      {
+        title: "Заполнить профиль",
+        btnText: 'Профиль',
+        btnIcon: <IdcardOutlined />,
+      }
+    ]
 
     return (
         <>
@@ -33,21 +53,10 @@ export const MainPage: React.FC = () => {
                         </Card>
                         <div className="cards-wrapper">
                             <Row gutter={16}>
-                              <Col span={8}>
-                                <Card title="Расписать тренировки" bordered={false} style={{textAlign: 'center'}}>
-                                  Card content
-                                </Card>
-                              </Col>
-                              <Col span={8}>
-                                <Card title="Назначить календарь" bordered={false} style={{textAlign: 'center'}}>
-                                  Card content
-                                </Card>
-                              </Col>
-                              <Col span={8}>
-                                <Card title="Заполнить профиль" bordered={false} style={{textAlign: 'center'}}>
-                                  Card content
-                                </Card>
-                              </Col>
+                              {
+                                contentCards.map((e: ICardInfo, i: number): React.ReactNode => 
+                                  <ContentCard key={i} title={e.title} btnText={e.btnText} btnIcon={e.btnIcon}/>)
+                              }
                             </Row>
                         </div>
                     </Content>
