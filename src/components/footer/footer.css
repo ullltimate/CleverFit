@@ -1,3 +1,18 @@
+.footer{
+    margin: 156px 24px 42px;
+}
 .footer-card .ant-card-actions > li:not(:last-child) {
     border-right: none;
+}
+.footer .ant-row {
+    align-items: end;
+}
+.footer .ant-btn-link{
+    color: #2F54EB;
+}
+.footer .ant-card-body{
+    padding: 12px 24px;
+}
+.footer a{
+    color: #2F54EB;
 }

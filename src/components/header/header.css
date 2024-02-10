@@ -5,10 +5,11 @@
 .header-wrapper{
     display: flex;
     justify-content: space-between;
-    margin-top: 8px;
+    margin-top: 14px;
 }
-.header-title{
-    max-width: 1000px;
+.header-wrapper .header-title{
+    max-width: 1050px;
+    margin-bottom: 6px;
 }
 .header-btn{
     text-align: center;

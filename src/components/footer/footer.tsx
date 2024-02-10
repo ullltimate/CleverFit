@@ -11,8 +11,8 @@ export const Footer: React.FC = () => {
 
     return (
         <>
-            <footer style={{margin: '156px 24px 42px'}}>
-              <Row justify={'space-between'} wrap={true} align={'bottom'} style={{flexWrap: 'wrap-reverse'}}>
+            <footer className='footer'>
+              <Row justify={'space-between'} wrap={true} style={{flexWrap: 'wrap-reverse'}}>
                 <Col flex="none">
 					<Button type="link">Смотреть отзывы</Button>
 				</Col>

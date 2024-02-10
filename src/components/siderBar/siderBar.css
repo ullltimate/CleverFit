@@ -13,7 +13,7 @@
 .trapezoid{
     height: 66px;
     position: fixed;
-    top: 50%;
+    top: 44%;
     border-left: 20px solid #fff;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
@@ -38,11 +38,11 @@
 .logo-full {
     max-width: 133px;
     height: 33px;
-    margin: 44px 30px 67px 30px;
+    margin: 49px 30px;
 }
 
 .logo-hidden{
-    margin: 50px 18px 68px 18px;
+    margin: 25px 18px 60px 18px;
 }
 
 .logo-clever{
@@ -50,8 +50,20 @@
     transition: 0.3s;
 }
 
+.logo-collapsed{
+    width: 28px;
+}
+
+.menu .ant-menu-item:not(:last-child){
+    margin-top: 16px;
+}
+
 .menu .ant-menu-item:last-child{
-    margin-top: 624px;
+    margin-top: 630px;
+    border-top: 1px solid #F0F0F0;
+}
+.menu .ant-menu-item:last-child .ant-menu-title-content{
+    margin-left: 25px;
 }
 
 .sider-wrapper{
