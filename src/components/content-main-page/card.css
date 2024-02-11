@@ -1,0 +1,31 @@
+.card-wrap .ant-card-head-title {
+    padding: 12px 0;
+}
+.card-wrap .ant-btn-link {
+    color: #2f54eb;
+}
+.card-wrap .ant-btn-link:hover{
+    color: #597EF7;
+}
+.card-wrap .ant-card {
+    text-align: center;
+}
+.card-wrap .ant-card p {
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #262626;
+}
+.card-wrap .ant-card-body {
+    padding: 12px 14px;
+}
+.card-wrap {
+    width: 240px;
+}
+
+@media screen and (max-width: 850px) {
+    .card-wrap .ant-card-body {
+        text-align: left;
+    }
+}
