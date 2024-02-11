@@ -22,6 +22,10 @@
 .footer a {
     color: #2f54eb;
 }
+.footer a:hover,
+.footer .ant-btn-link:hover{
+    color: #597EF7;
+}
 @media screen and (max-width: 850px) {
     .footer {
         margin: 237px 24px 42px;
