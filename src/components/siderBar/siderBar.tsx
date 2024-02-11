@@ -15,11 +15,11 @@ const { Sider } = Layout;
 
 
 export const SiderBar: React.FC = () => {
-    const [widthCollapsed, setWidthCollapsed] = useState(64);
-    const [collapsed, setCollapsed] = useState(false);
-    const [mobileWidth, setMobileWidth] = useState(false);
+    const [widthCollapsed, setWidthCollapsed] = useState<number>(64);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [mobileWidth, setMobileWidth] = useState<boolean>(false);
 
-    function changeBreakpoint(broken: boolean){
+    function changeBreakpoint(broken: boolean):void{
       if(broken){
         setWidthCollapsed(1);
         setMobileWidth(true);
