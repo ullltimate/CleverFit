@@ -42,48 +42,48 @@ export const SiderBar: React.FC = () => {
             </div>
             <Sider trigger={null} collapsible collapsed={collapsed} 
               theme='light' 
-              width={208} 
-              style={{height: '100%'}}
+              width={mobileWidth ? 106 : 208} 
+              style={!mobileWidth ? {height: '100%'} : {height: '100vh'}}
               collapsedWidth={widthCollapsed}
-              breakpoint='xs'
+              breakpoint='sm'
               onBreakpoint={(broken)=> changeBreakpoint(broken)}
             >
               <div className={`logo-${!collapsed ? 'full' : 'hidden'}`}>
                 <a href="">
                     <img src="/Clever.svg" alt="logo" className='logo-clever' style={{opacity: `${!collapsed? 1: 0}`}}/>
-                    <img src="/fit.svg" alt="logo" className={`${collapsed ? 'logo-collapsed' : ''}`} />
+                    <img src="/fit.svg" alt="logo" className={`logo-fit ${mobileWidth ? 'logo-collapsed' : ''}`} style={mobileWidth ? {opacity: `${!collapsed ? 1: 0}`} : {opacity: 1}}/>
                 </a>
               </div>
               <Menu
                 theme="light"
                 mode="inline"
-                inlineIndent={16}
+                inlineIndent={mobileWidth ? 8 : 16}
                 className='menu'
                 items={[
                   {
                     key: '1',
-                    icon: <CalendarTwoTone twoToneColor='#061178'/>,
+                    icon: !mobileWidth ? <CalendarTwoTone twoToneColor='#061178'/> : '',
                     label: 'Календарь',
                   },
                   {
                     key: '2',
-                    icon: <HeartFilled style={{color: '#061178'}}/>,
+                    icon: !mobileWidth ? <HeartFilled style={{color: '#061178'}}/> : '',
                     label: 'Тренировки',
                   },
                   {
                     key: '3',
-                    icon: <TrophyFilled style={{color: '#061178'}}/>,
+                    icon: !mobileWidth ? <TrophyFilled style={{color: '#061178'}}/> : '',
                     label: 'Достижения',
                   },
                   {
                     key: '4',
-                    icon: <IdcardOutlined style={{color: '#061178'}}/>,
+                    icon: !mobileWidth ? <IdcardOutlined style={{color: '#061178'}}/> : '',
                     label: 'Профиль',
                   },
                   {
                     key: '5',
-                    icon: <ExitIcon />,
-                    label: 'Выход',
+                    icon: !mobileWidth ? <ExitIcon /> : '',
+                    label: !collapsed ? 'Выход' : '',
                   },
                 ]}
               />

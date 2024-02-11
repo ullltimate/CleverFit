@@ -52,7 +52,7 @@ export const MainPage: React.FC = () => {
                           </h4>
                         </Card>
                         <div className="cards-wrapper">
-                            <Row gutter={16}>
+                            <Row gutter={16} className='wrap'>
                               {
                                 contentCards.map((e: ICardInfo, i: number): React.ReactNode => 
                                   <ContentCard key={i} title={e.title} btnText={e.btnText} btnIcon={e.btnIcon}/>)

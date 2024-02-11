@@ -21,3 +21,16 @@
         margin: 237px 24px 42px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .footer{
+        margin: 0px 24px 42px;
+    }
+    .footer .ant-col{
+        width: 100%;
+        text-align: center;
+    }
+    .footer .ant-row{
+        gap: 24px;
+    }
+}

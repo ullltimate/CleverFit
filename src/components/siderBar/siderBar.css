@@ -45,7 +45,8 @@
     margin: 25px 18px 60px 18px;
 }
 
-.logo-clever{
+.logo-clever, 
+.logo-fit{
     opacity: 1;
     transition: 0.3s;
 }
@@ -71,7 +72,11 @@
     position: relative;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 576px) {
+    .sider-wrapper{
+        position: fixed;
+        z-index: 10;
+    }
     .sider-wrapper .ant-layout-sider{
          position: absolute;
          z-index: 1;
@@ -84,5 +89,24 @@
     .trigger{
         top: 10px;
         left: -23px;
+    }
+    .trapezoid-wrapper-collapsed{
+        transform: translate(106px,0);
+    }
+    .logo-clever{
+        width: 52px;
+    }
+    .logo-collapsed{
+        width: 18px;
+    }
+    .logo-full{
+        margin: 16px;
+    }
+    .menu .ant-menu-item:not(:last-child){
+        padding-right: 8px;
+        margin-top: 6px;
+    }
+    .menu .ant-menu-item:last-child .ant-menu-title-content{
+        margin-left: 23px;
     }
 }
