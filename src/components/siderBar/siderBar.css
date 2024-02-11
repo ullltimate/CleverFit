@@ -1,4 +1,4 @@
-.trapezoid-wrapper{
+.trapezoid-wrapper {
     position: absolute;
     right: 0;
     left: auto;
@@ -6,11 +6,11 @@
     transition: all 0.3s;
 }
 
-.trapezoid-wrapper-collapsed{
-    transform: translate(208px,0);
+.trapezoid-wrapper-collapsed {
+    transform: translate(208px, 0);
 }
 
-.trapezoid{
+.trapezoid {
     height: 66px;
     position: fixed;
     top: 44%;
@@ -30,7 +30,7 @@
     cursor: pointer;
     transition: color 0.3s;
 }
- 
+
 .trigger:hover {
     color: #1890ff;
 }
@@ -41,72 +41,72 @@
     margin: 49px 30px;
 }
 
-.logo-hidden{
+.logo-hidden {
     margin: 25px 18px 60px 18px;
 }
 
-.logo-clever, 
-.logo-fit{
+.logo-clever,
+.logo-fit {
     opacity: 1;
     transition: 0.3s;
 }
 
-.logo-collapsed{
+.logo-collapsed {
     width: 28px;
 }
 
-.menu .ant-menu-item:not(:last-child){
+.menu .ant-menu-item:not(:last-child) {
     margin-top: 16px;
 }
 
-.menu .ant-menu-item:last-child{
+.menu .ant-menu-item:last-child {
     position: absolute;
     bottom: 0;
-    border-top: 1px solid #F0F0F0;
+    border-top: 1px solid #f0f0f0;
 }
-.menu .ant-menu-item:last-child .ant-menu-title-content{
+.menu .ant-menu-item:last-child .ant-menu-title-content {
     margin-left: 25px;
 }
 
-.sider-wrapper{
+.sider-wrapper {
     position: relative;
 }
 
 @media screen and (max-width: 576px) {
-    .sider-wrapper{
+    .sider-wrapper {
         position: fixed;
         z-index: 10;
     }
-    .sider-wrapper .ant-layout-sider{
-         position: absolute;
-         z-index: 1;
+    .sider-wrapper .ant-layout-sider {
+        position: absolute;
+        z-index: 1;
     }
-    .trapezoid{
+    .trapezoid {
         top: 24px;
         height: 48px;
         border-left: 32px solid #fff;
     }
-    .trigger{
+    .trigger {
         top: 10px;
         left: -23px;
     }
-    .trapezoid-wrapper-collapsed{
-        transform: translate(106px,0);
+    .trapezoid-wrapper-collapsed {
+        transform: translate(106px, 0);
     }
-    .logo-clever{
+    .logo-clever {
         width: 52px;
     }
-    .logo-collapsed{
+    .logo-collapsed {
         width: 18px;
     }
-    .logo-full{
+    .logo-full {
         margin: 16px;
     }
-    .menu .ant-menu-item:not(:last-child){
+    .menu .ant-menu-item:not(:last-child) {
         padding-right: 8px;
         margin-top: 6px;
     }
-    .menu .ant-menu-item:last-child .ant-menu-title-content{
+    .menu .ant-menu-item:last-child .ant-menu-title-content {
         margin-left: 23px;
     }
 }

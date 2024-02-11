@@ -1,4 +1,4 @@
-.footer{
+.footer {
     margin: 362px 24px 42px;
 }
 .footer-card .ant-card-actions > li:not(:last-child) {
@@ -7,30 +7,30 @@
 .footer .ant-row {
     align-items: end;
 }
-.footer .ant-btn-link{
-    color: #2F54EB;
+.footer .ant-btn-link {
+    color: #2f54eb;
 }
-.footer .ant-card-body{
+.footer .ant-card-body {
     padding: 12px 24px;
 }
-.footer a{
-    color: #2F54EB;
+.footer a {
+    color: #2f54eb;
 }
 @media screen and (max-width: 850px) {
-    .footer{
+    .footer {
         margin: 237px 24px 42px;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .footer{
+    .footer {
         margin: 0px 24px 42px;
     }
-    .footer .ant-col{
+    .footer .ant-col {
         width: 100%;
         text-align: center;
     }
-    .footer .ant-row{
+    .footer .ant-row {
         gap: 24px;
     }
 }

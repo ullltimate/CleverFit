@@ -1,58 +1,58 @@
-.header{
-    background: #F0F5FF;
+.header {
+    background: #f0f5ff;
     padding: 16px 24px;
 }
-.header-wrapper{
+.header-wrapper {
     display: flex;
     justify-content: space-between;
     margin-top: 14px;
 }
-.header-wrapper .header-title{
+.header-wrapper .header-title {
     max-width: 1050px;
     margin-bottom: 6px;
 }
-.header-btn{
+.header-btn {
     text-align: center;
 }
-.header-wrapper .ant-btn{
+.header-wrapper .ant-btn {
     padding: 4px 5px;
 }
-.ant-btn .header-btn__icon{
+.ant-btn .header-btn__icon {
     display: inline-block;
 }
-.ant-btn .header-btn__text{
+.ant-btn .header-btn__text {
     display: inline-block;
 }
 
 @media screen and (max-width: 850px) {
-    .header-wrapper .header-title{
+    .header-wrapper .header-title {
         font-size: 24px;
         font-weight: 500;
         line-height: 31px;
         margin-bottom: 2px;
     }
-    .ant-btn .header-btn__icon{
+    .ant-btn .header-btn__icon {
         display: none;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .header-wrapper{
+    .header-wrapper {
         margin-top: 6px;
     }
-    .header-wrapper .header-title{
+    .header-wrapper .header-title {
         font-size: 20px;
         line-height: 26px;
     }
-    .header-wrapper .ant-btn{
+    .header-wrapper .ant-btn {
         background: #fff;
         border-radius: 50%;
         padding: 4px 7px;
     }
-    .ant-btn .header-btn__icon{
+    .ant-btn .header-btn__icon {
         display: inline-block;
     }
-    .ant-btn .header-btn__text{
+    .ant-btn .header-btn__text {
         display: none;
     }
 }
