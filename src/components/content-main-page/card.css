@@ -17,3 +17,12 @@
 .card-wrap .ant-card-body {
     padding: 12px 14px;
 }
+.card-wrap {
+    width: 240px;
+}
+
+@media screen and (max-width: 850px) {
+    .card-wrap .ant-card-body {
+        text-align: left;
+    }
+}

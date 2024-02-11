@@ -1,3 +1,19 @@
+.wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.main-wrapper .ant-layout-has-sider {
+    background: center / cover no-repeat url(/main-page_light.png);
+}
+
+.main-wrapper .site-layout {
+    background: transparent;
+}
+.main-wrapper .ant-layout-content {
+    min-height: auto;
+}
+
 .site-layout .site-layout-background {
     background: #fff;
 }
@@ -32,6 +48,11 @@
 }
 .cards-wrapper .wrap {
     flex-wrap: nowrap;
+}
+@media screen and (max-width: 850px) {
+    .main-wrapper .ant-layout-has-sider {
+        min-height: 100vh;
+    }
 }
 @media screen and (max-width: 700px) {
     .cards-wrapper .wrap {

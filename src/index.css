@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 :root {
-    max-width: 1440px;
-    margin: 0 auto;
-
     font-family: 'Inter', sans-serif !important;
     line-height: 1.5;
     font-weight: 400;
@@ -53,14 +50,6 @@ button:hover {
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
-}
-
-:root .site-layout {
-    background: transparent;
-}
-
-.ant-layout-has-sider {
-    background: center / cover no-repeat url(/main-page_light.png) !important;
 }
 
 @media (prefers-color-scheme: light) {
