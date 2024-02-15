@@ -1,7 +1,3 @@
-.wrapper {
-    max-width: 1440px;
-    margin: 0 auto;
-}
 
 .main-wrapper .ant-layout-has-sider {
     background: center / cover no-repeat url(/main-page_light.png);
