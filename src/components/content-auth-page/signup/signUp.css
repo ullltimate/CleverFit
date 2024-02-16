@@ -1,0 +1,8 @@
+.auth-wrapper .registration-form .ant-form-item {
+    margin-bottom: 32px;
+}
+
+.auth-wrapper .registration-form .ant-form-item:nth-last-child(2) {
+    padding-top: 32px;
+    margin-bottom: 16px;
+}
