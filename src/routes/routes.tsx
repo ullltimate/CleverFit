@@ -1,4 +1,4 @@
-import { CustomTabs } from '@components/content-auth-page/Tabs';
+import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
 import { CustomLayout } from '@components/layout/layout';
 import { AuthPage } from '@pages/auth-page';
 import { MainPage } from '@pages/main-page';

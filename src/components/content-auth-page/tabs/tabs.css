@@ -1,0 +1,19 @@
+.logo{
+    margin-bottom: 48px;
+}
+.auth-wrapper .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #2F54EB;
+}
+
+.auth-wrapper .ant-tabs-ink-bar {
+    background: #2F54EB;
+}
+
+.auth-wrapper .ant-tabs-tab {
+    width: 184px;
+    justify-content: center;
+}
+
+.auth-wrapper .ant-tabs-nav{
+    margin-bottom: 24px;
+}

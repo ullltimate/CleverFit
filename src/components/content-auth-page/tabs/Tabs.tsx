@@ -1,9 +1,10 @@
 import { Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { LogIn } from './LogIn';
-import { SignUp } from './SignUp';
-import { IAuthItemsTab } from '../../types/types';
+import { LogIn } from '../login/LogIn';
+import { SignUp } from '../signup/SignUp';
+import { IAuthItemsTab } from '../../../types/types';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './tabs.css'
 
 export const CustomTabs: React.FC = () => {
     const [key, setKey] = useState('1');
@@ -28,10 +29,11 @@ export const CustomTabs: React.FC = () => {
 
     return (
         <>
-            <img src='/logo.svg' alt='' />
+            <img src='/logo.svg' className='logo' alt='logo' />
             <Tabs
                 activeKey={key}
                 centered
+                tabBarGutter={0}
                 items={itemsTab}
                 onChange={(k:string) => {setKey(k); key==='2' ? navigate(`/auth`) : navigate('/auth/registration')}}
             />
