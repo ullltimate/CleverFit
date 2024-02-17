@@ -16,11 +16,19 @@ export interface IAuthItemsTab {
 
 export interface IValidationMessage {
     require: string,
-    email: string
+    email: string,
+    password: string,
+    repeatPassword: string
 }
 
 export interface IValuesLoginForm {
     email: string,
     password: string,
     remember: boolean
+}
+
+export interface IValuesSignupForm {
+    email: string,
+    password: string,
+    repeatPassword: string
 }
