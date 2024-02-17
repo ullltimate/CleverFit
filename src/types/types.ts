@@ -13,3 +13,14 @@ export interface IAuthItemsTab {
     key: string,
     children: React.ReactNode,
 }
+
+export interface IValidationMessage {
+    require: string,
+    email: string
+}
+
+export interface IValuesLoginForm {
+    email: string,
+    password: string,
+    remember: boolean
+}

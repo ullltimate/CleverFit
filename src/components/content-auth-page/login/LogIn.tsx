@@ -1,12 +1,18 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { Form, Input, Checkbox, Button } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import './logIn.css'
+import { validateMessage, regEmail } from '../../../healpers/validation';
+import { IValuesLoginForm } from '../../../types/types';
 
 export const LogIn: React.FC = () => {
-    const onFinish = () => {
-        console.log('Received values of form: ');
+    const [forgotDisabled, setForgotDisabled] = useState(true);
+
+    const onFinish = (values: IValuesLoginForm) => {
+        console.log('Received values of form: ', values);
       };
+
+
     return (
         <>
             <Form
@@ -16,14 +22,31 @@ export const LogIn: React.FC = () => {
                 onFinish={onFinish}
             >
                 <Form.Item
-                    name='username'
-                    rules={[{ required: true, message: 'Please input your Username!' }]}
+                    name='e-mail'
+                    rules={[
+                        { 
+                            required: true, message: validateMessage.require 
+                        }, 
+                        {
+                            type: 'email',
+                            message: validateMessage.email, 
+                        },
+                        {
+                            validator: (_, value) => {
+                                if(regEmail.test(value)) { 
+                                    return Promise.resolve(setForgotDisabled(false))
+                                } else {
+                                    return Promise.reject(setForgotDisabled(true));
+                                }
+                            }
+                        }
+                        ]}
                 >
                     <Input addonBefore="e-mail"/>
                 </Form.Item>
                 <Form.Item
                     name='password'
-                    rules={[{ required: true, message: 'Please input your Password!' }]}
+                    rules={[{ required: true, message: validateMessage.require }]}
                 >
                     <Input.Password
                         type='password'
@@ -34,7 +57,7 @@ export const LogIn: React.FC = () => {
                     <Form.Item name='remember' valuePropName='checked' noStyle>
                         <Checkbox>Запомнить меня</Checkbox>
                     </Form.Item>
-                    <Button type='link' disabled={true} className='login-form-forgot'>
+                    <Button type='link' disabled={forgotDisabled} className='login-form-forgot'>
                         Забыли пароль?
                     </Button>
                 </Form.Item>
