@@ -20,6 +20,7 @@ export const SignUp: React.FC = () => {
                 <Form.Item
                     name='password'
                     rules={[{ required: true, message: 'Please input your Password!' }]}
+                    extra={'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
                 >
                     <Input.Password type='password' placeholder='Пароль' />
                 </Form.Item>
