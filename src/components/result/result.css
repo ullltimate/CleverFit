@@ -3,13 +3,17 @@
 }
 .result-icon{
     font-size: 80px;
-    margin-bottom: 35px;
+    margin-bottom: 24px;
 }
 .icon-warning{
     color: #FAAD14;
 }
+.icon-success{
+    color: #52C41A;
+}
 .result .result-title{
     margin-bottom: 0px;
+    font-weight: 500;
 }
 .result .result-button{
     margin-top: 24px;
