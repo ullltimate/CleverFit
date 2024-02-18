@@ -11,6 +11,9 @@
 .icon-success{
     color: #52C41A;
 }
+.icon-error{
+    color: #FF4D4F;
+}
 .result .result-title{
     margin-bottom: 0px;
     font-weight: 500;
