@@ -1,5 +1,6 @@
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
 import { CustomLayout } from '@components/layout/layout';
+import { Error } from '@components/result/error';
 import { ErrorLogin } from '@components/result/errorLogin';
 import { ErrorUserExist } from '@components/result/errorUserExist';
 import { Result } from '@components/result/result';
@@ -18,6 +19,7 @@ export const routes = (
                 <Route path='/result/error-login' element={<ErrorLogin/>}></Route>
                 <Route path='/result/success' element={<SuccessSignup/>}></Route>
                 <Route path='/result/error-user-exist' element={<ErrorUserExist/>}></Route>
+                <Route path='/result/error' element={<Error/>}></Route>
             </Route>
             <Route path='/main' element={<MainPage />}></Route>
             <Route path='/' element={<Navigate to='/auth' />} />
