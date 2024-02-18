@@ -1,0 +1,17 @@
+.result{
+    text-align: center;
+}
+.result-icon{
+    font-size: 80px;
+    margin-bottom: 35px;
+}
+.icon-warning{
+    color: #FAAD14;
+}
+.result .result-title{
+    margin-bottom: 0px;
+}
+.result .result-button{
+    margin-top: 24px;
+    width: 100%;
+}
