@@ -18,8 +18,8 @@ export const SignUp: React.FC = () => {
         signup({ email: values.email, password: values.password })
         .unwrap()
         .then(() => {
-            navigate(`${PATHS.RESULT.SUCCESS}`);
-        }).catch((error) => error.status === 409 ? navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`) : navigate(`${PATHS.RESULT.ERROR}`));
+            navigate(`${PATHS.RESULT.SUCCESS}`, {state: `${PATHS.REGISTRATION}`});
+        }).catch((error) => error.status === 409 ? navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`, {state: `${PATHS.REGISTRATION}`}) : navigate(`${PATHS.RESULT.ERROR}`, {state: `${PATHS.REGISTRATION}`}));
         console.log('Received values of form: ', values);
     };
 

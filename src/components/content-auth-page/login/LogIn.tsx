@@ -20,7 +20,7 @@ export const LogIn: React.FC = () => {
         .then((res) => {
             values.remember ? localStorage.setItem('token', res.accessToken) : sessionStorage.setItem('token', res.accessToken);
             navigate(`${PATHS.MAIN}`);
-        }).catch(() => navigate(`${PATHS.RESULT.ERROR_LOGIN}`));
+        }).catch(() => navigate(`${PATHS.RESULT.ERROR_LOGIN}`, {state: `${PATHS.AUTH}`}));
         console.log('Received values of form: ', values);
       };
 

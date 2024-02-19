@@ -4,30 +4,13 @@ import './main-page.css';
 import { Header } from '@components/header/header';
 import { SiderBar } from '@components/siderBar/siderBar';
 import { Footer } from '@components/footer/footer';
-import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
 import { ICardInfo } from '@tstypes/types';
 import { ContentCard } from '@components/content-main-page/card';
+import { contentCards } from '@constants/main-content-cards';
 
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
-    const contentCards: ICardInfo[] = [
-        {
-            title: 'Расписать тренировки',
-            btnText: 'Тренировки',
-            btnIcon: <HeartFilled />,
-        },
-        {
-            title: 'Назначить календарь',
-            btnText: 'Календарь',
-            btnIcon: <CalendarTwoTone twoToneColor='#2F54EB' />,
-        },
-        {
-            title: 'Заполнить профиль',
-            btnText: 'Профиль',
-            btnIcon: <IdcardOutlined />,
-        },
-    ];
 
     return (
         <>

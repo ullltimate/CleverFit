@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './result.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Typography, Button } from 'antd';
 import { IPropsResult } from '@tstypes/types';
+import { PATHS } from '@constants/paths';
 
 const { Title, Text } = Typography;
 
 export const Result: React.FC<IPropsResult> = ({icon, title, text, btnText, btnPath}) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        !location.state ? navigate(PATHS.AUTH) : '';
+    },[location.state, navigate])
     
     return (
         <>
@@ -15,7 +21,7 @@ export const Result: React.FC<IPropsResult> = ({icon, title, text, btnText, btnP
                 {icon}
                 <Title level={3} className='result-title'>{title}</Title>
                 <Text disabled className='result-text'>{text}</Text>
-                <Button type='primary' className='result-button' onClick={() => navigate(btnPath)}>{btnText}</Button>
+                <Button type='primary' className='result-button' onClick={() => {navigate(".", { replace: true }), navigate(btnPath, {state: location.pathname})}}>{btnText}</Button>
             </div>
         </>
     );
