@@ -32,3 +32,11 @@ export interface IValuesSignupForm {
     password: string,
     repeatPassword: string
 }
+
+export interface IPropsResult {
+    icon: React.ReactNode,
+    title: string,
+    text: string,
+    btnText: string,
+    btnPath: string,
+}
