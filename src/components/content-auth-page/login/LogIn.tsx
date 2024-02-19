@@ -2,9 +2,9 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { Form, Input, Checkbox, Button } from 'antd';
 import React, { useState } from 'react';
 import './logIn.css'
-import { validateMessage, regEmail } from '../../../healpers/validation';
-import { IValuesLoginForm } from '../../../types/types';
-import { useLoginMutation } from '../../../services/auth';
+import { validateMessage, regEmail } from '@constants/validation';
+import { IValuesLoginForm } from '@tstypes/types';
+import { useLoginMutation } from '@services/auth';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '@components/loader/Loader';
 

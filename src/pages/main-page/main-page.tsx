@@ -5,7 +5,7 @@ import { Header } from '@components/header/header';
 import { SiderBar } from '@components/siderBar/siderBar';
 import { Footer } from '@components/footer/footer';
 import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
-import { ICardInfo } from '../../types/types';
+import { ICardInfo } from '@tstypes/types';
 import { ContentCard } from '@components/content-main-page/card';
 
 const { Content } = Layout;

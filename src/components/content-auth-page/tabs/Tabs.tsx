@@ -2,7 +2,7 @@ import { Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LogIn } from '../login/LogIn';
 import { SignUp } from '../signup/SignUp';
-import { IAuthItemsTab } from '../../../types/types';
+import { IAuthItemsTab } from '@tstypes/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './tabs.css'
 

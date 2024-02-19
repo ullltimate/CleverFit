@@ -2,8 +2,8 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './signUp.css';
-import { regPassword, validateMessage } from '../../../healpers/validation';
-import { IValuesSignupForm } from '../../../types/types';
+import { regPassword, validateMessage } from '@constants/validation';
+import { IValuesSignupForm } from '@tstypes/types';
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();

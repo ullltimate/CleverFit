@@ -1,4 +1,4 @@
-import { IValidationMessage } from "../types/types";
+import { IValidationMessage } from "@tstypes/types";
 
 export const validateMessage: IValidationMessage = {
     require: 'Обязательное поле!',

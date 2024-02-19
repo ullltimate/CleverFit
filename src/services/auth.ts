@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { headers, urlAPI } from '../healpers/api';
+import { headers, urlAPI } from '@constants/api';
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
