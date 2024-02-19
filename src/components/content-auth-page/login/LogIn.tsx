@@ -4,17 +4,29 @@ import React, { useState } from 'react';
 import './logIn.css'
 import { validateMessage, regEmail } from '../../../healpers/validation';
 import { IValuesLoginForm } from '../../../types/types';
+import { useLoginMutation } from '../../../services/auth';
+import { useNavigate } from 'react-router-dom';
+import { Loader } from '@components/loader/Loader';
 
 export const LogIn: React.FC = () => {
     const [forgotDisabled, setForgotDisabled] = useState(true);
-
-    const onFinish = (values: IValuesLoginForm) => {
+    const [login, {isLoading}] = useLoginMutation();
+    const navigate = useNavigate();
+    
+    const onFinish = async (values: IValuesLoginForm) => {
+        login({ email: values.email, password: values.password })
+        .unwrap()
+        .then((res) => {
+            values.remember ? localStorage.setItem('token', res.accessToken) : sessionStorage.setItem('token', res.accessToken);
+            navigate('../main');
+        }).catch(() => navigate('/result/error-login'));
         console.log('Received values of form: ', values);
       };
 
 
     return (
         <>
+        {isLoading && <Loader/>}
             <Form
                 name='normal_login'
                 className='login-form'
@@ -22,7 +34,7 @@ export const LogIn: React.FC = () => {
                 onFinish={onFinish}
             >
                 <Form.Item
-                    name='e-mail'
+                    name='email'
                     rules={[
                         { 
                             required: true, message: validateMessage.require 
