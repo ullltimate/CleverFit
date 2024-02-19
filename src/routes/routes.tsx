@@ -5,24 +5,25 @@ import { ErrorLogin } from '@components/result/errorLogin';
 import { ErrorUserExist } from '@components/result/errorUserExist';
 import { Result } from '@components/result/result';
 import { SuccessSignup } from '@components/result/successSignup';
+import { PATHS } from '@constants/paths';
 import { AuthPage } from '@pages/auth-page';
 import { MainPage } from '@pages/main-page';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const routes = (
     <Routes>
-        <Route path='/' element={<CustomLayout />}>
-            <Route path='/auth' element={<AuthPage><CustomTabs/></AuthPage>}>
-                <Route path='/auth/registration' element={<AuthPage><CustomTabs/></AuthPage>}></Route>
+        <Route path={PATHS.INITIAL} element={<CustomLayout />}>
+            <Route path={PATHS.AUTH} element={<AuthPage><CustomTabs/></AuthPage>}>
+                <Route path={PATHS.REGISTRATION} element={<AuthPage><CustomTabs/></AuthPage>}></Route>
             </Route>
             <Route path='/result' element={<AuthPage><Result/></AuthPage>}>
-                <Route path='/result/error-login' element={<ErrorLogin/>}></Route>
-                <Route path='/result/success' element={<SuccessSignup/>}></Route>
-                <Route path='/result/error-user-exist' element={<ErrorUserExist/>}></Route>
-                <Route path='/result/error' element={<Error/>}></Route>
+                <Route path={PATHS.RESULT.ERROR_LOGIN} element={<ErrorLogin/>}></Route>
+                <Route path={PATHS.RESULT.SUCCESS} element={<SuccessSignup/>}></Route>
+                <Route path={PATHS.RESULT.ERROR_USER_EXIST} element={<ErrorUserExist/>}></Route>
+                <Route path={PATHS.RESULT.ERROR} element={<Error/>}></Route>
             </Route>
-            <Route path='/main' element={<MainPage />}></Route>
-            <Route path='/' element={<Navigate to='/auth' />} />
+            <Route path={PATHS.MAIN} element={<MainPage />}></Route>
+            <Route path={PATHS.INITIAL} element={<Navigate to={PATHS.AUTH} />} />
         </Route>
     </Routes>
 );

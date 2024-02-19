@@ -5,6 +5,7 @@ import { SignUp } from '../signup/SignUp';
 import { IAuthItemsTab } from '@tstypes/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './tabs.css'
+import { PATHS } from '@constants/paths';
 
 export const CustomTabs: React.FC = () => {
     const [key, setKey] = useState('1');
@@ -24,7 +25,7 @@ export const CustomTabs: React.FC = () => {
     ]
 
     useEffect(() => {
-        location.pathname === '/auth/registration' ? setKey('2') : setKey('1');
+        location.pathname === `${PATHS.REGISTRATION}` ? setKey('2') : setKey('1');
     },[location.pathname])
 
     return (
@@ -35,7 +36,7 @@ export const CustomTabs: React.FC = () => {
                 centered
                 tabBarGutter={0}
                 items={itemsTab}
-                onChange={(k:string) => {setKey(k); key==='2' ? navigate(`/auth`) : navigate('/auth/registration')}}
+                onChange={(k:string) => {setKey(k); key==='2' ? navigate(`${PATHS.AUTH}`) : navigate(`${PATHS.REGISTRATION}`)}}
             />
         </>
     );

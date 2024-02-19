@@ -7,6 +7,7 @@ import { IValuesLoginForm } from '@tstypes/types';
 import { useLoginMutation } from '@services/auth';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '@components/loader/Loader';
+import { PATHS } from '@constants/paths';
 
 export const LogIn: React.FC = () => {
     const [forgotDisabled, setForgotDisabled] = useState(true);
@@ -18,8 +19,8 @@ export const LogIn: React.FC = () => {
         .unwrap()
         .then((res) => {
             values.remember ? localStorage.setItem('token', res.accessToken) : sessionStorage.setItem('token', res.accessToken);
-            navigate('../main');
-        }).catch(() => navigate('/result/error-login'));
+            navigate(`${PATHS.MAIN}`);
+        }).catch(() => navigate(`${PATHS.RESULT.ERROR_LOGIN}`));
         console.log('Received values of form: ', values);
       };
 
