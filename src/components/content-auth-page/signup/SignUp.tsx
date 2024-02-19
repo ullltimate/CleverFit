@@ -4,12 +4,22 @@ import React, { useEffect, useState } from 'react';
 import './signUp.css';
 import { regPassword, validateMessage } from '@constants/validation';
 import { IValuesSignupForm } from '@tstypes/types';
+import { useSignupMutation } from '@services/auth';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '@constants/paths';
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({});
+    const [signup] = useSignupMutation();
+    const navigate = useNavigate();
 
     const onFinish = (values: IValuesSignupForm) => {
+        signup({ email: values.email, password: values.password })
+        .unwrap()
+        .then(() => {
+            navigate(`${PATHS.RESULT.SUCCESS}`);
+        }).catch((error) => error.status === 409 ? navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`) : navigate(`${PATHS.RESULT.ERROR}`));
         console.log('Received values of form: ', values);
     };
 
