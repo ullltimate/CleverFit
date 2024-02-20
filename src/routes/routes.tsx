@@ -71,6 +71,17 @@ export const routes = (
                         />
                     </AuthPage>}
             />
+            <Route path={PATHS.RESULT.SUCCESS_CHANGE_PASSWORD} 
+                element={
+                    <AuthPage>
+                        <Result icon={resultData.error_change_password.icon} 
+                            title={resultData.error_change_password.title}
+                             text={resultData.error_change_password.text}
+                            btnText={resultData.error_change_password.btnText}
+                            btnPath={resultData.error_change_password.btnPath}
+                        />
+                    </AuthPage>}
+            />
             <Route path={PATHS.MAIN} element={<MainPage />} />
             <Route path={PATHS.INITIAL} element={<Navigate to={PATHS.AUTH} />} />
         </Route>

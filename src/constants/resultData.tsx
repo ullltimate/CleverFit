@@ -37,4 +37,11 @@ export const resultData = {
         btnText: 'Повторить',
         btnPath: PATHS.CHANGE_PASSWORD
     },
+    success_change_password: {
+        icon: <CheckCircleFilled className='result-icon icon-success'/>,
+        title: 'Пароль успешно изменен',
+        text: 'Теперь можно войти в аккаунт, используя свой логин и новый пароль',
+        btnText: 'Вход',
+        btnPath: PATHS.AUTH
+    },
 }
