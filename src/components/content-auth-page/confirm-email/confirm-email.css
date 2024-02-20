@@ -1,0 +1,26 @@
+.confirm-email{
+    text-align: center;
+}
+.confirm-email__icon{
+    font-size: 80px;
+    margin-bottom: 24px;
+    color: #2F54EB;
+}
+.container{
+    margin: 24px auto;
+}
+.character{
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+}
+.character-error{
+    border: 1px solid #FF4D4F;
+    border-radius: 2px;
+}
+.character__inactive{
+    background: none;
+}
+.character__filled{
+    font-size: 14px;
+    font-weight: 400;
+}

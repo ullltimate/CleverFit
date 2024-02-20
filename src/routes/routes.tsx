@@ -1,3 +1,4 @@
+import { ConfirmEmail } from '@components/content-auth-page/confirm-email/confirm-email';
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
 import { CustomLayout } from '@components/layout/layout';
 import { Result } from '@components/result/result';
@@ -10,9 +11,9 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 export const routes = (
     <Routes>
         <Route path={PATHS.INITIAL} element={<CustomLayout />}>
-            <Route path={PATHS.AUTH} element={<AuthPage><CustomTabs/></AuthPage>}>
-                <Route path={PATHS.REGISTRATION} element={<AuthPage><CustomTabs/></AuthPage>}></Route>
-            </Route>
+            <Route path={PATHS.AUTH} element={<AuthPage><CustomTabs/></AuthPage>}></Route>
+            <Route path={PATHS.REGISTRATION} element={<AuthPage><CustomTabs/></AuthPage>}></Route>
+            <Route path={PATHS.CONFIRM_EMAIL} element={<AuthPage><ConfirmEmail/></AuthPage>}></Route>     
             <Route path={PATHS.RESULT.ERROR_LOGIN} 
                 element={
                     <AuthPage>
