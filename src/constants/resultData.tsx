@@ -30,4 +30,11 @@ export const resultData = {
         btnText: 'Повторить',
         btnPath: PATHS.REGISTRATION
     },
+    error_change_password : {
+        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+        title: 'Данные не сохранились',
+        text: 'Что-то пошло не так попробуйте ещё раз.',
+        btnText: 'Повторить',
+        btnPath: PATHS.CHANGE_PASSWORD
+    },
 }
