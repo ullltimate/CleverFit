@@ -1,12 +1,15 @@
 import React from 'react';
 import Lottie from 'lottie-react';
 import animationData from './lottie.json';
+import './loader.css'
 
 export const Loader: React.FC = () => {
     
     return (
         <>
-            <Lottie animationData={animationData} loop={true} style={{width: '150px'}} />
+            <div className='loader'>
+                <Lottie animationData={animationData} loop={true} style={{width: '150px'}} />
+            </div>
         </>
     );
 };
