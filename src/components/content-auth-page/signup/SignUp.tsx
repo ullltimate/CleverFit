@@ -48,7 +48,7 @@ export const SignUp: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input addonBefore='e-mail' />
+                    <Input addonBefore='e-mail' data-test-id='registration-email'/>
                 </Form.Item>
                 <Form.Item
                     name='password'
@@ -65,7 +65,7 @@ export const SignUp: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Пароль' />
+                    <Input.Password type='password' placeholder='Пароль' data-test-id='registration-password'/>
                 </Form.Item>
                 <Form.Item
                     name='repeatPassword'
@@ -84,7 +84,7 @@ export const SignUp: React.FC = () => {
                         }),
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Повторите пароль' />
+                    <Input.Password type='password' placeholder='Повторите пароль' data-test-id='registration-confirm-password'/>
                 </Form.Item>
 
                 <Form.Item shouldUpdate>
@@ -97,6 +97,7 @@ export const SignUp: React.FC = () => {
                             }
                             htmlType='submit'
                             className='login-form-button'
+                            data-test-id='registration-submit-button'
                         >
                             Войти
                         </Button>

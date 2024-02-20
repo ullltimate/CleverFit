@@ -55,7 +55,7 @@ export const LogIn: React.FC = () => {
                         }
                         ]}
                 >
-                    <Input addonBefore="e-mail"/>
+                    <Input addonBefore="e-mail" data-test-id='login-email'/>
                 </Form.Item>
                 <Form.Item
                     name='password'
@@ -64,19 +64,20 @@ export const LogIn: React.FC = () => {
                     <Input.Password
                         type='password'
                         placeholder='Пароль'
+                        data-test-id='login-password'
                     />
                 </Form.Item>
                 <Form.Item>
                     <Form.Item name='remember' valuePropName='checked' noStyle>
-                        <Checkbox>Запомнить меня</Checkbox>
+                        <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
                     </Form.Item>
-                    <Button type='link' disabled={forgotDisabled} className='login-form-forgot'>
+                    <Button type='link' disabled={forgotDisabled} className='login-form-forgot' data-test-id='login-forgot-button'>
                         Забыли пароль?
                     </Button>
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type='primary'  htmlType='submit' className='login-form-button'>
+                    <Button type='primary'  htmlType='submit' className='login-form-button' data-test-id='login-submit-button'>
                         Войти
                     </Button>
                 </Form.Item>
