@@ -7,7 +7,7 @@ import { PATHS } from '@constants/paths';
 
 const { Title, Text } = Typography;
 
-export const Result: React.FC<IPropsResult> = ({icon, title, text, btnText, btnPath}) => {
+export const Result: React.FC<IPropsResult> = ({icon, title, text, btnText, btnPath, dataAtribute}) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -21,7 +21,7 @@ export const Result: React.FC<IPropsResult> = ({icon, title, text, btnText, btnP
                 {icon}
                 <Title level={3} className='result-title'>{title}</Title>
                 <Text disabled className='result-text'>{text}</Text>
-                <Button type='primary' className='result-button' onClick={() => {navigate(".", { replace: true }), navigate(btnPath, {state: location.pathname})}}>{btnText}</Button>
+                <Button type='primary' className='result-button' data-test-id={dataAtribute} onClick={() => {navigate(".", { replace: true }), navigate(btnPath, {state: location.pathname})}}>{btnText}</Button>
             </div>
         </>
     );

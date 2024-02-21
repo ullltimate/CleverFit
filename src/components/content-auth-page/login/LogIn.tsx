@@ -77,7 +77,7 @@ export const LogIn: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type='primary'  htmlType='submit' className='login-form-button' data-test-id='login-submit-button'>
+                    <Button type='primary'  htmlType='submit' onSubmit={(e) => e.preventDefault()} className='login-form-button' data-test-id='login-submit-button'>
                         Войти
                     </Button>
                 </Form.Item>

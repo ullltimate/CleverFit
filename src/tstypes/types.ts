@@ -39,4 +39,5 @@ export interface IPropsResult {
     text: string,
     btnText: string,
     btnPath: string,
+    dataAtribute: string,
 }

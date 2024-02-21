@@ -24,6 +24,7 @@ export const routes = (
                             text={resultData.error_login.text}
                             btnText={resultData.error_login.btnText}
                             btnPath={resultData.error_login.btnPath}
+                            dataAtribute={resultData.error_login.dataAtribute}
                             />
                     </AuthPage>}
             />
@@ -35,6 +36,7 @@ export const routes = (
                             text={resultData.success_signup.text}
                             btnText={resultData.success_signup.btnText}
                             btnPath={resultData.success_signup.btnPath}
+                            dataAtribute={resultData.success_signup.dataAtribute}
                         />
                     </AuthPage>}
             />
@@ -46,6 +48,7 @@ export const routes = (
                             text={resultData.error_user_exist.text}
                             btnText={resultData.error_user_exist.btnText}
                             btnPath={resultData.error_user_exist.btnPath}
+                            dataAtribute={resultData.error_user_exist.dataAtribute}
                         />
                     </AuthPage>}
             />
@@ -54,9 +57,10 @@ export const routes = (
                     <AuthPage>
                         <Result icon={resultData.error.icon} 
                             title={resultData.error.title}
-                             text={resultData.error.text}
+                            text={resultData.error.text}
                             btnText={resultData.error.btnText}
                             btnPath={resultData.error.btnPath}
+                            dataAtribute={resultData.error.dataAtribute}
                         />
                     </AuthPage>}
             />
@@ -65,9 +69,10 @@ export const routes = (
                     <AuthPage>
                         <Result icon={resultData.error_change_password.icon} 
                             title={resultData.error_change_password.title}
-                             text={resultData.error_change_password.text}
+                            text={resultData.error_change_password.text}
                             btnText={resultData.error_change_password.btnText}
                             btnPath={resultData.error_change_password.btnPath}
+                            dataAtribute={resultData.error_change_password.dataAtribute}
                         />
                     </AuthPage>}
             />
@@ -76,9 +81,10 @@ export const routes = (
                     <AuthPage>
                         <Result icon={resultData.error_change_password.icon} 
                             title={resultData.error_change_password.title}
-                             text={resultData.error_change_password.text}
+                            text={resultData.error_change_password.text}
                             btnText={resultData.error_change_password.btnText}
                             btnPath={resultData.error_change_password.btnPath}
+                            dataAtribute={resultData.error_change_password.dataAtribute}
                         />
                     </AuthPage>}
             />
