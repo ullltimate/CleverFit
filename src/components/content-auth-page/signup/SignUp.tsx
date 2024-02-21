@@ -1,31 +1,49 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './signUp.css';
 import { regPassword, validateMessage } from '@constants/validation';
 import { IValuesSignupForm } from '@tstypes/types';
 import { useSignupMutation } from '@services/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PATHS } from '@constants/paths';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import {increment} from '@redux/reducers/userSlice'
+
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({});
     const [signup] = useSignupMutation();
     const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useAppDispatch();
+    const {user} = useAppSelector(state => state.userReducer);
 
-    const onFinish = (values: IValuesSignupForm) => {
+    const onFinish = useCallback((values: IValuesSignupForm) => {
         signup({ email: values.email, password: values.password })
         .unwrap()
         .then(() => {
             navigate(`${PATHS.RESULT.SUCCESS}`, {state: `${PATHS.REGISTRATION}`});
-        }).catch((error) => error.status === 409 ? navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`, {state: `${PATHS.REGISTRATION}`}) : navigate(`${PATHS.RESULT.ERROR}`, {state: `${PATHS.REGISTRATION}`}));
+            dispatch(increment(values))
+        }).catch((error) => {
+            if(error.status === 409){
+                navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`, {state: `${PATHS.REGISTRATION}`})
+            }else{
+                navigate(`${PATHS.RESULT.ERROR}`, {state: `${PATHS.REGISTRATION}`}); 
+                dispatch(increment(values))
+            }
+        });
         console.log('Received values of form: ', values);
-    };
+    },[dispatch, navigate, signup]);
 
     useEffect(() => {
         forceUpdate({});
-    }, []);
+        if(location.state === `${PATHS.RESULT.ERROR}`){
+            console.log(location.state)
+            onFinish(user)
+        }
+    }, [location.state, onFinish, user]);
     return (
         <>
             <Form
