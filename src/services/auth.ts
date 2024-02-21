@@ -28,8 +28,17 @@ export const authAPI = createApi({
                 headers: headers,
                 body: email,
             })
+        }),
+        confirmEmail: build.mutation({
+            query: (body) => ({
+                url: '/auth/confirm-email',
+                method: 'POST',
+                headers: headers,
+                body,
+                credentials: 'include'
+            })
         })
     }),
 });
 
-export const { useLoginMutation, useSignupMutation, useCheckEmailMutation } = authAPI;
+export const { useLoginMutation, useSignupMutation, useCheckEmailMutation, useConfirmEmailMutation } = authAPI;
