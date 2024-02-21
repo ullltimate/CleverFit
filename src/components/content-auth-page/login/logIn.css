@@ -13,8 +13,8 @@
     padding-right: 0px;
     color: #2f54eb;
 }
-.auth-wrapper .ant-btn-link[disabled] {
-    color: rgb(0, 0, 0, 0.25);
+.disabled {
+    color: rgb(0, 0, 0, 0.25) !important;
 }
 
 .auth-wrapper .login-form-button {

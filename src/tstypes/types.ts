@@ -30,7 +30,7 @@ export interface IValuesLoginForm {
 export interface IValuesSignupForm {
     email: string,
     password: string,
-    repeatPassword: string
+    repeatPassword?: string
 }
 
 export interface IPropsResult {

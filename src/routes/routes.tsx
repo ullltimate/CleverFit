@@ -88,6 +88,30 @@ export const routes = (
                         />
                     </AuthPage>}
             />
+            <Route path={PATHS.RESULT.ERROR_EMAIL_NO_EXIST} 
+                element={
+                    <AuthPage>
+                        <Result icon={resultData.error_email_no_exist.icon} 
+                            title={resultData.error_email_no_exist.title}
+                            text={resultData.error_email_no_exist.text}
+                            btnText={resultData.error_email_no_exist.btnText}
+                            btnPath={resultData.error_email_no_exist.btnPath}
+                            dataAtribute={resultData.error_email_no_exist.dataAtribute}
+                        />
+                    </AuthPage>}
+            />
+            <Route path={PATHS.RESULT.ERROR_CHECK_EMAIL} 
+                element={
+                    <AuthPage>
+                        <Result icon={resultData.error_check_email.icon} 
+                            title={resultData.error_check_email.title}
+                            text={resultData.error_check_email.text}
+                            btnText={resultData.error_check_email.btnText}
+                            btnPath={resultData.error_check_email.btnPath}
+                            dataAtribute={resultData.error_check_email.dataAtribute}
+                        />
+                    </AuthPage>}
+            />
             <Route path={PATHS.MAIN} element={<MainPage />} />
             <Route path={PATHS.INITIAL} element={<Navigate to={PATHS.AUTH} />} />
         </Route>

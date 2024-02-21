@@ -20,8 +20,16 @@ export const authAPI = createApi({
                 headers: headers,
                 body,
             })
+        }),
+        checkEmail: build.mutation({
+            query: (email) => ({
+                url: '/auth/check-email',
+                method: 'POST',
+                headers: headers,
+                body: email,
+            })
         })
     }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authAPI;
+export const { useLoginMutation, useSignupMutation, useCheckEmailMutation } = authAPI;

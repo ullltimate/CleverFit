@@ -50,4 +50,20 @@ export const resultData = {
         btnPath: PATHS.AUTH,
         dataAtribute: 'change-entry-button',
     },
+    error_email_no_exist: {
+        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+        title: 'Такой e-mail не зарегистрирован',
+        text: 'Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail.',
+        btnText: 'Попробовать снова',
+        btnPath: PATHS.AUTH,
+        dataAtribute: 'check-retry-button',
+    },
+    error_check_email: {
+        icon: <img src='/error.svg' />,
+        title: 'Что-то пошло не так',
+        text: 'Произошла ошибка, попробуйте отправить форму ещё раз.',
+        btnText: 'Назад',
+        btnPath: PATHS.AUTH,
+        dataAtribute: 'check-back-button',
+    }
 }

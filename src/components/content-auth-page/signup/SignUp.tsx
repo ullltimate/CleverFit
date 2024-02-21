@@ -25,7 +25,6 @@ export const SignUp: React.FC = () => {
         .unwrap()
         .then(() => {
             navigate(`${PATHS.RESULT.SUCCESS}`, {state: `${PATHS.REGISTRATION}`});
-            dispatch(increment(values))
         }).catch((error) => {
             if(error.status === 409){
                 navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`, {state: `${PATHS.REGISTRATION}`})
