@@ -41,7 +41,7 @@ export const ChangePassword: React.FC = () => {
             {isLoading && <Loader/>}
             <Form
                 name='normal_registration'
-                className='registration-form'
+                className='change-password-form'
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
 
