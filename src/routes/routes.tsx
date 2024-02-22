@@ -79,12 +79,12 @@ export const routes = (
             <Route path={PATHS.RESULT.SUCCESS_CHANGE_PASSWORD} 
                 element={
                     <AuthPage>
-                        <Result icon={resultData.error_change_password.icon} 
-                            title={resultData.error_change_password.title}
-                            text={resultData.error_change_password.text}
-                            btnText={resultData.error_change_password.btnText}
-                            btnPath={resultData.error_change_password.btnPath}
-                            dataAtribute={resultData.error_change_password.dataAtribute}
+                        <Result icon={resultData.success_change_password.icon} 
+                            title={resultData.success_change_password.title}
+                            text={resultData.success_change_password.text}
+                            btnText={resultData.success_change_password.btnText}
+                            btnPath={resultData.success_change_password.btnPath}
+                            dataAtribute={resultData.success_change_password.dataAtribute}
                         />
                     </AuthPage>}
             />

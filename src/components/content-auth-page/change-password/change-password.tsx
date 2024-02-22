@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './change-password.css'
 import { Button, Form, Input, Typography } from 'antd';
 import { validateMessage, regPassword } from '@constants/validation';
-import { IValuesSignupForm } from '@tstypes/types';
+import { IChangePassord } from '@tstypes/types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { PATHS } from '@constants/paths';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useChangePassordMutation } from '@services/auth';
+import { increment } from '@redux/reducers/userSlice';
 
 const { Title } = Typography;
 
 export const ChangePassword: React.FC = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user } = useAppSelector(state => state.userReducer);
+    const dispatch = useAppDispatch();
+    const [change] = useChangePassordMutation();
 
-    const onFinish = (values: IValuesSignupForm) => {
-        
+    const onFinish = useCallback((values: IChangePassord) => {
+        dispatch(increment({email: user.email, password: values.password}))
+        change(values)
+            .unwrap()
+            .then(() => navigate(PATHS.RESULT.SUCCESS_CHANGE_PASSWORD, {state: PATHS.CHANGE_PASSWORD} ))
+            .catch(() => navigate(PATHS.RESULT.ERROR_CHANGE_PASSWORD, {state: PATHS.CHANGE_PASSWORD}))
         console.log('Received values of form: ', values);
-    };
+    },[change, dispatch, navigate, user.email]);
+
+    useEffect(() => {
+        if (location.state === PATHS.RESULT.ERROR_CHANGE_PASSWORD){
+            onFinish({password: user.password, confirmPasswword: user.password})
+        } else if (location.state != PATHS.CONFIRM_EMAIL && location.state != PATHS.RESULT.ERROR_CHANGE_PASSWORD){
+            navigate(PATHS.AUTH)
+        } 
+    },[location.state, navigate, onFinish, user.password])
 
     return (
         <>
@@ -41,7 +63,7 @@ export const ChangePassword: React.FC = () => {
                     <Input.Password type='password' placeholder='Пароль' data-test-id='change-password'/>
                 </Form.Item>
                 <Form.Item
-                    name='repeatPassword'
+                    name='confirmPassword'
                     dependencies={['password']}
                     rules={[
                         ({ getFieldValue }) => ({

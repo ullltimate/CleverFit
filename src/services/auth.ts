@@ -37,8 +37,17 @@ export const authAPI = createApi({
                 body,
                 credentials: 'include'
             })
+        }),
+        changePassord : build.mutation({
+            query: (body) => ({
+                url: '/auth/change-password',
+                method: 'POST',
+                headers: headers,
+                body,
+                credentials: 'include'
+            })
         })
     }),
 });
 
-export const { useLoginMutation, useSignupMutation, useCheckEmailMutation, useConfirmEmailMutation } = authAPI;
+export const { useLoginMutation, useSignupMutation, useCheckEmailMutation, useConfirmEmailMutation, useChangePassordMutation } = authAPI;

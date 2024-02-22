@@ -41,3 +41,8 @@ export interface IPropsResult {
     btnPath: string,
     dataAtribute: string,
 }
+
+export interface IChangePassord {
+    password: string,
+    confirmPasswword: string
+}
