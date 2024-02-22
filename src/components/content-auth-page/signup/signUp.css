@@ -18,3 +18,9 @@
     text-shadow: none;
     box-shadow: none;
 }
+
+@media screen and (max-width: 570px) {
+    .auth-wrapper .registration-form #normal_registration_password_help{
+        max-width: 300px;
+    }
+}

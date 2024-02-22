@@ -14,8 +14,23 @@
 
 .auth-card{
     max-width: 540px;
+    margin: 0px 16px;
 }
 
 .auth-card .ant-card-body{
     padding: 64px 85px;
+}
+
+.auth-wrapper button,
+.auth-wrapper input {
+    height: 40px;
+}
+
+@media screen and (max-width: 570px) {
+    .auth-card .ant-card-body{
+        padding: 32px 16px;
+    }
+    .auth-card{
+        margin: 0px 16px;
+    }
 }

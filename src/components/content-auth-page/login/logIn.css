@@ -37,3 +37,13 @@
     margin-bottom: 24px;
     padding-top: 24px;
 }
+
+.auth-wrapper .ant-form-item-explain-error{
+    font-size: 12px;
+}
+
+@media screen and (max-width: 570px) {
+    .auth-wrapper .ant-form-item-explain-error{
+        max-width: 300px;
+    }
+}
