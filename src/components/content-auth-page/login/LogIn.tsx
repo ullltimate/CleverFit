@@ -26,7 +26,7 @@ export const LogIn: React.FC = () => {
         login({ email: values.email, password: values.password })
             .unwrap()
             .then((res) => {
-                values.remember ? localStorage.setItem('token', res.accessToken) : sessionStorage.setItem('token', res.accessToken);
+                values.remember ? localStorage.setItem('token', res.accessToken) : '';
                 dispatch(increment({ email: values.email, password: values.password }))
                 navigate(PATHS.MAIN);
             }).catch(() => navigate(PATHS.RESULT.ERROR_LOGIN, {state: PATHS.AUTH}));
@@ -50,10 +50,13 @@ export const LogIn: React.FC = () => {
     },[checkEmail, dispatch, navigate])
 
     useEffect(() => {
+        if(localStorage.getItem('token')){
+            navigate(PATHS.MAIN)
+        }
         if(location.state === PATHS.RESULT.ERROR_CHECK_EMAIL){
             check(user.email);
         }
-    },[check, location.state, user.email])
+    },[check, location.state, navigate, user.email])
 
     return (
         <>

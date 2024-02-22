@@ -8,7 +8,7 @@ export const Loader: React.FC = () => {
     return (
         <>
             <div className='loader'>
-                <Lottie animationData={animationData} loop={true} style={{width: '150px'}} data-test-id='verification-input'/>
+                <Lottie animationData={animationData} loop={true} style={{width: '150px'}} data-test-id='loader'/>
             </div>
         </>
     );
