@@ -2,7 +2,7 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { Form, Input, Checkbox, Button } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import './logIn.css'
-import { validateMessage, regEmail } from '@constants/validation';
+import { validateMessage, regEmail, regPassword } from '@constants/validation';
 import { IValuesLoginForm } from '@tstypes/types';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -93,7 +93,17 @@ export const LogIn: React.FC = () => {
                 </Form.Item>
                 <Form.Item
                     name='password'
-                    rules={[{ required: true, message: validateMessage.require }]}
+                    rules={[
+                        {
+                            validator: (_, value) => {
+                                if (regPassword.test(value)) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject(new Error(validateMessage.password));
+                                }
+                            },
+                        },
+                    ]}
                 >
                     <Input.Password
                         type='password'
