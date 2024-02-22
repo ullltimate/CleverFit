@@ -13,11 +13,10 @@ import { increment } from '@redux/reducers/userSlice';
 
 export const LogIn: React.FC = () => {
     const [forgotDisabled, setForgotDisabled] = useState(true);
-    const [login, {isLoading}] = useLoginMutation();
-    const [checkEmail] = useCheckEmailMutation();
+    const [login, {isLoading: isLoadingLogin}] = useLoginMutation();
+    const [checkEmail, {isLoading: isLoadingEmail}] = useCheckEmailMutation();
     const navigate = useNavigate();
     const location = useLocation()
-    //const [email, setEmail] = useState('');
     const dispatch = useAppDispatch();
     const { user } = useAppSelector(state => state.userReducer);
     console.log(user)
@@ -58,7 +57,7 @@ export const LogIn: React.FC = () => {
 
     return (
         <>
-        {isLoading && <Loader/>}
+        {(isLoadingLogin || isLoadingEmail) && <Loader/>}
             <Form
                 name='normal_login'
                 className='login-form'

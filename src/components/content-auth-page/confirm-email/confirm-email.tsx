@@ -7,6 +7,7 @@ import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PATHS } from '@constants/paths';
 import { useConfirmEmailMutation } from '@services/auth';
+import { Loader } from '@components/loader/Loader';
 
 const { Title, Text } = Typography;
 
@@ -14,7 +15,7 @@ export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useAppSelector(state => state.userReducer);
-    const [ confirm ] = useConfirmEmailMutation();
+    const [ confirm, {isLoading} ] = useConfirmEmailMutation();
     const [borderStyle, setBorderStyle] = useState('character');
     const [value, setValue] = useState('')
 
@@ -33,6 +34,7 @@ export const ConfirmEmail: React.FC = () => {
 
     return (
         <>
+            {isLoading && <Loader/>}
             <div className='confirm-email'>
                 <ExclamationCircleFilled className='confirm-email__icon'/>
                 <Title level={3}>Введите код для восстановления аккауанта</Title>

@@ -8,6 +8,7 @@ import { PATHS } from '@constants/paths';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePassordMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
+import { Loader } from '@components/loader/Loader';
 
 const { Title } = Typography;
 
@@ -16,7 +17,7 @@ export const ChangePassword: React.FC = () => {
     const location = useLocation();
     const { user } = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
-    const [change] = useChangePassordMutation();
+    const [change, {isLoading}] = useChangePassordMutation();
 
     const onFinish = useCallback((values: IChangePassord) => {
         dispatch(increment({email: user.email, password: values.password}))
@@ -37,6 +38,7 @@ export const ChangePassword: React.FC = () => {
 
     return (
         <>
+            {isLoading && <Loader/>}
             <Form
                 name='normal_registration'
                 className='registration-form'

@@ -9,12 +9,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { PATHS } from '@constants/paths';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {increment} from '@redux/reducers/userSlice'
+import { Loader } from '@components/loader/Loader';
 
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({});
-    const [signup] = useSignupMutation();
+    const [signup, {isLoading}] = useSignupMutation();
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ export const SignUp: React.FC = () => {
     }, [location.state, onFinish, user]);
     return (
         <>
+            {isLoading && <Loader/>}
             <Form
                 name='normal_registration'
                 className='registration-form'
