@@ -10,7 +10,6 @@ import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
 import './siderBar.css';
 import { ExitIcon } from '@components/icons/exitIcon';
-import { useNavigate } from 'react-router-dom';
 import { increment } from '@redux/reducers/userSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
