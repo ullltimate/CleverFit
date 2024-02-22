@@ -6,9 +6,7 @@ import { routes } from './routes/routes';
 
 const App: React.FC = () => (
     <Provider store={store}>
-        <HistoryRouter history={history}>
-            {routes}
-        </HistoryRouter>
+        <HistoryRouter history={history}>{routes}</HistoryRouter>
     </Provider>
 );
 

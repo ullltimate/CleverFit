@@ -1,24 +1,24 @@
-.result{
+.result {
     text-align: center;
 }
-.result-icon{
+.result-icon {
     font-size: 80px;
     margin-bottom: 24px;
 }
-.icon-warning{
-    color: #FAAD14;
+.icon-warning {
+    color: #faad14;
 }
-.icon-success{
-    color: #52C41A;
+.icon-success {
+    color: #52c41a;
 }
-.icon-error{
-    color: #FF4D4F;
+.icon-error {
+    color: #ff4d4f;
 }
-.result .result-title{
+.result .result-title {
     margin-bottom: 0px;
     font-weight: 500;
 }
-.result .result-button{
+.result .result-button {
     margin-top: 24px;
     width: 100%;
 }

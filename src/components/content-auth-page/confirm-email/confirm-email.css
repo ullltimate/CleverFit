@@ -1,26 +1,26 @@
-.confirm-email{
+.confirm-email {
     text-align: center;
 }
-.confirm-email__icon{
+.confirm-email__icon {
     font-size: 80px;
     margin-bottom: 24px;
-    color: #2F54EB;
+    color: #2f54eb;
 }
-.container{
+.container {
     margin: 24px auto;
 }
-.character{
-    border: 1px solid #D9D9D9;
+.character {
+    border: 1px solid #d9d9d9;
     border-radius: 2px;
 }
-.character-error{
-    border: 1px solid #FF4D4F;
+.character-error {
+    border: 1px solid #ff4d4f;
     border-radius: 2px;
 }
-.character__inactive{
+.character__inactive {
     background: none;
 }
-.character__filled{
+.character__filled {
     font-size: 14px;
     font-weight: 400;
 }

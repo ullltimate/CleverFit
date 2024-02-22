@@ -1,9 +1,9 @@
-import { CheckCircleFilled, CloseCircleFilled, WarningFilled } from "@ant-design/icons";
-import { PATHS } from "./paths";
+import { CheckCircleFilled, CloseCircleFilled, WarningFilled } from '@ant-design/icons';
+import { PATHS } from './paths';
 
 export const resultData = {
     error_login: {
-        icon: <WarningFilled className='result-icon icon-warning'/>,
+        icon: <WarningFilled className='result-icon icon-warning' />,
         title: 'Вход не выполнен',
         text: 'Что-то пошло не так. Попробуйте еще раз',
         btnText: 'Повторить',
@@ -11,7 +11,7 @@ export const resultData = {
         dataAtribute: 'login-retry-button',
     },
     success_signup: {
-        icon: <CheckCircleFilled className='result-icon icon-success'/>,
+        icon: <CheckCircleFilled className='result-icon icon-success' />,
         title: 'Регистрация успешна',
         text: 'Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.',
         btnText: 'Войти',
@@ -19,7 +19,7 @@ export const resultData = {
         dataAtribute: 'registration-enter-button',
     },
     error_user_exist: {
-        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+        icon: <CloseCircleFilled className='result-icon icon-error' />,
         title: 'Данные не сохранились',
         text: 'Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail.',
         btnText: 'Назад к регистрации',
@@ -27,15 +27,15 @@ export const resultData = {
         dataAtribute: 'registration-back-button',
     },
     error: {
-        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+        icon: <CloseCircleFilled className='result-icon icon-error' />,
         title: 'Данные не сохранились',
         text: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.',
         btnText: 'Повторить',
         btnPath: PATHS.REGISTRATION,
         dataAtribute: 'registration-retry-button',
     },
-    error_change_password : {
-        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+    error_change_password: {
+        icon: <CloseCircleFilled className='result-icon icon-error' />,
         title: 'Данные не сохранились',
         text: 'Что-то пошло не так попробуйте ещё раз.',
         btnText: 'Повторить',
@@ -43,7 +43,7 @@ export const resultData = {
         dataAtribute: 'change-retry-button',
     },
     success_change_password: {
-        icon: <CheckCircleFilled className='result-icon icon-success'/>,
+        icon: <CheckCircleFilled className='result-icon icon-success' />,
         title: 'Пароль успешно изменен',
         text: 'Теперь можно войти в аккаунт, используя свой логин и новый пароль',
         btnText: 'Вход',
@@ -51,7 +51,7 @@ export const resultData = {
         dataAtribute: 'change-entry-button',
     },
     error_email_no_exist: {
-        icon: <CloseCircleFilled className='result-icon icon-error'/>,
+        icon: <CloseCircleFilled className='result-icon icon-error' />,
         title: 'Такой e-mail не зарегистрирован',
         text: 'Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail.',
         btnText: 'Попробовать снова',
@@ -65,5 +65,5 @@ export const resultData = {
         btnText: 'Назад',
         btnPath: PATHS.AUTH,
         dataAtribute: 'check-back-button',
-    }
-}
+    },
+};

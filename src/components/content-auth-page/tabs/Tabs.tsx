@@ -4,7 +4,7 @@ import { LogIn } from '../login/LogIn';
 import { SignUp } from '../signup/SignUp';
 import { IAuthItemsTab } from '@tstypes/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './tabs.css'
+import './tabs.css';
 import { PATHS } from '@constants/paths';
 
 export const CustomTabs: React.FC = () => {
@@ -22,11 +22,11 @@ export const CustomTabs: React.FC = () => {
             key: '2',
             children: <SignUp />,
         },
-    ]
+    ];
 
     useEffect(() => {
-        location.pathname === `${PATHS.REGISTRATION}` ? setKey('2') : setKey('1');
-    },[location.pathname])
+        location.pathname === PATHS.REGISTRATION ? setKey('2') : setKey('1');
+    }, [location.pathname]);
 
     return (
         <>
@@ -36,7 +36,10 @@ export const CustomTabs: React.FC = () => {
                 centered
                 tabBarGutter={0}
                 items={itemsTab}
-                onChange={(k:string) => {setKey(k); key==='2' ? navigate(`${PATHS.AUTH}`) : navigate(`${PATHS.REGISTRATION}`)}}
+                onChange={(k: string) => {
+                    setKey(k);
+                    key === '2' ? navigate(PATHS.AUTH) : navigate(PATHS.REGISTRATION);
+                }}
             />
         </>
     );

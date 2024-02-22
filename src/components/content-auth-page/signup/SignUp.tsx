@@ -8,49 +8,51 @@ import { useSignupMutation } from '@services/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PATHS } from '@constants/paths';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import {increment} from '@redux/reducers/userSlice'
+import { increment } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
-
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({});
-    const [signup, {isLoading}] = useSignupMutation();
+    const [signup, { isLoading }] = useSignupMutation();
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const {user} = useAppSelector(state => state.userReducer);
+    const { user } = useAppSelector((state) => state.userReducer);
 
-    const onFinish = useCallback((values: IValuesSignupForm) => {
-        signup({ email: values.email, password: values.password })
-        .unwrap()
-        .then(() => {
-            navigate(`${PATHS.RESULT.SUCCESS}`, {state: `${PATHS.REGISTRATION}`});
-        }).catch((error) => {
-            if(error.status === 409){
-                navigate(`${PATHS.RESULT.ERROR_USER_EXIST}`, {state: `${PATHS.REGISTRATION}`})
-            }else{
-                navigate(`${PATHS.RESULT.ERROR}`, {state: `${PATHS.REGISTRATION}`}); 
-                dispatch(increment(values))
-            }
-        });
-        console.log('Received values of form: ', values);
-    },[dispatch, navigate, signup]);
+    const onFinish = useCallback(
+        (values: IValuesSignupForm) => {
+            signup({ email: values.email, password: values.password })
+                .unwrap()
+                .then(() => {
+                    navigate(PATHS.RESULT.SUCCESS, { state: PATHS.REGISTRATION });
+                })
+                .catch((error) => {
+                    if (error.status === 409) {
+                        navigate(PATHS.RESULT.ERROR_USER_EXIST, {
+                            state: PATHS.REGISTRATION,
+                        });
+                    } else {
+                        navigate(PATHS.RESULT.ERROR, { state: PATHS.REGISTRATION });
+                        dispatch(increment(values));
+                    }
+                });
+        },
+        [dispatch, navigate, signup],
+    );
 
     useEffect(() => {
         forceUpdate({});
-        if(location.state === `${PATHS.RESULT.ERROR}`){
-            console.log(location.state)
-            onFinish(user)
+        if (location.state === PATHS.RESULT.ERROR) {
+            onFinish(user);
         }
     }, [location.state, onFinish, user]);
     return (
         <>
-            {isLoading && <Loader/>}
+            {isLoading && <Loader />}
             <Form
                 name='normal_registration'
                 className='registration-form'
-                initialValues={{ remember: true }}
                 onFinish={onFinish}
                 form={form}
             >
@@ -67,7 +69,7 @@ export const SignUp: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input addonBefore='e-mail' data-test-id='registration-email'/>
+                    <Input addonBefore='e-mail' data-test-id='registration-email' />
                 </Form.Item>
                 <Form.Item
                     name='password'
@@ -84,7 +86,11 @@ export const SignUp: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Пароль' data-test-id='registration-password'/>
+                    <Input.Password
+                        type='password'
+                        placeholder='Пароль'
+                        data-test-id='registration-password'
+                    />
                 </Form.Item>
                 <Form.Item
                     name='repeatPassword'
@@ -103,9 +109,12 @@ export const SignUp: React.FC = () => {
                         }),
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Повторите пароль' data-test-id='registration-confirm-password'/>
+                    <Input.Password
+                        type='password'
+                        placeholder='Повторите пароль'
+                        data-test-id='registration-confirm-password'
+                    />
                 </Form.Item>
-
                 <Form.Item shouldUpdate>
                     {() => (
                         <Button
@@ -122,7 +131,6 @@ export const SignUp: React.FC = () => {
                         </Button>
                     )}
                 </Form.Item>
-
                 <Form.Item>
                     <Button type='text' className='login-form-button'>
                         <GooglePlusOutlined /> Войти через Google

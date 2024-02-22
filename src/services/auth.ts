@@ -19,7 +19,7 @@ export const authAPI = createApi({
                 method: 'POST',
                 headers: headers,
                 body,
-            })
+            }),
         }),
         checkEmail: build.mutation({
             query: (email) => ({
@@ -27,7 +27,7 @@ export const authAPI = createApi({
                 method: 'POST',
                 headers: headers,
                 body: email,
-            })
+            }),
         }),
         confirmEmail: build.mutation({
             query: (body) => ({
@@ -35,19 +35,25 @@ export const authAPI = createApi({
                 method: 'POST',
                 headers: headers,
                 body,
-                credentials: 'include'
-            })
+                credentials: 'include',
+            }),
         }),
-        changePassord : build.mutation({
+        changePassord: build.mutation({
             query: (body) => ({
                 url: '/auth/change-password',
                 method: 'POST',
                 headers: headers,
                 body,
-                credentials: 'include'
-            })
-        })
+                credentials: 'include',
+            }),
+        }),
     }),
 });
 
-export const { useLoginMutation, useSignupMutation, useCheckEmailMutation, useConfirmEmailMutation, useChangePassordMutation } = authAPI;
+export const {
+    useLoginMutation,
+    useSignupMutation,
+    useCheckEmailMutation,
+    useConfirmEmailMutation,
+    useChangePassordMutation,
+} = authAPI;

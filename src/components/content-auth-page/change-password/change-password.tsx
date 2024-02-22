@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import './change-password.css'
+import './change-password.css';
 import { Button, Form, Input, Typography } from 'antd';
 import { validateMessage, regPassword } from '@constants/validation';
 import { IChangePassord } from '@tstypes/types';
@@ -15,38 +15,50 @@ const { Title } = Typography;
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAppSelector(state => state.userReducer);
+    const { user } = useAppSelector((state) => state.userReducer);
     const dispatch = useAppDispatch();
-    const [change, {isLoading}] = useChangePassordMutation();
+    const [change, { isLoading }] = useChangePassordMutation();
 
-    const onFinish = useCallback((values: IChangePassord) => {
-        dispatch(increment({email: user.email, password: values.password}))
-        change(values)
-            .unwrap()
-            .then(() => navigate(PATHS.RESULT.SUCCESS_CHANGE_PASSWORD, {state: PATHS.CHANGE_PASSWORD} ))
-            .catch(() => navigate(PATHS.RESULT.ERROR_CHANGE_PASSWORD, {state: PATHS.CHANGE_PASSWORD}))
-        console.log('Received values of form: ', values);
-    },[change, dispatch, navigate, user.email]);
+    const onFinish = useCallback(
+        (values: IChangePassord) => {
+            dispatch(increment({ email: user.email, password: values.password }));
+            change(values)
+                .unwrap()
+                .then(() =>
+                    navigate(PATHS.RESULT.SUCCESS_CHANGE_PASSWORD, {
+                        state: PATHS.CHANGE_PASSWORD,
+                    }),
+                )
+                .catch(() =>
+                    navigate(PATHS.RESULT.ERROR_CHANGE_PASSWORD, { state: PATHS.CHANGE_PASSWORD }),
+                );
+        },
+        [change, dispatch, navigate, user.email],
+    );
 
     useEffect(() => {
-        if (location.state === PATHS.RESULT.ERROR_CHANGE_PASSWORD){
-            onFinish({password: user.password, confirmPasswword: user.password})
-        } else if (location.state != PATHS.CONFIRM_EMAIL && location.state != PATHS.RESULT.ERROR_CHANGE_PASSWORD){
-            navigate(PATHS.AUTH)
-        } 
-    },[location.state, navigate, onFinish, user.password])
+        if (location.state === PATHS.RESULT.ERROR_CHANGE_PASSWORD) {
+            onFinish({ password: user.password, confirmPasswword: user.password });
+        } else if (
+            location.state != PATHS.CONFIRM_EMAIL &&
+            location.state != PATHS.RESULT.ERROR_CHANGE_PASSWORD
+        ) {
+            navigate(PATHS.AUTH);
+        }
+    }, [location.state, navigate, onFinish, user.password]);
 
     return (
         <>
-            {isLoading && <Loader/>}
+            {isLoading && <Loader />}
             <Form
                 name='normal_registration'
                 className='change-password-form'
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-
             >
-                <Title level={3} className='change-password__title'>Восстановление аккауанта</Title>
+                <Title level={3} className='change-password__title'>
+                    Восстановление аккауанта
+                </Title>
                 <Form.Item
                     name='password'
                     help={validateMessage.password}
@@ -62,7 +74,11 @@ export const ChangePassword: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Пароль' data-test-id='change-password'/>
+                    <Input.Password
+                        type='password'
+                        placeholder='Пароль'
+                        data-test-id='change-password'
+                    />
                 </Form.Item>
                 <Form.Item
                     name='confirmPassword'
@@ -81,7 +97,11 @@ export const ChangePassword: React.FC = () => {
                         }),
                     ]}
                 >
-                    <Input.Password type='password' placeholder='Повторите пароль' data-test-id='change-confirm-password'/>
+                    <Input.Password
+                        type='password'
+                        placeholder='Повторите пароль'
+                        data-test-id='change-confirm-password'
+                    />
                 </Form.Item>
 
                 <Form.Item shouldUpdate>

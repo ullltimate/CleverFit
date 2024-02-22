@@ -1,5 +1,5 @@
-import { HeartFilled, CalendarTwoTone, IdcardOutlined } from "@ant-design/icons";
-import { ICardInfo } from "@tstypes/types";
+import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
+import { ICardInfo } from '@tstypes/types';
 
 export const contentCards: ICardInfo[] = [
     {
