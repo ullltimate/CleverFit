@@ -1,7 +1,8 @@
 import { CheckCircleFilled, CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import { PATHS } from './paths';
+import { IResultData } from '@tstypes/resultData';
 
-export const resultData = {
+export const resultData: IResultData = {
     error_login: {
         icon: <WarningFilled className='result-icon icon-warning' />,
         title: 'Вход не выполнен',

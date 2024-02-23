@@ -14,13 +14,6 @@ export interface IAuthItemsTab {
     children: React.ReactNode,
 }
 
-export interface IValidationMessage {
-    require: string,
-    email: string,
-    password: string,
-    repeatPassword: string
-}
-
 export interface IValuesLoginForm {
     email: string,
     password: string,
@@ -44,5 +37,5 @@ export interface IPropsResult {
 
 export interface IChangePassord {
     password: string,
-    confirmPasswword: string
+    confirmPassword: string
 }

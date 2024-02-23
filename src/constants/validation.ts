@@ -1,4 +1,5 @@
-import { IValidationMessage } from '@tstypes/types';
+import { IValidationMessage } from '@tstypes/validation';
+import { IRegExp } from '@tstypes/validation';
 
 export const validateMessage: IValidationMessage = {
     require: 'Обязательное поле!',
@@ -7,6 +8,6 @@ export const validateMessage: IValidationMessage = {
     repeatPassword: 'Пароли не совпадают',
 };
 
-export const regEmail = /^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,4}$/i;
+export const regEmail: IRegExp = /^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,4}$/i;
 
-export const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}/;
+export const regPassword: IRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}/;

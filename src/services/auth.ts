@@ -1,11 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { headers, urlAPI } from '@constants/api';
+import { 
+    IResponseLogin, 
+    IRequestLogin, 
+    IResponseCheck, 
+    IRequestCheck, 
+    IResponseConfirm, 
+    IRequestConfirm, 
+    IResponseChangePass,
+    IRequestChangePass
+} from '@tstypes/api';
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
     baseQuery: fetchBaseQuery({ baseUrl: urlAPI }),
     endpoints: (build) => ({
-        login: build.mutation({
+        login: build.mutation<IResponseLogin, IRequestLogin>({
             query: (body) => ({
                 url: '/auth/login',
                 method: 'POST',
@@ -13,7 +23,7 @@ export const authAPI = createApi({
                 body,
             }),
         }),
-        signup: build.mutation({
+        signup: build.mutation<object, IRequestLogin>({
             query: (body) => ({
                 url: '/auth/registration',
                 method: 'POST',
@@ -21,7 +31,7 @@ export const authAPI = createApi({
                 body,
             }),
         }),
-        checkEmail: build.mutation({
+        checkEmail: build.mutation<IResponseCheck, IRequestCheck>({
             query: (email) => ({
                 url: '/auth/check-email',
                 method: 'POST',
@@ -29,7 +39,7 @@ export const authAPI = createApi({
                 body: email,
             }),
         }),
-        confirmEmail: build.mutation({
+        confirmEmail: build.mutation<IResponseConfirm, IRequestConfirm>({
             query: (body) => ({
                 url: '/auth/confirm-email',
                 method: 'POST',
@@ -38,7 +48,7 @@ export const authAPI = createApi({
                 credentials: 'include',
             }),
         }),
-        changePassord: build.mutation({
+        changePassord: build.mutation<IResponseChangePass, IRequestChangePass>({
             query: (body) => ({
                 url: '/auth/change-password',
                 method: 'POST',

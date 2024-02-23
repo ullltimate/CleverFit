@@ -1,6 +1,8 @@
-export const urlAPI = 'https://marathon-api.clevertec.ru';
+import { IUrlAPI } from "@tstypes/api";
+
+export const urlAPI: IUrlAPI = 'https://marathon-api.clevertec.ru';
 
 export const headers = {
-    accept: 'application/json',
+    'accept': 'application/json',
     'Content-Type': 'application/json',
 };

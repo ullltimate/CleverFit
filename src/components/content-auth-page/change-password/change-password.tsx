@@ -38,7 +38,7 @@ export const ChangePassword: React.FC = () => {
 
     useEffect(() => {
         if (location.state === PATHS.RESULT.ERROR_CHANGE_PASSWORD) {
-            onFinish({ password: user.password, confirmPasswword: user.password });
+            onFinish({ password: user.password, confirmPassword: user.password });
         } else if (
             location.state != PATHS.CONFIRM_EMAIL &&
             location.state != PATHS.RESULT.ERROR_CHANGE_PASSWORD

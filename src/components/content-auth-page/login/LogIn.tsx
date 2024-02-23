@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { increment } from '@redux/reducers/userSlice';
 
 export const LogIn: React.FC = () => {
-    const [forgotDisabled, setForgotDisabled] = useState(true);
+    const [forgotDisabled, setForgotDisabled] = useState<boolean>(true);
     const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
     const [checkEmail, { isLoading: isLoadingEmail }] = useCheckEmailMutation();
     const navigate = useNavigate();
