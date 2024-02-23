@@ -1,5 +1,5 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
-import { Form, Input, Checkbox, Button } from 'antd';
+import { Form, Input, Checkbox, Button, Grid } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import './logIn.css';
 import { validateMessage, regEmail, regPassword } from '@constants/validation';
@@ -11,6 +11,8 @@ import { PATHS } from '@constants/paths';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { increment } from '@redux/reducers/userSlice';
 
+const { useBreakpoint } = Grid;
+
 export const LogIn: React.FC = () => {
     const [forgotDisabled, setForgotDisabled] = useState<boolean>(true);
     const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
@@ -19,6 +21,7 @@ export const LogIn: React.FC = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.userReducer);
+    const {xs} = useBreakpoint();
 
     const onFinish = (values: IValuesLoginForm) => {
         login({ email: values.email, password: values.password })
@@ -119,7 +122,7 @@ export const LogIn: React.FC = () => {
                     </Form.Item>
                     <Button
                         type='link'
-                        className={`login-form-forgot ${forgotDisabled ? 'disabled' : ''}`}
+                        className='login-form-forgot'
                         data-test-id='login-forgot-button'
                         onClick={() => !forgotDisabled && check(user.email)}
                     >
@@ -141,7 +144,7 @@ export const LogIn: React.FC = () => {
 
                 <Form.Item>
                     <Button type='text' className='login-form-button'>
-                        <GooglePlusOutlined /> Войти через Google
+                        {!xs && <GooglePlusOutlined />} Войти через Google
                     </Button>
                 </Form.Item>
             </Form>

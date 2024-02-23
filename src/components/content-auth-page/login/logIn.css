@@ -1,10 +1,6 @@
-.auth-wrapper .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #2f54eb;
-    border-color: #2f54eb;
-}
-
+.auth-wrapper .ant-checkbox-checked .ant-checkbox-inner,
 .auth-wrapper .ant-btn-primary {
-    background: #2f54eb;
+    background-color: #2f54eb;
     border-color: #2f54eb;
 }
 
@@ -13,16 +9,13 @@
     padding-right: 0px;
     color: #2f54eb;
 }
-.disabled {
-    color: rgb(0, 0, 0, 0.25) !important;
-}
 
 .auth-wrapper .login-form-button {
     width: 100%;
 }
 
 .auth-wrapper .ant-form label {
-    padding: 5px 0px;
+    padding: 9px 0px;
 }
 
 .auth-wrapper .login-form .ant-form-item {
@@ -40,6 +33,10 @@
 
 .auth-wrapper .ant-form-item-explain-error {
     font-size: 12px;
+}
+
+.auth-wrapper .ant-input-affix-wrapper{
+    padding: 0 11px;
 }
 
 @media screen and (max-width: 570px) {

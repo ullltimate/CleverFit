@@ -1,5 +1,5 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Grid } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import './signUp.css';
 import { regPassword, validateMessage } from '@constants/validation';
@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { increment } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
 
+const { useBreakpoint } = Grid;
+
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({});
@@ -19,6 +21,7 @@ export const SignUp: React.FC = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.userReducer);
+    const {xs} = useBreakpoint();
 
     const onFinish = useCallback(
         (values: IValuesSignupForm) => {
@@ -133,7 +136,7 @@ export const SignUp: React.FC = () => {
                 </Form.Item>
                 <Form.Item>
                     <Button type='text' className='login-form-button'>
-                        <GooglePlusOutlined /> Войти через Google
+                        {!xs && <GooglePlusOutlined />} Войти через Google
                     </Button>
                 </Form.Item>
             </Form>
