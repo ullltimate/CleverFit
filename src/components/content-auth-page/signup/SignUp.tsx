@@ -1,15 +1,16 @@
-import { GooglePlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Grid } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
-import './signUp.css';
-import { regPassword, validateMessage } from '@constants/validation';
-import { IValuesSignupForm } from '@tstypes/types';
-import { useSignupMutation } from '@services/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PATHS } from '@constants/paths';
+import { Form, Input, Button, Grid } from 'antd';
+import { GooglePlusOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { increment } from '@redux/reducers/userSlice';
+import { useSignupMutation } from '@services/auth';
 import { Loader } from '@components/loader/Loader';
+import { regPassword, validateMessage } from '@constants/validation';
+import { PATHS } from '@constants/paths';
+import { IValuesSignupForm } from '@tstypes/types';
+
+import './signUp.css';
 
 const { useBreakpoint } = Grid;
 

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import './result.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Typography, Button } from 'antd';
-import { IPropsResult } from '@tstypes/types';
 import { PATHS } from '@constants/paths';
+import { IPropsResult } from '@tstypes/types';
+
+import './result.css'
 
 const { Title, Text } = Typography;
 

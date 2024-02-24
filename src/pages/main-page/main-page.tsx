@@ -1,15 +1,16 @@
-import { Card, Layout, Row } from 'antd';
 import React, { useEffect } from 'react';
-import './main-page.css';
+import { useNavigate } from 'react-router-dom';
+import { Card, Layout, Row } from 'antd';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Header } from '@components/header/header';
 import { SiderBar } from '@components/siderBar/siderBar';
 import { Footer } from '@components/footer/footer';
-import { ICardInfo } from '@tstypes/types';
 import { ContentCard } from '@components/content-main-page/card';
 import { contentCards } from '@constants/main-content-cards';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { PATHS } from '@constants/paths';
+import { ICardInfo } from '@tstypes/types';
+
+import './main-page.css';
 
 const { Content } = Layout;
 

@@ -1,15 +1,16 @@
-import { GooglePlusOutlined } from '@ant-design/icons';
-import { Form, Input, Checkbox, Button, Grid } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
-import './logIn.css';
-import { validateMessage, regEmail, regPassword } from '@constants/validation';
-import { IValuesLoginForm } from '@tstypes/types';
-import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Loader } from '@components/loader/Loader';
-import { PATHS } from '@constants/paths';
+import { Form, Input, Checkbox, Button, Grid } from 'antd';
+import { GooglePlusOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
+import { Loader } from '@components/loader/Loader';
+import { validateMessage, regEmail, regPassword } from '@constants/validation';
+import { PATHS } from '@constants/paths';
+import { IValuesLoginForm } from '@tstypes/types';
+
+import './logIn.css';
 
 const { useBreakpoint } = Grid;
 

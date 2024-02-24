@@ -1,17 +1,17 @@
 .result {
     text-align: center;
 }
-.result-icon {
+.result .result-icon {
     font-size: 80px;
     margin-bottom: 24px;
 }
-.icon-warning {
+.result .icon-warning {
     color: #faad14;
 }
-.icon-success {
+.result .icon-success {
     color: #52c41a;
 }
-.icon-error {
+.result .icon-error {
     color: #ff4d4f;
 }
 .result .result-title {

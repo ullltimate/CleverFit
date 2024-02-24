@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     HeartFilled,
     TrophyFilled,
@@ -7,11 +8,11 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
-import './siderBar.css';
-import { ExitIcon } from '@components/icons/exitIcon';
 import { increment } from '@redux/reducers/userSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { ExitIcon } from '@components/icons/exitIcon';
+
+import './siderBar.css';
 
 const { Sider } = Layout;
 

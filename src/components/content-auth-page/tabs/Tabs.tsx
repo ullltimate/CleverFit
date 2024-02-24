@@ -1,11 +1,12 @@
-import { Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Tabs } from 'antd';
 import { LogIn } from '../login/LogIn';
 import { SignUp } from '../signup/SignUp';
-import { IAuthItemsTab } from '@tstypes/types';
-import { useLocation, useNavigate } from 'react-router-dom';
-import './tabs.css';
 import { PATHS } from '@constants/paths';
+import { IAuthItemsTab } from '@tstypes/types';
+
+import './tabs.css';
 
 export const CustomTabs: React.FC = () => {
     const [key, setKey] = useState('1');

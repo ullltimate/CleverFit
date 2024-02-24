@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect } from 'react';
-import './change-password.css';
-import { Button, Form, Input, Typography } from 'antd';
-import { validateMessage, regPassword } from '@constants/validation';
-import { IChangePassord } from '@tstypes/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PATHS } from '@constants/paths';
+import { Button, Form, Input, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePassordMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
+import { PATHS } from '@constants/paths';
+import { validateMessage, regPassword } from '@constants/validation';
+import { IChangePassord } from '@tstypes/types';
+
+import './change-password.css';
 
 const { Title } = Typography;
 

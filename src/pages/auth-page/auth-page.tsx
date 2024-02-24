@@ -1,7 +1,8 @@
 import React from 'react';
-import './auth-page.css';
 import { Card, Layout } from 'antd';
 import { IAuthChildren } from '@tstypes/types';
+
+import './auth-page.css';
 
 const { Content } = Layout;
 

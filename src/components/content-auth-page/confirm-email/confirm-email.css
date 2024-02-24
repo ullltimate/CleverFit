@@ -1,7 +1,7 @@
 .confirm-email {
     text-align: center;
 }
-.confirm-email__icon {
+.confirm-email .confirm-email__icon {
     font-size: 80px;
     margin-bottom: 24px;
     color: #2f54eb;

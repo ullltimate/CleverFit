@@ -1,3 +1,6 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthPage } from '@pages/auth-page';
+import { MainPage } from '@pages/main-page';
 import { ChangePassword } from '@components/content-auth-page/change-password/change-password';
 import { ConfirmEmail } from '@components/content-auth-page/confirm-email/confirm-email';
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
@@ -5,9 +8,6 @@ import { CustomLayout } from '@components/layout/layout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
 import { resultData } from '@constants/resultData';
-import { AuthPage } from '@pages/auth-page';
-import { MainPage } from '@pages/main-page';
-import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const routes = (
     <Routes>
