@@ -1,0 +1,26 @@
+.auth-wrapper .registration-form .ant-form-item {
+    margin-bottom: 32px;
+}
+
+.auth-wrapper .registration-form .ant-form-item:nth-last-child(2) {
+    padding-top: 32px;
+    margin-bottom: 16px;
+}
+
+.auth-wrapper .registration-form #normal_registration_password_help {
+    font-size: 12px;
+}
+
+.auth-wrapper .ant-btn-primary[disabled] {
+    color: rgba(0, 0, 0, 0.25);
+    border-color: #d9d9d9;
+    background: #f5f5f5;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 570px) {
+    .auth-wrapper .registration-form #normal_registration_password_help {
+        max-width: 300px;
+    }
+}

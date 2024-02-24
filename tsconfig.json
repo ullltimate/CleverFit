@@ -24,8 +24,10 @@
             "@hooks/*": ["./src/hooks/*"],
             "@pages/*": ["./src/pages/*"],
             "@redux/*": ["./src/redux/*"],
-            "@types/*": ["./src/types/*"],
-            "@utils/*": ["./src/utils/*"]
+            "@types/*": ["src/tstypes/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@services/*": ["./src/services/*"],
+            "@tstypes/*": ["./src/tstypes/*"]
         },
         "plugins": [
             {

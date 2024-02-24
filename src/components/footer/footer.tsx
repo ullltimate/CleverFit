@@ -1,7 +1,8 @@
 import React from 'react';
-import './footer.css';
-import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { Row, Col, Button, Card } from 'antd';
+import { AndroidFilled, AppleFilled } from '@ant-design/icons';
+
+import './footer.css';
 
 const { Meta } = Card;
 

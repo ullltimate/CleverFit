@@ -1,0 +1,33 @@
+.logo {
+    display: block;
+    margin: 0px auto 48px;
+}
+.auth-wrapper .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #2f54eb;
+}
+
+.auth-wrapper .ant-tabs-ink-bar {
+    background: #2f54eb;
+}
+
+.auth-wrapper .ant-tabs-tab {
+    width: 184px;
+    justify-content: center;
+}
+
+.auth-wrapper .ant-tabs-nav {
+    margin-bottom: 24px;
+}
+.auth-wrapper .ant-btn-text {
+    border-color: #d9d9d9;
+}
+
+@media screen and (max-width: 570px) {
+    .logo {
+        max-width: 203px;
+        margin: 0px auto 32px;
+    }
+    .auth-wrapper .ant-tabs-tab {
+        width: 148px;
+    }
+}

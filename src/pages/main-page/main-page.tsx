@@ -1,33 +1,28 @@
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Layout, Row } from 'antd';
-import React from 'react';
-import './main-page.css';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Header } from '@components/header/header';
 import { SiderBar } from '@components/siderBar/siderBar';
 import { Footer } from '@components/footer/footer';
-import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
-import { ICardInfo } from '../../types/types';
 import { ContentCard } from '@components/content-main-page/card';
+import { contentCards } from '@constants/main-content-cards';
+import { PATHS } from '@constants/paths';
+import { ICardInfo } from '@tstypes/types';
+
+import './main-page.css';
 
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
-    const contentCards: ICardInfo[] = [
-        {
-            title: 'Расписать тренировки',
-            btnText: 'Тренировки',
-            btnIcon: <HeartFilled />,
-        },
-        {
-            title: 'Назначить календарь',
-            btnText: 'Календарь',
-            btnIcon: <CalendarTwoTone twoToneColor='#2F54EB' />,
-        },
-        {
-            title: 'Заполнить профиль',
-            btnText: 'Профиль',
-            btnIcon: <IdcardOutlined />,
-        },
-    ];
+    const { user } = useAppSelector(state => state.userReducer);
+    const navigate = useNavigate();
+
+    console.log(user)
+
+    useEffect(() => {
+        (user.email === '' && !localStorage.getItem('token')) ? navigate(PATHS.AUTH) : '';
+    },[navigate, user.email])
 
     return (
         <>

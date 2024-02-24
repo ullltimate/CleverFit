@@ -1,0 +1,46 @@
+.auth-wrapper .ant-checkbox-checked .ant-checkbox-inner,
+.auth-wrapper .ant-btn-primary {
+    background-color: #2f54eb;
+    border-color: #2f54eb;
+}
+
+.auth-wrapper .login-form-forgot {
+    float: right;
+    padding-right: 0px;
+    color: #2f54eb;
+}
+
+.auth-wrapper .login-form-button {
+    width: 100%;
+}
+
+.auth-wrapper .ant-form label {
+    padding: 9px 0px;
+}
+
+.auth-wrapper .login-form .ant-form-item {
+    margin-bottom: 32px;
+}
+
+.auth-wrapper .login-form .ant-form-item:nth-last-child(2) {
+    margin-bottom: 16px;
+}
+
+.auth-wrapper .login-form .ant-form-item:nth-last-child(3) {
+    margin-bottom: 24px;
+    padding-top: 24px;
+}
+
+.auth-wrapper .ant-form-item-explain-error {
+    font-size: 12px;
+}
+
+.auth-wrapper .ant-input-affix-wrapper{
+    padding: 0 11px;
+}
+
+@media screen and (max-width: 570px) {
+    .auth-wrapper .ant-form-item-explain-error {
+        max-width: 300px;
+    }
+}

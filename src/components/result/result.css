@@ -1,0 +1,24 @@
+.result {
+    text-align: center;
+}
+.result .result-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+}
+.result .icon-warning {
+    color: #faad14;
+}
+.result .icon-success {
+    color: #52c41a;
+}
+.result .icon-error {
+    color: #ff4d4f;
+}
+.result .result-title {
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+.result .result-button {
+    margin-top: 24px;
+    width: 100%;
+}

@@ -1,7 +1,8 @@
 import React from 'react';
-import './card.css';
 import { Col, Card, Button } from 'antd';
-import { ICardInfo } from '../../types/types';
+import { ICardInfo } from '@tstypes/types';
+
+import './card.css';
 
 export const ContentCard: React.FC<ICardInfo> = ({ title, btnText, btnIcon }) => {
     return (

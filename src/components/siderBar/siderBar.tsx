@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     HeartFilled,
     TrophyFilled,
@@ -7,15 +8,19 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
-import './siderBar.css';
+import { increment } from '@redux/reducers/userSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { ExitIcon } from '@components/icons/exitIcon';
+
+import './siderBar.css';
+
 const { Sider } = Layout;
 
 export const SiderBar: React.FC = () => {
     const [widthCollapsed, setWidthCollapsed] = useState<number>(64);
     const [collapsed, setCollapsed] = useState<boolean>(false);
     const [mobileWidth, setMobileWidth] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
 
     function changeBreakpoint(broken: boolean): void {
         if (broken) {
@@ -24,6 +29,22 @@ export const SiderBar: React.FC = () => {
         } else {
             setWidthCollapsed(64);
             setMobileWidth(false);
+        }
+    }
+
+    type key = {
+        key: string,
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('token');
+        dispatch(increment({email: '', password: ''}));
+    }
+
+    function onClick({key}: key){
+        switch(key){
+            case 'exit':
+                logOut();
         }
     }
 
@@ -81,6 +102,7 @@ export const SiderBar: React.FC = () => {
                         mode='inline'
                         inlineIndent={mobileWidth ? 8 : 16}
                         className='menu'
+                        onClick={onClick}
                         items={[
                             {
                                 key: '1',
@@ -89,7 +111,7 @@ export const SiderBar: React.FC = () => {
                                 ) : (
                                     ''
                                 ),
-                                label: 'Календарь',
+                                label: !collapsed ? 'Календарь' : '',
                             },
                             {
                                 key: '2',
@@ -98,7 +120,7 @@ export const SiderBar: React.FC = () => {
                                 ) : (
                                     ''
                                 ),
-                                label: 'Тренировки',
+                                label: !collapsed ? 'Тренировки' : '',
                             },
                             {
                                 key: '3',
@@ -107,7 +129,7 @@ export const SiderBar: React.FC = () => {
                                 ) : (
                                     ''
                                 ),
-                                label: 'Достижения',
+                                label: !collapsed ? 'Достижения' : '',
                             },
                             {
                                 key: '4',
@@ -116,10 +138,10 @@ export const SiderBar: React.FC = () => {
                                 ) : (
                                     ''
                                 ),
-                                label: 'Профиль',
+                                label: !collapsed ? 'Профиль' : '',
                             },
                             {
-                                key: '5',
+                                key: 'exit',
                                 icon: !mobileWidth ? <ExitIcon /> : '',
                                 label: !collapsed ? 'Выход' : '',
                             },
