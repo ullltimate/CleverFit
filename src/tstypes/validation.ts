@@ -6,3 +6,7 @@ export interface IValidationMessage {
     password: string,
     repeatPassword: string
 }
+
+export type fieldValue = {
+    getFieldValue: (name: string) => string,
+}

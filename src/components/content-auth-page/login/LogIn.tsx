@@ -6,11 +6,12 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
-import { validateMessage, regEmail, regPassword } from '@constants/validation';
+import { regEmail, rulesPassword, rulesEmail } from '@constants/validation';
 import { PATHS } from '@constants/paths';
 import { IValuesLoginForm } from '@tstypes/types';
 
 import './logIn.css';
+import { Rule } from 'antd/lib/form';
 
 const { useBreakpoint } = Grid;
 
@@ -75,16 +76,9 @@ export const LogIn: React.FC = () => {
                 <Form.Item
                     name='email'
                     rules={[
+                        rulesEmail,
                         {
-                            required: true,
-                            message: validateMessage.require,
-                        },
-                        {
-                            type: 'email',
-                            message: validateMessage.email,
-                        },
-                        {
-                            validator: (_, value) => {
+                            validator: (_: Rule, value: string) => {
                                 if (regEmail.test(value)) {
                                     dispatch(increment({ email: value, password: '' }));
                                     return Promise.resolve(setForgotDisabled(false));
@@ -93,23 +87,13 @@ export const LogIn: React.FC = () => {
                                 }
                             },
                         },
-                    ]}
+                    ].flat()}
                 >
                     <Input addonBefore='e-mail' data-test-id='login-email' />
                 </Form.Item>
                 <Form.Item
                     name='password'
-                    rules={[
-                        {
-                            validator: (_, value) => {
-                                if (regPassword.test(value)) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject(new Error(validateMessage.password));
-                                }
-                            },
-                        },
-                    ]}
+                    rules={rulesPassword}
                 >
                     <Input.Password
                         type='password'

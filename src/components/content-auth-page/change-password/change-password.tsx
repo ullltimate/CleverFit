@@ -6,7 +6,7 @@ import { useChangePassordMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
-import { validateMessage, regPassword } from '@constants/validation';
+import { validateMessage, rulesPassword, rulesRepeatPassword } from '@constants/validation';
 import { IChangePassord } from '@tstypes/types';
 
 import './change-password.css';
@@ -63,17 +63,7 @@ export const ChangePassword: React.FC = () => {
                 <Form.Item
                     name='password'
                     help={validateMessage.password}
-                    rules={[
-                        {
-                            validator: (_, value) => {
-                                if (regPassword.test(value)) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject(new Error(validateMessage.password));
-                                }
-                            },
-                        },
-                    ]}
+                    rules={rulesPassword}
                 >
                     <Input.Password
                         type='password'
@@ -84,19 +74,7 @@ export const ChangePassword: React.FC = () => {
                 <Form.Item
                     name='confirmPassword'
                     dependencies={['password']}
-                    rules={[
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject(
-                                        new Error(validateMessage.repeatPassword),
-                                    );
-                                }
-                            },
-                        }),
-                    ]}
+                    rules={rulesRepeatPassword}
                 >
                     <Input.Password
                         type='password'
