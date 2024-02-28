@@ -15,4 +15,5 @@ export const PATHS = {
         ERROR_CHANGE_PASSWORD: '/result/error-change-password',
         SUCCESS_CHANGE_PASSWORD: '/result/success-change-password',
     },
+    FEEDBACKS: '/feedbacks',
 };

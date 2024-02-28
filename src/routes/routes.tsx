@@ -8,6 +8,7 @@ import { CustomLayout } from '@components/layout/layout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
 import { resultData } from '@constants/resultData';
+import { CommentsPage } from '@pages/comments-page';
 
 export const routes = (
     <Routes>
@@ -165,6 +166,7 @@ export const routes = (
                 }
             />
             <Route path={PATHS.MAIN} element={<MainPage />} />
+            <Route path={PATHS.FEEDBACKS} element={<CommentsPage />} />
             <Route path={PATHS.INITIAL} element={<Navigate to={PATHS.AUTH} />} />
         </Route>
     </Routes>

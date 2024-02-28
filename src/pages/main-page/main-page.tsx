@@ -11,6 +11,7 @@ import { PATHS } from '@constants/paths';
 import { ICardInfo } from '@tstypes/types';
 
 import './main-page.css';
+import { CustomBreadcrumb } from '@components/breadcrumb/CustomBreadcrumb';
 
 const { Content } = Layout;
 
@@ -30,6 +31,7 @@ export const MainPage: React.FC = () => {
                 <Layout>
                     <SiderBar />
                     <Layout className='site-layout'>
+                        <CustomBreadcrumb />
                         <Header />
                         <Content style={{ margin: 24 }}>
                             <Card bordered={false} className='content-discription'>

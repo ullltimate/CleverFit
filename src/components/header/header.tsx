@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography, Breadcrumb } from 'antd';
+import { Button, Typography} from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
 import './header.css';
@@ -10,9 +10,6 @@ export const Header: React.FC = () => {
     return (
         <>
             <header className='header'>
-                <Breadcrumb>
-                    <Breadcrumb.Item>Главная</Breadcrumb.Item>
-                </Breadcrumb>
                 <div className='header-wrapper'>
                     <Title className='header-title'>
                         Приветствуем тебя в CleverFit — приложении,
