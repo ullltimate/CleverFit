@@ -1,0 +1,14 @@
+.comment .ant-comment-inner{
+    justify-content: space-evenly;
+    padding: 16px;
+}
+.comment .ant-comment-avatar{
+    text-align: center;
+}
+.comment-autor{
+    max-width: 75px;
+    padding-top: 12px;
+}
+.comment .ant-comment-content{
+    max-width: 966px;
+}
