@@ -1,0 +1,31 @@
+.comments-btns{
+    margin-top: 132px;
+}
+.comments-btns .ant-btn-primary{
+    height: 40px;
+    background: #2F54EB;
+    border-color: #2F54EB;
+}
+.comments-btns .ant-btn-link{
+    color: #2F54EB;
+}
+.comments-list{
+    max-height: 730px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.comments-list::-webkit-scrollbar {
+    width: 0px;
+}
+
+@media screen and (max-width: 500px) {
+    .comments-btns button {
+        width: 100%;
+    }
+    .comments-btns{
+        margin-top: 48px;
+    }
+    .comments-btns .ant-btn-primary{
+        margin-bottom: 16px;
+    }
+}

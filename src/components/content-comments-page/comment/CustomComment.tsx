@@ -3,8 +3,11 @@ import { Comment, Avatar, Tooltip, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import './CustomComment.css';
+import { IFeedbacks } from '@tstypes/feedbacks';
 
-export const CustomComment: React.FC = () => {
+
+
+export const CustomComment: React.FC<IFeedbacks> = ({fullName, imageSrc, message, rating, createdAt}) => {
     return (
         <>
             <div className='comment'>
@@ -13,28 +16,25 @@ export const CustomComment: React.FC = () => {
                     avatar={
                         <>
                             <Avatar
+                                src={imageSrc}
                                 alt='Avatar'
                                 size={42}
                                 icon={<UserOutlined />}
                                 style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
                             />{' '}
-                            <p className='comment-autor'>Вероника Киверова</p>
+                            <p className='comment-autor'>{fullName}</p>
                         </>
                     }
                     content={
                         <p className='comment-text'>
-                            Я очень довольна этим приложением! Оно помогает мне следить за своим
-                            здоровьем и физической формой, предлагая разнообразные упражнения и
-                            питание. Я люблю, что приложение адаптируется к моему уровню и целям, и
-                            дает мне полезные советы и обратную связь. Я рекомендую это приложение
-                            всем, кто хочет улучшить свою жизнь!
+                            {message}
                         </p>
                     }
                     datetime={
                         <>
-                            <Rate disabled defaultValue={3} />
+                            <Rate disabled defaultValue={rating} />
                             <Tooltip>
-                                <span>20.03.2022</span>
+                                <span>{new Date(createdAt).toLocaleDateString('ru')}</span>
                             </Tooltip>
                         </>
                     }
