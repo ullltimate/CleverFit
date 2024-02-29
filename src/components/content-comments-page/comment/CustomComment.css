@@ -3,16 +3,17 @@
     padding: 16px;
 }
 .comment .ant-comment-avatar{
+    width: 175px;
     text-align: center;
     margin-bottom: 12px;
 }
 .comment-autor{
     max-width: 85px;
     padding-top: 12px;
-    margin-bottom: 0;
+    margin: 0 auto;
 }
 .comment .ant-comment-content{
-    max-width: 966px;
+    max-width: 1110px;
 }
 .comment .ant-rate{
     font-size: 16px;
@@ -25,7 +26,7 @@
     margin-bottom: 12px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
     .comment .ant-comment-inner{
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -36,5 +37,8 @@
     }
     .comment .ant-avatar{
         vertical-align: bottom;
+    }
+    .comment .ant-comment-avatar{
+        text-align: left;
     }
 }
