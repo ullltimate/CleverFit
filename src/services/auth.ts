@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { headers, urlAPI } from '@constants/api';
+import { urlAPI } from '@constants/api';
 import { 
     IResponseLogin, 
     IRequestLogin, 
@@ -19,7 +19,6 @@ export const authAPI = createApi({
             query: (body) => ({
                 url: '/auth/login',
                 method: 'POST',
-                headers: headers,
                 body,
             }),
         }),
@@ -27,7 +26,6 @@ export const authAPI = createApi({
             query: (body) => ({
                 url: '/auth/registration',
                 method: 'POST',
-                headers: headers,
                 body,
             }),
         }),
@@ -35,7 +33,6 @@ export const authAPI = createApi({
             query: (email) => ({
                 url: '/auth/check-email',
                 method: 'POST',
-                headers: headers,
                 body: email,
             }),
         }),
@@ -43,7 +40,6 @@ export const authAPI = createApi({
             query: (body) => ({
                 url: '/auth/confirm-email',
                 method: 'POST',
-                headers: headers,
                 body,
                 credentials: 'include',
             }),
@@ -52,7 +48,6 @@ export const authAPI = createApi({
             query: (body) => ({
                 url: '/auth/change-password',
                 method: 'POST',
-                headers: headers,
                 body,
                 credentials: 'include',
             }),
