@@ -1,32 +1,62 @@
-import React, { useState } from 'react';
-import { Button, Modal, Rate } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Modal, Rate, Result } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import TextArea from 'antd/lib/input/TextArea';
 import { CustomComment } from '@components/content-comments-page/comment/CustomComment';
-import { useGetFeedbacksQuery } from '@services/feedbacks';
+import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
 
 import './comments-page.css';
+import { IFeedbacks } from '@tstypes/feedbacks';
 
 export const CommentsPage: React.FC = () => {
     const { data } = useGetFeedbacksQuery();
+    const [reviews, setReviews] = useState<IFeedbacks[]>();
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => setIsModalOpen(true);
-    const handleOk = () => setIsModalOpen(false);
-    const handleCancel = () => setIsModalOpen(false);
+    const [isModalReview, setIsModalReview] = useState(false);
+    const [isModalResult, setIsModalResult] = useState(false);
+    const showModalReview = () => setIsModalReview(true);
+    const handleCancel = () => setIsModalReview(false);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+    const [review, setReview] = useState({ message: '', rating: 0 });
+    const [createReview] = useCreateReviewMutation();
+    const [isSuccess, setIsSuccess] = useState(false);
 
-    const changeRate = (e: number) => {
-        e > 0 ? setIsSubmitDisabled(false) : setIsSubmitDisabled(true)
-    }
+    const createComment = async () => {
+        await createReview(review)
+            .unwrap()
+            .then(() => {
+                setReview({ message: '', rating: 0 });
+                setIsModalReview(false);
+                setIsSuccess(true);
+                setIsModalResult(true);
+            })
+            .catch(() => {
+                setIsSuccess(false);
+                setIsModalReview(false);
+                setIsModalResult(true);
+            });
+    };
+
+    const changeRate = (value: number) => {
+        value > 0 ? setIsSubmitDisabled(false) : setIsSubmitDisabled(true);
+    };
+
+    useEffect(() => {
+        data &&
+            setReviews(
+                [...data].sort(
+                    (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+                ),
+            );
+    }, [data]);
 
     return (
         <>
             <Content style={{ margin: 24 }}>
                 <div className='comments-list'>
-                    {data
-                        ? showAllComments
-                            ? data.map((e) => (
+                    {reviews &&
+                        (showAllComments
+                            ? reviews.map((e: IFeedbacks) => (
                                   <CustomComment
                                       key={e.id}
                                       createdAt={e.createdAt}
@@ -36,9 +66,9 @@ export const CommentsPage: React.FC = () => {
                                       message={e.message}
                                   />
                               ))
-                            : data
+                            : reviews
                                   .slice(0, 4)
-                                  .map((e) => (
+                                  .map((e: IFeedbacks) => (
                                       <CustomComment
                                           key={e.id}
                                           createdAt={e.createdAt}
@@ -47,11 +77,10 @@ export const CommentsPage: React.FC = () => {
                                           rating={e.rating}
                                           message={e.message}
                                       />
-                                  ))
-                        : ''}
+                                  )))}
                 </div>
                 <div className='comments-btns'>
-                    <Button type='primary' onClick={showModal} data-test-id='write-review'>
+                    <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
                         Написать отзыв
                     </Button>
                     <Button
@@ -67,7 +96,7 @@ export const CommentsPage: React.FC = () => {
                 title='Ваш отзыв'
                 centered
                 maskStyle={{ background: '#799CD41A', backdropFilter: 'blur(5px)' }}
-                open={isModalOpen}
+                open={isModalReview}
                 onCancel={handleCancel}
                 footer={[
                     <Button
@@ -75,21 +104,76 @@ export const CommentsPage: React.FC = () => {
                         key='submit'
                         htmlType='submit'
                         disabled={isSubmitDisabled}
-                        onClick={handleOk}
+                        onClick={createComment}
                         data-test-id='new-review-submit-button'
                     >
                         Опубликовать
                     </Button>,
                 ]}
             >
-                <Rate
-                    onChange={changeRate}
-                    allowClear
-                ></Rate>
-                <TextArea
-                    placeholder='Autosize height with minimum and maximum number of lines'
-                    autoSize={{ minRows: 2, maxRows: 10 }}
-                />
+                <Form
+                    onValuesChange={(_, allValues) => setReview(allValues)}
+                    initialValues={review}
+                >
+                    <Form.Item name='rating'>
+                        <Rate onChange={changeRate} allowClear></Rate>
+                    </Form.Item>
+                    <Form.Item name='message'>
+                        <TextArea
+                            placeholder='Autosize height with minimum and maximum number of lines'
+                            autoSize={{ minRows: 2, maxRows: 10 }}
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <Modal
+                open={isModalResult}
+                footer={null}
+                centered
+                closable={false}
+                maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
+            >
+                {isSuccess ? (
+                    <div className='modal-success'>
+                        <Result
+                            status='success'
+                            title='Отзыв успешно опубликован'
+                            extra={
+                                <Button type='primary' onClick={() => setIsModalResult(false)}>
+                                    Отлично
+                                </Button>
+                            }
+                        />
+                    </div>
+                ) : (
+                    <div className='modal-error'>
+                        <Result
+                            status='error'
+                            title='Данные не сохранились'
+                            subTitle='Что-то пошло не так. Попробуйте ещё раз.'
+                            extra={[
+                                <Button
+                                    type='primary'
+                                    key='newReview'
+                                    onClick={() => {
+                                        setIsModalResult(false);
+                                        setIsModalReview(true);
+                                    }}
+                                    data-test-id='write-review-not-saved-modal'
+                                >
+                                    Написать отзыв
+                                </Button>,
+                                <Button
+                                    type='text'
+                                    key='close'
+                                    onClick={() => setIsModalResult(false)}
+                                >
+                                    Закрыть
+                                </Button>,
+                            ]}
+                        />
+                    </div>
+                )}
             </Modal>
         </>
     );
