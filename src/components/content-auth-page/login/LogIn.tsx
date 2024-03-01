@@ -5,6 +5,7 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
+import { saveToken } from '@redux/reducers/tokenSlice';
 import { Loader } from '@components/loader/Loader';
 import { regEmail, rulesPassword, rulesEmail } from '@constants/validation';
 import { PATHS } from '@constants/paths';
@@ -29,7 +30,8 @@ export const LogIn: React.FC = () => {
         login({ email: values.email, password: values.password })
             .unwrap()
             .then((res) => {
-                values.remember ? localStorage.setItem('token', res.accessToken) : '';
+                values.remember ? localStorage.setItem('token', res.accessToken) : dispatch(saveToken(res.accessToken));
+                dispatch(saveToken(res.accessToken));
                 dispatch(increment({ email: values.email, password: values.password }));
                 navigate(PATHS.MAIN);
             })
