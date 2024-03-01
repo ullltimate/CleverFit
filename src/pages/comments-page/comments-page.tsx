@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal, Rate, Result } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import TextArea from 'antd/lib/input/TextArea';
-import { CustomComment } from '@components/content-comments-page/comment/CustomComment';
 import { Loader } from '@components/loader/Loader';
+import { AllComments } from '@components/content-comments-page/allReviews/AllReviews';
 import { EmptyComments } from '@components/content-comments-page/empty/EmptyComments';
 import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
 import { IFeedbacks } from '@tstypes/feedbacks';
@@ -17,6 +17,7 @@ export const CommentsPage: React.FC = () => {
     const [isModalReview, setIsModalReview] = useState(false);
     const [isModalResult, setIsModalResult] = useState(false);
     const showModalReview = () => setIsModalReview(true);
+    const isShowAllComments = () => setShowAllComments(!showAllComments);
     const handleCancel = () => setIsModalReview(false);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [review, setReview] = useState({ message: '', rating: 0 });
@@ -56,46 +57,18 @@ export const CommentsPage: React.FC = () => {
         <>
             <Content style={{ margin: 24 }}>
                 {isFetching && <Loader />}
-                <EmptyComments showModalReview={showModalReview}/>
-                <div className='comments-list'>
-                    {reviews &&
-                        (showAllComments
-                            ? reviews.map((e: IFeedbacks) => (
-                                  <CustomComment
-                                      key={e.id}
-                                      createdAt={e.createdAt}
-                                      fullName={e.fullName}
-                                      imageSrc={e.imageSrc}
-                                      rating={e.rating}
-                                      message={e.message}
-                                  />
-                              ))
-                            : reviews
-                                  .slice(0, 4)
-                                  .map((e: IFeedbacks) => (
-                                      <CustomComment
-                                          key={e.id}
-                                          createdAt={e.createdAt}
-                                          fullName={e.fullName}
-                                          imageSrc={e.imageSrc}
-                                          rating={e.rating}
-                                          message={e.message}
-                                      />
-                                  )))
-                    }
-                </div>
-                <div className='comments-btns'>
-                    <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
-                        Написать отзыв
-                    </Button>
-                    <Button
-                        type='link'
-                        onClick={() => setShowAllComments(!showAllComments)}
-                        data-test-id='all-reviews-button'
-                    >
-                        {showAllComments ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
-                    </Button>
-                </div>
+                {reviews &&
+                    (reviews.length === 0 ? (
+                        <EmptyComments showModalReview={showModalReview} />
+                    ) : (
+                        <AllComments
+                            showModalReview={showModalReview}
+                            reviews={reviews}
+                            showAllComments={showAllComments}
+                            isShowAllComments={isShowAllComments}
+                        />
+                    ))
+                }
             </Content>
             <Modal
                 title='Ваш отзыв'
