@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Button, Card, Modal, Result } from 'antd';
+import { Row, Col, Button, Card } from 'antd';
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { Loader } from '@components/loader/Loader';
 import { useLazyGetFeedbacksQuery } from '@services/feedbacks';
@@ -13,20 +13,16 @@ const { Meta } = Card;
 export const Footer: React.FC = () => {
     const navigate = useNavigate();
     const [getFeedbacks, { isLoading }] = useLazyGetFeedbacksQuery();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => setIsModalOpen(true);
-    const handleCancel = () => setIsModalOpen(false);
 
-    const showReviews = () => {
-        getFeedbacks()
+    const showReviews = async() => {
+        await getFeedbacks()
             .unwrap()
             .then(() => navigate(PATHS.FEEDBACKS))
             .catch((error) => {
+                navigate(PATHS.FEEDBACKS);
                 if (error.status === 403) {
                     localStorage.removeItem('token');
                     navigate(PATHS.AUTH);
-                } else {
-                    showModal();
                 }
             });
     };
@@ -62,26 +58,6 @@ export const Footer: React.FC = () => {
                         </Card>
                     </Col>
                 </Row>
-                <Modal
-                    open={isModalOpen}
-                    footer={null}
-                    centered
-                    closable={false}
-                    maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
-                >
-                    <div className='footer-modal'>
-                        <Result
-                            status='500'
-                            title='Что-то пошло не так'
-                            subTitle='Произошла ошибка, попробуйте ещё раз.'
-                            extra={
-                                <Button type='primary' onClick={handleCancel}>
-                                    Назад
-                                </Button>
-                            }
-                        />
-                    </div>
-                </Modal>
             </footer>
         </>
     );

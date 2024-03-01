@@ -9,13 +9,19 @@ import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbac
 import { IFeedbacks } from '@tstypes/feedbacks';
 
 import './comments-page.css';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '@constants/paths';
 
 export const CommentsPage: React.FC = () => {
-    const { data, isFetching } = useGetFeedbacksQuery();
+    const navigate = useNavigate()
+    const { data, isFetching, error } = useGetFeedbacksQuery();
     const [reviews, setReviews] = useState<IFeedbacks[]>();
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
     const [isModalReview, setIsModalReview] = useState(false);
     const [isModalResult, setIsModalResult] = useState(false);
+    const [isModalError, setIsModalError] = useState(false);
+    const showModalError = () => setIsModalError(true);
+    const handleCancelError = () => navigate(PATHS.MAIN);
     const showModalReview = () => setIsModalReview(true);
     const isShowAllComments = () => setShowAllComments(!showAllComments);
     const handleCancel = () => setIsModalReview(false);
@@ -45,13 +51,14 @@ export const CommentsPage: React.FC = () => {
     };
 
     useEffect(() => {
+        error && showModalError();
         data &&
             setReviews(
                 [...data].sort(
                     (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
                 ),
             );
-    }, [data]);
+    }, [data, error]);
 
     return (
         <>
@@ -67,8 +74,7 @@ export const CommentsPage: React.FC = () => {
                             showAllComments={showAllComments}
                             isShowAllComments={isShowAllComments}
                         />
-                    ))
-                }
+                    ))}
             </Content>
             <Modal
                 title='Ваш отзыв'
@@ -152,6 +158,26 @@ export const CommentsPage: React.FC = () => {
                         />
                     </div>
                 )}
+            </Modal>
+            <Modal
+                open={isModalError}
+                footer={null}
+                centered
+                closable={false}
+                maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
+            >
+                <div className='comments-modal'>
+                    <Result
+                        status='500'
+                        title='Что-то пошло не так'
+                        subTitle='Произошла ошибка, попробуйте ещё раз.'
+                        extra={
+                            <Button type='primary' onClick={handleCancelError}>
+                                Назад
+                            </Button>
+                        }
+                    />
+                </div>
             </Modal>
         </>
     );

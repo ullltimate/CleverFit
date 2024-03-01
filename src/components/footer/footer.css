@@ -26,19 +26,7 @@
 .footer .ant-btn-link:hover{
     color: #597EF7;
 }
-.footer-modal .ant-result{
-    padding: 40px 8px;
-}
-.footer-modal .ant-result-title{
-    line-height: 31.2px;
-}
-.footer-modal .ant-result-subtitle{
-    line-height: 18.2px;
-}
-.footer-modal .ant-btn-primary{
-    background: #2F54EB;
-    background-color: #2F54EB;
-}
+
 @media screen and (max-width: 850px) {
     .footer {
         margin: 237px 24px 42px;
