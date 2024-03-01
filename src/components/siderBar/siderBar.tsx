@@ -13,6 +13,8 @@ import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { ExitIcon } from '@components/icons/exitIcon';
 
 import './siderBar.css';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '@constants/paths';
 
 const { Sider } = Layout;
 
@@ -21,6 +23,7 @@ export const SiderBar: React.FC = () => {
     const [collapsed, setCollapsed] = useState<boolean>(false);
     const [mobileWidth, setMobileWidth] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
     function changeBreakpoint(broken: boolean): void {
         if (broken) {
@@ -39,6 +42,7 @@ export const SiderBar: React.FC = () => {
     const logOut = () => {
         localStorage.removeItem('token');
         dispatch(increment({email: '', password: ''}));
+        navigate(PATHS.AUTH);
     }
 
     function onClick({key}: key){
