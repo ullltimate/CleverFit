@@ -3,13 +3,15 @@ import { Button, Form, Modal, Rate, Result } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import TextArea from 'antd/lib/input/TextArea';
 import { CustomComment } from '@components/content-comments-page/comment/CustomComment';
+import { Loader } from '@components/loader/Loader';
+import { EmptyComments } from '@components/content-comments-page/empty/EmptyComments';
 import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
-
-import './comments-page.css';
 import { IFeedbacks } from '@tstypes/feedbacks';
 
+import './comments-page.css';
+
 export const CommentsPage: React.FC = () => {
-    const { data } = useGetFeedbacksQuery();
+    const { data, isFetching } = useGetFeedbacksQuery();
     const [reviews, setReviews] = useState<IFeedbacks[]>();
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
     const [isModalReview, setIsModalReview] = useState(false);
@@ -53,6 +55,8 @@ export const CommentsPage: React.FC = () => {
     return (
         <>
             <Content style={{ margin: 24 }}>
+                {isFetching && <Loader />}
+                <EmptyComments showModalReview={showModalReview}/>
                 <div className='comments-list'>
                     {reviews &&
                         (showAllComments
@@ -77,7 +81,8 @@ export const CommentsPage: React.FC = () => {
                                           rating={e.rating}
                                           message={e.message}
                                       />
-                                  )))}
+                                  )))
+                    }
                 </div>
                 <div className='comments-btns'>
                     <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
