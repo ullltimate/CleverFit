@@ -1,15 +1,15 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AuthPage } from '@pages/auth-page';
 import { MainPage } from '@pages/main-page';
+import { CommentsPage } from '@pages/comments-page';
 import { ChangePassword } from '@components/content-auth-page/change-password/change-password';
 import { ConfirmEmail } from '@components/content-auth-page/confirm-email/confirm-email';
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
 import { CustomLayout } from '@components/layout/layout';
+import { MainLayout } from '@components/layout/MainLayout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
 import { resultData } from '@constants/resultData';
-import { CommentsPage } from '@pages/comments-page';
-import { MainLayout } from '@components/layout/MainLayout';
 
 export const routes = (
     <Routes>
@@ -170,7 +170,6 @@ export const routes = (
                 <Route path={PATHS.MAIN} element={<MainPage />} />
                 <Route path={PATHS.FEEDBACKS} element={<CommentsPage />} />
             </Route>
-            <Route path={PATHS.INITIAL} element={<Navigate to={PATHS.AUTH} />} />
         </Route>
     </Routes>
 );

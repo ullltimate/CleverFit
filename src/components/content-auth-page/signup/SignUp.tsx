@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Grid } from 'antd';
-import { GooglePlusOutlined } from '@ant-design/icons';
+import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { increment } from '@redux/reducers/userSlice';
 import { useSignupMutation } from '@services/auth';
 import { Loader } from '@components/loader/Loader';
+import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
 import { rulesEmail, rulesPassword, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { PATHS } from '@constants/paths';
 import { IValuesSignupForm } from '@tstypes/types';
 
 import './signUp.css';
-
-const { useBreakpoint } = Grid;
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
@@ -22,7 +20,6 @@ export const SignUp: React.FC = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.userReducer);
-    const {xs} = useBreakpoint();
 
     const onFinish = useCallback(
         (values: IValuesSignupForm) => {
@@ -104,11 +101,7 @@ export const SignUp: React.FC = () => {
                         </Button>
                     )}
                 </Form.Item>
-                <Form.Item>
-                    <Button type='text' className='login-form-button'>
-                        {!xs && <GooglePlusOutlined />} Войти через Google
-                    </Button>
-                </Form.Item>
+                <ButtonGoogle />
             </Form>
         </>
     );

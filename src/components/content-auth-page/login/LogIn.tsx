@@ -1,20 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Form, Input, Checkbox, Button, Grid } from 'antd';
-import { GooglePlusOutlined } from '@ant-design/icons';
+import { Form, Input, Checkbox, Button} from 'antd';
+import { Rule } from 'antd/lib/form';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
 import { increment } from '@redux/reducers/userSlice';
 import { saveToken } from '@redux/reducers/tokenSlice';
 import { Loader } from '@components/loader/Loader';
+import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
 import { regEmail, rulesPassword, rulesEmail } from '@constants/validation';
 import { PATHS } from '@constants/paths';
 import { IValuesLoginForm } from '@tstypes/types';
 
 import './logIn.css';
-import { Rule } from 'antd/lib/form';
-
-const { useBreakpoint } = Grid;
 
 export const LogIn: React.FC = () => {
     const [forgotDisabled, setForgotDisabled] = useState<boolean>(true);
@@ -24,13 +22,14 @@ export const LogIn: React.FC = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.userReducer);
-    const {xs} = useBreakpoint();
 
     const onFinish = (values: IValuesLoginForm) => {
         login({ email: values.email, password: values.password })
             .unwrap()
             .then((res) => {
-                values.remember ? localStorage.setItem('token', res.accessToken) : dispatch(saveToken(res.accessToken));
+                values.remember
+                    ? localStorage.setItem('token', res.accessToken)
+                    : dispatch(saveToken(res.accessToken));
                 dispatch(saveToken(res.accessToken));
                 dispatch(increment({ email: values.email, password: values.password }));
                 navigate(PATHS.MAIN);
@@ -69,11 +68,7 @@ export const LogIn: React.FC = () => {
     return (
         <>
             {(isLoadingLogin || isLoadingEmail) && <Loader />}
-            <Form
-                name='normal_login'
-                className='login-form'
-                onFinish={onFinish}
-            >
+            <Form name='normal_login' className='login-form' onFinish={onFinish}>
                 <Form.Item
                     name='email'
                     rules={[
@@ -92,10 +87,7 @@ export const LogIn: React.FC = () => {
                 >
                     <Input addonBefore='e-mail' data-test-id='login-email' />
                 </Form.Item>
-                <Form.Item
-                    name='password'
-                    rules={rulesPassword}
-                >
+                <Form.Item name='password' rules={rulesPassword}>
                     <Input.Password
                         type='password'
                         placeholder='Пароль'
@@ -128,11 +120,7 @@ export const LogIn: React.FC = () => {
                     </Button>
                 </Form.Item>
 
-                <Form.Item>
-                    <Button type='text' className='login-form-button'>
-                        {!xs && <GooglePlusOutlined />} Войти через Google
-                    </Button>
-                </Form.Item>
+                <ButtonGoogle />
             </Form>
         </>
     );
