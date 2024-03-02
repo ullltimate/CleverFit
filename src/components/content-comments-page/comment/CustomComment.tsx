@@ -1,6 +1,6 @@
 import React from 'react';
 import { Comment, Avatar, Tooltip, Rate } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { StarTwoTone, UserOutlined } from '@ant-design/icons';
 
 import './CustomComment.css';
 import { IFeedbacks } from '@tstypes/feedbacks';
@@ -32,7 +32,7 @@ export const CustomComment: React.FC<IFeedbacks> = ({fullName, imageSrc, message
                     }
                     datetime={
                         <>
-                            <Rate disabled defaultValue={rating} />
+                            <Rate disabled defaultValue={rating} character={<StarTwoTone />}/>
                             <Tooltip>
                                 <span>{new Date(createdAt).toLocaleDateString('ru')}</span>
                             </Tooltip>

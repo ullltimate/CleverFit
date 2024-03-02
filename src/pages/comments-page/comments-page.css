@@ -1,15 +1,15 @@
-.comments-btns{
+.comments-btns {
     margin-top: 132px;
 }
-.comments-btns .ant-btn-primary{
+.comments-btns .ant-btn-primary {
     height: 40px;
-    background: #2F54EB;
-    border-color: #2F54EB;
+    background: #2f54eb;
+    border-color: #2f54eb;
 }
-.comments-btns .ant-btn-link{
-    color: #2F54EB;
+.comments-btns .ant-btn-link {
+    color: #2f54eb;
 }
-.comments-list{
+.comments-list {
     max-height: 730px;
     overflow-y: auto;
     scrollbar-width: none;
@@ -18,28 +18,78 @@
     width: 0px;
 }
 
-.comments-modal .ant-result{
+.comments-modal .ant-result {
     padding: 40px 8px;
 }
-.comments-modal .ant-result-title{
+.comments-modal .ant-result-title {
     line-height: 31.2px;
 }
-.comments-modal .ant-result-subtitle{
+.comments-modal .ant-result-subtitle {
     line-height: 18.2px;
 }
-.comments-modal .ant-btn-primary{
-    background: #2F54EB;
-    background-color: #2F54EB;
+.comments-modal .ant-btn-primary {
+    background: #2f54eb;
+    background-color: #2f54eb;
+}
+.modal-form .ant-rate-star-full .anticon svg path:last-child,
+.modal-form .ant-rate-star-full .anticon svg path:first-child,
+.modal-form .ant-rate-star-zero .anticon svg path:last-child,
+.modal-form .ant-rate-star-focused .anticon svg path:last-child,
+.modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:last-child,
+.modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:first-child {
+    fill: #faad14;
+}
+.modal-form .ant-rate-star-zero .anticon svg path:first-child,
+.modal-form .ant-rate-star-focused .anticon svg path:first-child {
+    fill: transparent;
 }
 
-@media screen and (max-width: 500px) {
+.modal-error .ant-btn-text,
+.modal-error .ant-btn-primary {
+    width: 180px;
+}
+.modal-error .ant-btn-text {
+    height: 40px;
+    border: 1px solid #d9d9d9;
+}
+
+.modal-error .ant-result {
+    padding: 40px 32px;
+}
+
+.modal-success .ant-btn-primary{
+    width: 100%;
+}
+
+.modal-success .ant-result {
+    padding: 40px 52px;
+}
+
+
+@media screen and (max-width: 510px) {
     .comments-btns button {
         width: 100%;
     }
-    .comments-btns{
+    .comments-btns {
         margin-top: 48px;
     }
-    .comments-btns .ant-btn-primary{
+    .comments-btns .ant-btn-primary {
         margin-bottom: 16px;
+    }
+    .modal-error .ant-btn-text,
+    .modal-error .ant-btn-primary {
+        width: 144px;
+    }
+    .modal-error .ant-result {
+        padding: 8px 0px;
+    }
+    .ant-modal-body{
+        padding: 24px 16px !important;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .modal-success .ant-result {
+        padding: 8px 0px;
     }
 }

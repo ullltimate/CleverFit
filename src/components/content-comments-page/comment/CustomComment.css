@@ -29,6 +29,15 @@
     margin-bottom: 12px;
 }
 
+.comment .ant-rate-star-full .anticon svg path:last-child,
+.comment .ant-rate-star-full .anticon svg path:first-child,
+.comment .ant-rate-star-zero .anticon svg path:last-child{
+    fill: #FAAD14
+}
+.comment .ant-rate-star-zero .anticon svg path:first-child{
+    fill: transparent
+}
+
 @media screen and (max-width: 900px) {
     .comment .ant-comment-inner{
         flex-wrap: wrap;

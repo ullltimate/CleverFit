@@ -11,6 +11,7 @@ import { IFeedbacks } from '@tstypes/feedbacks';
 import './comments-page.css';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '@constants/paths';
+import { StarTwoTone } from '@ant-design/icons';
 
 export const CommentsPage: React.FC = () => {
     const navigate = useNavigate()
@@ -27,7 +28,7 @@ export const CommentsPage: React.FC = () => {
     const handleCancel = () => setIsModalReview(false);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [review, setReview] = useState({ message: '', rating: 0 });
-    const [createReview] = useCreateReviewMutation();
+    const [createReview, {isLoading}] = useCreateReviewMutation();
     const [isSuccess, setIsSuccess] = useState(false);
 
     const createComment = async () => {
@@ -63,7 +64,7 @@ export const CommentsPage: React.FC = () => {
     return (
         <>
             <Content style={{ margin: 24 }}>
-                {isFetching && <Loader />}
+                {(isFetching || isLoading) && <Loader />}
                 {reviews &&
                     (reviews.length === 0 ? (
                         <EmptyComments showModalReview={showModalReview} />
@@ -95,20 +96,22 @@ export const CommentsPage: React.FC = () => {
                     </Button>,
                 ]}
             >
-                <Form
-                    onValuesChange={(_, allValues) => setReview(allValues)}
-                    initialValues={review}
-                >
-                    <Form.Item name='rating'>
-                        <Rate onChange={changeRate} allowClear></Rate>
-                    </Form.Item>
-                    <Form.Item name='message'>
-                        <TextArea
-                            placeholder='Autosize height with minimum and maximum number of lines'
-                            autoSize={{ minRows: 2, maxRows: 10 }}
-                        />
-                    </Form.Item>
-                </Form>
+                <div className='modal-form'>
+                    <Form
+                        onValuesChange={(_, allValues) => setReview(allValues)}
+                        initialValues={review}
+                    >
+                        <Form.Item name='rating'>
+                            <Rate onChange={changeRate} allowClear character={<StarTwoTone />}></Rate>
+                        </Form.Item>
+                        <Form.Item name='message'>
+                            <TextArea
+                                placeholder='Autosize height with minimum and maximum number of lines'
+                                autoSize={{ minRows: 2, maxRows: 10 }}
+                            />
+                        </Form.Item>
+                    </Form>
+                </div>
             </Modal>
             <Modal
                 open={isModalResult}
