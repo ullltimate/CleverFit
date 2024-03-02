@@ -11,7 +11,6 @@ import './main-page.css';
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
-
     return (
         <>
             <Header />

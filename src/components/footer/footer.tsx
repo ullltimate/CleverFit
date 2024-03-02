@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
     const navigate = useNavigate();
     const [getFeedbacks, { isLoading }] = useLazyGetFeedbacksQuery();
 
-    const showReviews = async() => {
+    const showReviews = async () => {
         await getFeedbacks()
             .unwrap()
             .then(() => navigate(PATHS.FEEDBACKS))

@@ -23,7 +23,7 @@ export const SiderBar: React.FC = () => {
     const [collapsed, setCollapsed] = useState<boolean>(false);
     const [mobileWidth, setMobileWidth] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     function changeBreakpoint(broken: boolean): void {
         if (broken) {
@@ -36,17 +36,17 @@ export const SiderBar: React.FC = () => {
     }
 
     type key = {
-        key: string,
-    }
+        key: string;
+    };
 
     const logOut = () => {
         localStorage.removeItem('token');
-        dispatch(increment({email: '', password: ''}));
+        dispatch(increment({ email: '', password: '' }));
         navigate(PATHS.AUTH);
-    }
+    };
 
-    function onClick({key}: key){
-        switch(key){
+    function onClick({ key }: key) {
+        switch (key) {
             case 'exit':
                 logOut();
         }

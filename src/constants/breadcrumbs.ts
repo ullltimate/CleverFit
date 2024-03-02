@@ -1,4 +1,4 @@
-import { PATHS } from "./paths";
+import { PATHS } from './paths';
 
 export const routes = {
     main: [
@@ -14,5 +14,5 @@ export const routes = {
         {
             name: 'Отзывы пользователей',
         },
-    ]
+    ],
 };

@@ -2,7 +2,6 @@ import { Rule, RuleObject } from 'antd/lib/form';
 import { IValidationMessage, fieldValue } from '@tstypes/validation';
 import { IRegExp } from '@tstypes/validation';
 
-
 export const validateMessage: IValidationMessage = {
     require: 'Обязательное поле!',
     email: 'Example@gmail.com',
@@ -20,27 +19,23 @@ export const rulesPassword = [
             if (regPassword.test(value)) {
                 return Promise.resolve();
             } else {
-                return Promise.reject(
-                    new Error(validateMessage.password)
-                );
+                return Promise.reject(new Error(validateMessage.password));
             }
         },
     },
-]
+];
 
 export const rulesRepeatPassword = [
-    ( {getFieldValue} : fieldValue): RuleObject => ({
+    ({ getFieldValue }: fieldValue): RuleObject => ({
         validator(_: Rule, value: string): Promise<void> {
             if (getFieldValue('password') === value) {
                 return Promise.resolve();
             } else {
-                return Promise.reject(
-                    new Error(validateMessage.repeatPassword),
-                );
+                return Promise.reject(new Error(validateMessage.repeatPassword));
             }
         },
     }),
-]
+];
 
 export const rulesEmail: Rule[] = [
     {
@@ -51,4 +46,4 @@ export const rulesEmail: Rule[] = [
         type: 'email',
         message: validateMessage.email,
     },
-]
+];

@@ -1,19 +1,23 @@
 .comments-btns {
     margin-top: 132px;
 }
+
 .comments-btns .ant-btn-primary {
     height: 40px;
     background: #2f54eb;
     border-color: #2f54eb;
 }
+
 .comments-btns .ant-btn-link {
     color: #2f54eb;
 }
+
 .comments-list {
     max-height: 730px;
     overflow-y: auto;
     scrollbar-width: none;
 }
+
 .comments-list::-webkit-scrollbar {
     width: 0px;
 }
@@ -21,6 +25,7 @@
 .comments-modal .ant-result {
     padding: 40px 8px;
 }
+
 .comments-modal .ant-result-title {
     line-height: 31.2px;
 }
@@ -31,6 +36,7 @@
     background: #2f54eb;
     background-color: #2f54eb;
 }
+
 .modal-form .ant-rate-star-full .anticon svg path:last-child,
 .modal-form .ant-rate-star-full .anticon svg path:first-child,
 .modal-form .ant-rate-star-zero .anticon svg path:last-child,
@@ -57,7 +63,7 @@
     padding: 40px 32px;
 }
 
-.modal-success .ant-btn-primary{
+.modal-success .ant-btn-primary {
     width: 100%;
 }
 
@@ -65,14 +71,15 @@
     padding: 40px 52px;
 }
 
-
 @media screen and (max-width: 510px) {
     .comments-btns button {
         width: 100%;
     }
+
     .comments-btns {
         margin-top: 48px;
     }
+
     .comments-btns .ant-btn-primary {
         margin-bottom: 16px;
     }
@@ -80,10 +87,11 @@
     .modal-error .ant-btn-primary {
         width: 144px;
     }
+
     .modal-error .ant-result {
         padding: 8px 0px;
     }
-    .ant-modal-body{
+    .ant-modal-body {
         padding: 24px 16px !important;
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography} from 'antd';
+import { Button, Typography } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
 import './header.css';

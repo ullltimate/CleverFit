@@ -13,7 +13,7 @@ export const MainLayout: React.FC = () => {
     useEffect(() => {
         user.email === '' && !localStorage.getItem('token') ? navigate(PATHS.AUTH) : '';
     }, [navigate, user.email]);
-    
+
     return (
         <>
             <div className='main-wrapper wrapper'>

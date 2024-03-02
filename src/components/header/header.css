@@ -2,23 +2,29 @@
     background: #f0f5ff;
     padding: 0px 24px 16px;
 }
+
 .header-wrapper {
     display: flex;
     justify-content: space-between;
 }
+
 .header-wrapper .header-title {
     max-width: 1050px;
     margin-bottom: 6px;
 }
+
 .header-btn {
     text-align: center;
 }
+
 .header-wrapper .ant-btn {
     padding: 4px 5px;
 }
+
 .ant-btn .header-btn__icon {
     display: inline-block;
 }
+
 .ant-btn .header-btn__text {
     display: inline-block;
 }
@@ -30,6 +36,7 @@
         line-height: 31px;
         margin-bottom: 2px;
     }
+
     .ant-btn .header-btn__icon {
         display: none;
     }
@@ -39,18 +46,22 @@
     .header-wrapper {
         margin-top: 6px;
     }
+
     .header-wrapper .header-title {
         font-size: 20px;
         line-height: 26px;
     }
+
     .header-wrapper .ant-btn {
         background: #fff;
         border-radius: 50%;
         padding: 4px 7px;
     }
+
     .ant-btn .header-btn__icon {
         display: inline-block;
     }
+    
     .ant-btn .header-btn__text {
         display: none;
     }

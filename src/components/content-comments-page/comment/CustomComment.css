@@ -1,56 +1,69 @@
-.comment{
+.comment {
     margin-bottom: 20px;
 }
-.comment .ant-comment-inner{
+
+.comment .ant-comment-inner {
     justify-content: space-evenly;
     padding: 16px;
 }
-.comment .ant-comment-avatar{
+
+.comment .ant-comment-avatar {
     width: 175px;
     text-align: center;
     margin-bottom: 12px;
 }
-.comment-autor{
+
+.comment-autor {
     max-width: 85px;
     padding-top: 12px;
     margin: 0 auto;
 }
-.comment .ant-comment-content{
+
+.comment .ant-comment-content {
     max-width: 1110px;
 }
-.comment .ant-rate{
+
+.comment .ant-rate {
     font-size: 16px;
     margin-right: 16px;
 }
-.comment-text{
-    color:  #8C8C8C;
+
+.comment-text {
+    color: #8c8c8c;
 }
-.comment .ant-comment-content-author{
+
+.comment .ant-comment-content-author {
     margin-bottom: 12px;
 }
 
 .comment .ant-rate-star-full .anticon svg path:last-child,
 .comment .ant-rate-star-full .anticon svg path:first-child,
-.comment .ant-rate-star-zero .anticon svg path:last-child{
-    fill: #FAAD14
+.comment .ant-rate-star-zero .anticon svg path:last-child {
+    fill: #faad14;
 }
-.comment .ant-rate-star-zero .anticon svg path:first-child{
-    fill: transparent
+
+.comment .ant-rate-star-zero .anticon svg path:first-child {
+    fill: transparent;
 }
 
 @media screen and (max-width: 900px) {
-    .comment .ant-comment-inner{
+    
+    .comment .ant-comment-inner {
         flex-wrap: wrap;
         justify-content: flex-start;
     }
-    .comment-autor{
+
+    .comment-autor {
         display: inline-block;
         padding: 0 0 0 16px;
     }
-    .comment .ant-avatar{
+
+    .comment .ant-avatar {
         vertical-align: bottom;
     }
-    .comment .ant-comment-avatar{
+
+    .comment .ant-comment-avatar {
         text-align: left;
     }
+
 }

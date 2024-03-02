@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Modal, Rate, Result } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import TextArea from 'antd/lib/input/TextArea';
+import { StarTwoTone } from '@ant-design/icons';
 import { Loader } from '@components/loader/Loader';
 import { AllComments } from '@components/content-comments-page/allReviews/AllReviews';
 import { EmptyComments } from '@components/content-comments-page/empty/EmptyComments';
 import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
+import { PATHS } from '@constants/paths';
 import { IFeedbacks } from '@tstypes/feedbacks';
 
 import './comments-page.css';
-import { useNavigate } from 'react-router-dom';
-import { PATHS } from '@constants/paths';
-import { StarTwoTone } from '@ant-design/icons';
 
 export const CommentsPage: React.FC = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { data, isFetching, error } = useGetFeedbacksQuery();
     const [reviews, setReviews] = useState<IFeedbacks[]>();
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export const CommentsPage: React.FC = () => {
     const handleCancel = () => setIsModalReview(false);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [review, setReview] = useState({ message: '', rating: 0 });
-    const [createReview, {isLoading}] = useCreateReviewMutation();
+    const [createReview, { isLoading }] = useCreateReviewMutation();
     const [isSuccess, setIsSuccess] = useState(false);
 
     const createComment = async () => {
@@ -102,7 +102,11 @@ export const CommentsPage: React.FC = () => {
                         initialValues={review}
                     >
                         <Form.Item name='rating'>
-                            <Rate onChange={changeRate} allowClear character={<StarTwoTone />}></Rate>
+                            <Rate
+                                onChange={changeRate}
+                                allowClear
+                                character={<StarTwoTone />}
+                            ></Rate>
                         </Form.Item>
                         <Form.Item name='message'>
                             <TextArea

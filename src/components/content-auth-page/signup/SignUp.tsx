@@ -57,17 +57,10 @@ export const SignUp: React.FC = () => {
                 onFinish={onFinish}
                 form={form}
             >
-                <Form.Item
-                    name='email'
-                    rules={rulesEmail}
-                >
+                <Form.Item name='email' rules={rulesEmail}>
                     <Input addonBefore='e-mail' data-test-id='registration-email' />
                 </Form.Item>
-                <Form.Item
-                    name='password'
-                    help={validateMessage.password}
-                    rules={rulesPassword}
-                >
+                <Form.Item name='password' help={validateMessage.password} rules={rulesPassword}>
                     <Input.Password
                         type='password'
                         placeholder='Пароль'

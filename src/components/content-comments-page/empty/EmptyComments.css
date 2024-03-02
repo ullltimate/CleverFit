@@ -1,31 +1,36 @@
-.comments-empty{
-    background: #FFFFFF;
+.comments-empty {
+    background: #ffffff;
     margin-top: 30vh;
 }
-.text-wrapper{
+
+.text-wrapper {
     max-width: 520px;
     margin: 0 auto;
     padding: 56px 0px;
     text-align: center;
 }
-.comments-empty-btns{
+
+.comments-empty-btns {
     margin-top: 20px;
     text-align: center;
 }
-.comments-empty-btns .ant-btn-primary{
+
+.comments-empty-btns .ant-btn-primary {
     height: 40px;
-    background: #2F54EB;
-    border-color: #2F54EB;
+    background: #2f54eb;
+    border-color: #2f54eb;
 }
 
 @media screen and (max-width: 500px) {
-    .text-wrapper{
+    .text-wrapper {
         padding: 48px 32px;
     }
-    .comments-empty-btns .ant-btn-primary{
+
+    .comments-empty-btns .ant-btn-primary {
         width: 100%;
     }
-    .comments-empty{
+
+    .comments-empty {
         margin-top: 0;
     }
 }

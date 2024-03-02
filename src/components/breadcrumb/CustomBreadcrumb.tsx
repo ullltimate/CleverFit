@@ -7,16 +7,16 @@ import { routes } from '@constants/breadcrumbs';
 import './breadcrumb.css';
 
 type ICurrentRoutes = {
-    path?: string,
-    name: string,
-}
+    path?: string;
+    name: string;
+};
 
 export const CustomBreadcrumb: React.FC = () => {
     const [currentRoutes, setCurrentRoutes] = useState<ICurrentRoutes[]>();
     const location = useLocation();
 
     useEffect(() => {
-        switch(location.pathname) {
+        switch (location.pathname) {
             case PATHS.MAIN:
                 setCurrentRoutes(routes.main);
                 break;
@@ -24,7 +24,7 @@ export const CustomBreadcrumb: React.FC = () => {
                 setCurrentRoutes(routes.feedbacks);
                 break;
         }
-    },[location.pathname])
+    }, [location.pathname]);
 
     return (
         <>

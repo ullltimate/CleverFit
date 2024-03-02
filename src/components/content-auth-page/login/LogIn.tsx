@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Form, Input, Checkbox, Button} from 'antd';
+import { Form, Input, Checkbox, Button } from 'antd';
 import { Rule } from 'antd/lib/form';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';

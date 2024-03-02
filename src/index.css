@@ -15,10 +15,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-:root .ant-btn-primary{
+:root .ant-btn-primary {
     height: 40px;
-    background: #2F54EB;
-    border-color: #2F54EB;
+    background: #2f54eb;
+    border-color: #2f54eb;
 }
 
 body {

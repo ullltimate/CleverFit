@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface TokenState {
-    token: string
+    token: string;
 }
 
 const initialState: TokenState = {
-    token: ''
+    token: '',
 };
 
 export const tokenSlice = createSlice({

@@ -60,11 +60,7 @@ export const ChangePassword: React.FC = () => {
                 <Title level={3} className='change-password__title'>
                     Восстановление аккауанта
                 </Title>
-                <Form.Item
-                    name='password'
-                    help={validateMessage.password}
-                    rules={rulesPassword}
-                >
+                <Form.Item name='password' help={validateMessage.password} rules={rulesPassword}>
                     <Input.Password
                         type='password'
                         placeholder='Пароль'

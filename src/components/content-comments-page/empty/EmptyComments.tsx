@@ -6,10 +6,10 @@ import './EmptyComments.css';
 const { Title, Text } = Typography;
 
 type IShowModal = {
-    showModalReview: () => void
-}
+    showModalReview: () => void;
+};
 
-export const EmptyComments: React.FC<IShowModal> = ({showModalReview}) => {
+export const EmptyComments: React.FC<IShowModal> = ({ showModalReview }) => {
     return (
         <>
             <div className='comments-empty'>
