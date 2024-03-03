@@ -4,6 +4,7 @@ import { Typography } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import VerificationInput from 'react-verification-input';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { userSelector } from '@redux/reducers/userSlice';
 import { useConfirmEmailMutation } from '@services/auth';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
@@ -15,7 +16,7 @@ const { Title, Text } = Typography;
 export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAppSelector((state) => state.userReducer);
+    const { user } = useAppSelector(userSelector);
     const [confirm, { isLoading }] = useConfirmEmailMutation();
     const [borderStyle, setBorderStyle] = useState<string>('character');
     const [value, setValue] = useState<string>('');

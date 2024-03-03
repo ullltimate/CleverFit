@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePassordMutation } from '@services/auth';
-import { increment } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
 import { validateMessage, rulesPassword, rulesRepeatPassword } from '@constants/validation';
@@ -16,7 +16,7 @@ const { Title } = Typography;
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAppSelector((state) => state.userReducer);
+    const { user } = useAppSelector(userSelector);
     const dispatch = useAppDispatch();
     const [change, { isLoading }] = useChangePassordMutation();
 

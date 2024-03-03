@@ -4,7 +4,7 @@ import { Form, Input, Checkbox, Button } from 'antd';
 import { Rule } from 'antd/lib/form';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
-import { increment } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/userSlice';
 import { saveToken } from '@redux/reducers/tokenSlice';
 import { Loader } from '@components/loader/Loader';
 import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
@@ -21,7 +21,7 @@ export const LogIn: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.userReducer);
+    const { user } = useAppSelector(userSelector);
 
     const onFinish = (values: IValuesLoginForm) => {
         login({ email: values.email, password: values.password })

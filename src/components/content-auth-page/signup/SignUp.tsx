@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { increment } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/userSlice';
 import { useSignupMutation } from '@services/auth';
 import { Loader } from '@components/loader/Loader';
 import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
@@ -19,7 +19,7 @@ export const SignUp: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.userReducer);
+    const { user } = useAppSelector(userSelector);
 
     const onFinish = useCallback(
         (values: IValuesSignupForm) => {

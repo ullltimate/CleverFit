@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     HeartFilled,
     TrophyFilled,
@@ -9,12 +10,12 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { increment } from '@redux/reducers/userSlice';
+import { saveToken } from '@redux/reducers/tokenSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { ExitIcon } from '@components/icons/exitIcon';
+import { PATHS } from '@constants/paths';
 
 import './siderBar.css';
-import { useNavigate } from 'react-router-dom';
-import { PATHS } from '@constants/paths';
 
 const { Sider } = Layout;
 
@@ -42,6 +43,7 @@ export const SiderBar: React.FC = () => {
     const logOut = () => {
         localStorage.removeItem('token');
         dispatch(increment({ email: '', password: '' }));
+        dispatch(saveToken(''));
         navigate(PATHS.AUTH);
     };
 
