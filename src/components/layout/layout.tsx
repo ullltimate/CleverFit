@@ -24,10 +24,8 @@ export const CustomLayout: React.FC = () => {
     }, [dispatch, location.pathname, navigate, params]);
 
     return (
-        <>
-            <div>
-                <Outlet />
-            </div>
-        </>
+        <div>
+            <Outlet />
+        </div>
     );
 };

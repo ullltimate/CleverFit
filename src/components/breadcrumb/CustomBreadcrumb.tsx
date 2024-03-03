@@ -22,17 +22,15 @@ export const CustomBreadcrumb: React.FC = () => {
     }, [location.pathname]);
 
     return (
-        <>
-            <div className='breadcrumb'>
-                <Breadcrumb>
-                    {currentRoutes &&
-                        currentRoutes.map((e: IBreadCrumbRoute, i: number) => (
-                            <Breadcrumb.Item key={i}>
-                                {e.path ? <Link to={e.path}>{e.name}</Link> : e.name}
-                            </Breadcrumb.Item>
-                        ))}
-                </Breadcrumb>
-            </div>
-        </>
+        <div className='breadcrumb'>
+            <Breadcrumb>
+                {currentRoutes &&
+                    currentRoutes.map((e: IBreadCrumbRoute, i: number) => (
+                        <Breadcrumb.Item key={i}>
+                            {e.path ? <Link to={e.path}>{e.name}</Link> : e.name}
+                        </Breadcrumb.Item>
+                    ))}
+            </Breadcrumb>
+        </div>
     );
 };

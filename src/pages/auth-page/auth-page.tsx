@@ -6,16 +6,12 @@ import './auth-page.css';
 
 const { Content } = Layout;
 
-export const AuthPage: React.FC<IAuthChildren> = ({ children }) => {
-    return (
-        <>
-            <div className='auth-wrapper wrapper'>
-                <Layout>
-                    <Content>
-                        <Card className='auth-card'>{children}</Card>
-                    </Content>
-                </Layout>
-            </div>
-        </>
-    );
-};
+export const AuthPage: React.FC<IAuthChildren> = ({ children }) => (
+    <div className='auth-wrapper wrapper'>
+        <Layout>
+            <Content>
+                <Card className='auth-card'>{children}</Card>
+            </Content>
+        </Layout>
+    </div>
+);

@@ -15,16 +15,14 @@ export const MainLayout: React.FC = () => {
     }, [navigate, user.email]);
 
     return (
-        <>
-            <div className='main-wrapper wrapper'>
-                <Layout>
-                    <SiderBar />
-                    <Layout className='site-layout'>
-                        <CustomBreadcrumb />
-                        <Outlet />
-                    </Layout>
+        <div className='main-wrapper wrapper'>
+            <Layout>
+                <SiderBar />
+                <Layout className='site-layout'>
+                    <CustomBreadcrumb />
+                    <Outlet />
                 </Layout>
-            </div>
-        </>
+            </Layout>
+        </div>
     );
 };

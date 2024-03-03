@@ -11,13 +11,12 @@ export const ButtonGoogle: React.FC = () => {
     const loginWithGoogle = () => {
         window.location.href = `${urlAPI}/auth/google`;
     };
+    
     return (
-        <>
-            <Form.Item>
-                <Button type='text' className='login-form-button' onClick={loginWithGoogle}>
-                    {!xs && <GooglePlusOutlined />} Войти через Google
-                </Button>
-            </Form.Item>
-        </>
+        <Form.Item>
+            <Button type='text' className='login-form-button' onClick={loginWithGoogle}>
+                {!xs && <GooglePlusOutlined />} Войти через Google
+            </Button>
+        </Form.Item>
     );
 };
