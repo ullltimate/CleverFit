@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@redux/configure-store';
-import { IValuesSignupForm } from '@tstypes/types';
+import { ValuesSignupForm } from '@tstypes/types';
 
-interface UserState {
+type UserState = {
     user: {
         email: string;
         password: string;
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        increment: (state, action: PayloadAction<IValuesSignupForm>) => {
+        increment: (state, action: PayloadAction<ValuesSignupForm>) => {
             state.user = action.payload;
         },
     },

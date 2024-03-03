@@ -1,38 +1,31 @@
-export type IUrlAPI = string;
-
-export interface IRequestLogin {
+export type RequestLogin = {
     email: string;
     password: string;
 }
 
-export interface IResponseLogin {
+export type ResponseLogin = {
     accessToken: string;
 }
 
-export interface IRequestCheck {
+export type RequestCheck = {
     email: string;
 }
 
-export interface IResponseCheck {
+export type ResponseCheck = {
     email: string;
     message: string;
 }
 
-export interface IRequestConfirm {
+export type RequestConfirm = {
     email: string;
     code: string;
 }
 
-export interface IResponseConfirm {
-    email: string;
-    message: string;
-}
-
-export interface IRequestChangePass {
+export type RequestChangePass = {
     password: string;
     confirmPassword: string;
 }
 
-export interface IResponseChangePass {
+export type ResponseChangePass = {
     message: string;
 }

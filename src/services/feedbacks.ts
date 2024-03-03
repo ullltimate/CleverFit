@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { endpointsAPI, urlAPI } from '@constants/api';
-import { IFeedbacks } from '@tstypes/feedbacks';
+import { Feedbacks } from '@tstypes/feedbacks';
 import { store } from '@redux/configure-store';
 
 export const feedbackAPI = createApi({
@@ -17,7 +17,7 @@ export const feedbackAPI = createApi({
     }),
     tagTypes: ['Feedback'],
     endpoints: (build) => ({
-        getFeedbacks: build.query<IFeedbacks[], void>({
+        getFeedbacks: build.query<Feedbacks[], void>({
             query: () => ({
                 url: endpointsAPI.feedback,
             }),

@@ -8,7 +8,7 @@ import { Loader } from '@components/loader/Loader';
 import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
 import { rulesEmail, rulesPassword, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { PATHS } from '@constants/paths';
-import { IValuesSignupForm } from '@tstypes/types';
+import { ValuesSignupForm } from '@tstypes/types';
 
 import './signUp.css';
 
@@ -22,7 +22,7 @@ export const SignUp: React.FC = () => {
     const { user } = useAppSelector(userSelector);
 
     const onFinish = useCallback(
-        (values: IValuesSignupForm) => {
+        (values: ValuesSignupForm) => {
             signup({ email: values.email, password: values.password })
                 .unwrap()
                 .then(() => {

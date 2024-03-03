@@ -1,11 +1,11 @@
 import React from 'react';
 import { Comment, Avatar, Tooltip, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
-import { IFeedbacks } from '@tstypes/feedbacks';
+import { Feedbacks } from '@tstypes/feedbacks';
 
 import './CustomComment.css';
 
-export const CustomComment: React.FC<IFeedbacks> = ({
+export const CustomComment: React.FC<Feedbacks> = ({
     fullName,
     imageSrc,
     message,
@@ -24,7 +24,7 @@ export const CustomComment: React.FC<IFeedbacks> = ({
                             icon={<UserOutlined />}
                             style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
                         />{' '}
-                        <p className='comment-autor'>{`${fullName}` || 'Пользователь'}</p>
+                        <p className='comment-autor'>{fullName || 'Пользователь'}</p>
                     </>
                 }
                 content={<p className='comment-text'>{message}</p>}

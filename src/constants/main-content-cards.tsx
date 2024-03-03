@@ -1,7 +1,7 @@
 import { HeartFilled, CalendarTwoTone, IdcardOutlined } from '@ant-design/icons';
-import { ICardInfo } from '@tstypes/types';
+import { CardInfo } from '@tstypes/types';
 
-export const contentCards: ICardInfo[] = [
+export const contentCards: CardInfo[] = [
     {
         title: 'Расписать тренировки',
         btnText: 'Тренировки',

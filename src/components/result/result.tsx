@@ -2,13 +2,21 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Typography, Button } from 'antd';
 import { PATHS } from '@constants/paths';
-import { IPropsResult } from '@tstypes/types';
 
 import './result.css';
 
 const { Title, Text } = Typography;
 
-export const Result: React.FC<IPropsResult> = ({
+type PropsResult = {
+    icon: React.ReactNode,
+    title: string,
+    text: string,
+    btnText: string,
+    btnPath: string,
+    dataAtribute: string,
+}
+
+export const Result: React.FC<PropsResult> = ({
     icon,
     title,
     text,

@@ -9,27 +9,27 @@ import { AllComments } from '@components/content-comments-page/allReviews/AllRev
 import { EmptyComments } from '@components/content-comments-page/empty/EmptyComments';
 import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
 import { PATHS } from '@constants/paths';
-import { IFeedbacks } from '@tstypes/feedbacks';
+import { Feedbacks } from '@tstypes/feedbacks';
 
 import './comments-page.css';
 
 export const CommentsPage: React.FC = () => {
     const navigate = useNavigate();
     const { data, isFetching, error } = useGetFeedbacksQuery();
-    const [reviews, setReviews] = useState<IFeedbacks[]>();
-    const [showAllComments, setShowAllComments] = useState<boolean>(false);
-    const [isModalReview, setIsModalReview] = useState<boolean>(false);
-    const [isModalResult, setIsModalResult] = useState<boolean>(false);
-    const [isModalError, setIsModalError] = useState<boolean>(false);
+    const [reviews, setReviews] = useState<Feedbacks[]>();
+    const [showAllComments, setShowAllComments] = useState(false);
+    const [isModalReview, setIsModalReview] = useState(false);
+    const [isModalResult, setIsModalResult] = useState(false);
+    const [isModalError, setIsModalError] = useState(false);
     const showModalError = (): void => setIsModalError(true);
     const handleCancelError = (): void => navigate(PATHS.MAIN);
     const showModalReview = (): void => setIsModalReview(true);
     const isShowAllComments = (): void => setShowAllComments(!showAllComments);
     const handleCancel = (): void => setIsModalReview(false);
-    const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [review, setReview] = useState({ message: '', rating: 0 });
     const [createReview, { isLoading }] = useCreateReviewMutation();
-    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const createComment = async () => {
         await createReview(review)
@@ -56,7 +56,7 @@ export const CommentsPage: React.FC = () => {
         data &&
             setReviews(
                 [...data].sort(
-                    (a: IFeedbacks, b: IFeedbacks) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+                    (a: Feedbacks, b: Feedbacks) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
                 ),
             );
     }, [data, error]);

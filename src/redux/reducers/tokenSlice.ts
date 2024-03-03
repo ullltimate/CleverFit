@@ -1,7 +1,7 @@
 import { RootState } from '@redux/configure-store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface TokenState {
+type TokenState = {
     token: string;
 }
 

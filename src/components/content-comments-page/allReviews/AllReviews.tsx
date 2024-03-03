@@ -1,18 +1,18 @@
 import React from 'react';
 import { Button } from 'antd';
 import { CustomComment } from '../comment/CustomComment';
-import { IFeedbacks } from '@tstypes/feedbacks';
+import { Feedbacks } from '@tstypes/feedbacks';
 
 import './AllReviews.css';
 
-type IAllCommentsProps = {
+type AllCommentsProps = {
     showModalReview: () => void;
-    reviews: IFeedbacks[];
+    reviews: Feedbacks[];
     showAllComments: boolean;
     isShowAllComments: () => void;
 };
 
-export const AllComments: React.FC<IAllCommentsProps> = ({
+export const AllComments: React.FC<AllCommentsProps> = ({
     showModalReview,
     reviews,
     showAllComments,
@@ -21,7 +21,7 @@ export const AllComments: React.FC<IAllCommentsProps> = ({
     <>
         <div className='comments-list'>
             {showAllComments
-                ? reviews.map((e: IFeedbacks) => (
+                ? reviews.map((e: Feedbacks) => (
                       <CustomComment
                           key={e.id}
                           createdAt={e.createdAt}
@@ -33,7 +33,7 @@ export const AllComments: React.FC<IAllCommentsProps> = ({
                   ))
                 : reviews
                       .slice(0, 4)
-                      .map((e: IFeedbacks) => (
+                      .map((e: Feedbacks) => (
                           <CustomComment
                               key={e.id}
                               createdAt={e.createdAt}

@@ -1,8 +1,8 @@
 import { Rule, RuleObject } from 'antd/lib/form';
-import { IValidationMessage, fieldValue } from '@tstypes/validation';
+import { ValidationMessage, FieldValue } from '@tstypes/validation';
 import { IRegExp } from '@tstypes/validation';
 
-export const validateMessage: IValidationMessage = {
+export const validateMessage: ValidationMessage = {
     require: 'Обязательное поле!',
     email: 'Example@gmail.com',
     password: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
@@ -26,7 +26,7 @@ export const rulesPassword = [
 ];
 
 export const rulesRepeatPassword = [
-    ({ getFieldValue }: fieldValue): RuleObject => ({
+    ({ getFieldValue }: FieldValue): RuleObject => ({
         validator(_: Rule, value: string): Promise<void> {
             if (getFieldValue('password') === value) {
                 return Promise.resolve();

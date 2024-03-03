@@ -10,12 +10,17 @@ import { Loader } from '@components/loader/Loader';
 import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
 import { regEmail, rulesPassword, rulesEmail } from '@constants/validation';
 import { PATHS } from '@constants/paths';
-import { IValuesLoginForm } from '@tstypes/types';
 
 import './logIn.css';
 
+type ValuesLoginForm = {
+    email: string,
+    password: string,
+    remember: boolean
+}
+
 export const LogIn: React.FC = () => {
-    const [forgotDisabled, setForgotDisabled] = useState<boolean>(true);
+    const [forgotDisabled, setForgotDisabled] = useState(true);
     const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
     const [checkEmail, { isLoading: isLoadingEmail }] = useCheckEmailMutation();
     const navigate = useNavigate();
@@ -23,7 +28,7 @@ export const LogIn: React.FC = () => {
     const dispatch = useAppDispatch();
     const { user } = useAppSelector(userSelector);
 
-    const onFinish = (values: IValuesLoginForm) => {
+    const onFinish = (values: ValuesLoginForm) => {
         login({ email: values.email, password: values.password })
             .unwrap()
             .then((res) => {

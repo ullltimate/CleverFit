@@ -1,6 +1,6 @@
-import { IUrlAPI } from '@tstypes/api';
+type UrlAPI = string;
 
-export const urlAPI: IUrlAPI = 'https://marathon-api.clevertec.ru';
+export const urlAPI: UrlAPI = 'https://marathon-api.clevertec.ru';
 
 type EndpointsAPI = {
     auth: {

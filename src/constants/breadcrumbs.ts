@@ -1,16 +1,16 @@
 import { PATHS } from './paths';
 
-export type IBreadCrumbRoute = {
+export type BreadCrumbRoute = {
     name: string,
     path?: string,
 }
 
-type IBreadCrumbRoutes = {
-    main: IBreadCrumbRoute[],
-    feedbacks: IBreadCrumbRoute[],
+type BreadCrumbRoutes = {
+    main: BreadCrumbRoute[],
+    feedbacks: BreadCrumbRoute[],
 }
 
-export const routes: IBreadCrumbRoutes = {
+export const routes: BreadCrumbRoutes = {
     main: [
         {
             name: 'Главная',

@@ -1,12 +1,12 @@
 export type IRegExp = RegExp;
 
-export interface IValidationMessage {
+export type ValidationMessage = {
     require: string,
     email: string,
     password: string,
     repeatPassword: string
 }
 
-export type fieldValue = {
+export type FieldValue = {
     getFieldValue: (name: string) => string,
 }

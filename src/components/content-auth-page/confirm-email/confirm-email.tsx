@@ -18,8 +18,8 @@ export const ConfirmEmail: React.FC = () => {
     const location = useLocation();
     const { user } = useAppSelector(userSelector);
     const [confirm, { isLoading }] = useConfirmEmailMutation();
-    const [borderStyle, setBorderStyle] = useState<string>('character');
-    const [value, setValue] = useState<string>('');
+    const [borderStyle, setBorderStyle] = useState('character');
+    const [value, setValue] = useState('');
 
     const onComplete = (value: string) => {
         confirm({ email: user.email, code: value })

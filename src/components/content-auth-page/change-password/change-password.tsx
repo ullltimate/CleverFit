@@ -7,7 +7,7 @@ import { increment, userSelector } from '@redux/reducers/userSlice';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
 import { validateMessage, rulesPassword, rulesRepeatPassword } from '@constants/validation';
-import { IChangePassord } from '@tstypes/types';
+import { RequestChangePass } from '@tstypes/api';
 
 import './change-password.css';
 
@@ -21,7 +21,7 @@ export const ChangePassword: React.FC = () => {
     const [change, { isLoading }] = useChangePassordMutation();
 
     const onFinish = useCallback(
-        (values: IChangePassord) => {
+        (values: RequestChangePass) => {
             dispatch(increment({ email: user.email, password: values.password }));
             change(values)
                 .unwrap()

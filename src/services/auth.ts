@@ -1,42 +1,41 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { endpointsAPI, urlAPI } from '@constants/api';
 import { 
-    IResponseLogin, 
-    IRequestLogin, 
-    IResponseCheck, 
-    IRequestCheck, 
-    IResponseConfirm, 
-    IRequestConfirm, 
-    IResponseChangePass,
-    IRequestChangePass
+    ResponseLogin, 
+    RequestLogin, 
+    ResponseCheck, 
+    RequestCheck,
+    RequestConfirm, 
+    ResponseChangePass,
+    RequestChangePass
 } from '@tstypes/api';
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
     baseQuery: fetchBaseQuery({ baseUrl: urlAPI }),
     endpoints: (build) => ({
-        login: build.mutation<IResponseLogin, IRequestLogin>({
+        login: build.mutation<ResponseLogin, RequestLogin>({
             query: (body) => ({
                 url: endpointsAPI.auth.logIn,
                 method: 'POST',
                 body,
             }),
         }),
-        signup: build.mutation<object, IRequestLogin>({
+        signup: build.mutation<object, RequestLogin>({
             query: (body) => ({
                 url: endpointsAPI.auth.signUp,
                 method: 'POST',
                 body,
             }),
         }),
-        checkEmail: build.mutation<IResponseCheck, IRequestCheck>({
+        checkEmail: build.mutation<ResponseCheck, RequestCheck>({
             query: (email) => ({
                 url: endpointsAPI.auth.checkEmail,
                 method: 'POST',
                 body: email,
             }),
         }),
-        confirmEmail: build.mutation<IResponseConfirm, IRequestConfirm>({
+        confirmEmail: build.mutation<ResponseCheck, RequestConfirm>({
             query: (body) => ({
                 url: endpointsAPI.auth.confirmEmail,
                 method: 'POST',
@@ -44,7 +43,7 @@ export const authAPI = createApi({
                 credentials: 'include',
             }),
         }),
-        changePassord: build.mutation<IResponseChangePass, IRequestChangePass>({
+        changePassord: build.mutation<ResponseChangePass, RequestChangePass>({
             query: (body) => ({
                 url: endpointsAPI.auth.changePassword,
                 method: 'POST',

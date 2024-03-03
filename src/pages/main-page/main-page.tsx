@@ -4,7 +4,7 @@ import { Header } from '@components/header/header';
 import { Footer } from '@components/footer/footer';
 import { ContentCard } from '@components/content-main-page/card';
 import { contentCards } from '@constants/main-content-cards';
-import { ICardInfo } from '@tstypes/types';
+import { CardInfo } from '@tstypes/types';
 
 import './main-page.css';
 
@@ -38,7 +38,7 @@ export const MainPage: React.FC = () => {
                 <div className='cards-wrapper'>
                     <Row gutter={16} className='wrap'>
                         {contentCards.map(
-                            (e: ICardInfo, i: number): React.ReactNode => (
+                            (e: CardInfo, i: number): React.ReactNode => (
                                 <ContentCard
                                     key={i}
                                     title={e.title}

@@ -1,15 +1,15 @@
-export interface IResultData {
-    error_login: IResultDataItem,
-    success_signup: IResultDataItem,
-    error_user_exist: IResultDataItem,
-    error: IResultDataItem,
-    error_change_password: IResultDataItem,
-    success_change_password: IResultDataItem,
-    error_email_no_exist: IResultDataItem,
-    error_check_email: IResultDataItem,
+export type ResultData = {
+    error_login: ResultDataItem,
+    success_signup: ResultDataItem,
+    error_user_exist: ResultDataItem,
+    error: ResultDataItem,
+    error_change_password: ResultDataItem,
+    success_change_password: ResultDataItem,
+    error_email_no_exist: ResultDataItem,
+    error_check_email: ResultDataItem,
 }
 
-interface IResultDataItem {
+type ResultDataItem = {
     icon: React.ReactNode
     title: string,
     text: string,
