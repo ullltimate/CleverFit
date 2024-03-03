@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { urlAPI } from '@constants/api';
+import { endpointsAPI, urlAPI } from '@constants/api';
 import { IFeedbacks } from '@tstypes/feedbacks';
 import { store } from '@redux/configure-store';
 
@@ -19,13 +19,13 @@ export const feedbackAPI = createApi({
     endpoints: (build) => ({
         getFeedbacks: build.query<IFeedbacks[], void>({
             query: () => ({
-                url: '/feedback',
+                url: endpointsAPI.feedback,
             }),
             providesTags: () => ['Feedback'],
         }),
         createReview: build.mutation({
             query: (body) => ({
-                url: '/feedback',
+                url: endpointsAPI.feedback,
                 method: 'POST',
                 body,
             }),
