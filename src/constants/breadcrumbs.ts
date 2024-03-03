@@ -1,6 +1,16 @@
 import { PATHS } from './paths';
 
-export const routes = {
+export type IBreadCrumbRoute = {
+    name: string,
+    path?: string,
+}
+
+type IBreadCrumbRoutes = {
+    main: IBreadCrumbRoute[],
+    feedbacks: IBreadCrumbRoute[],
+}
+
+export const routes: IBreadCrumbRoutes = {
     main: [
         {
             name: 'Главная',

@@ -18,18 +18,18 @@ export const CommentsPage: React.FC = () => {
     const { data, isFetching, error } = useGetFeedbacksQuery();
     const [reviews, setReviews] = useState<IFeedbacks[]>();
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
-    const [isModalReview, setIsModalReview] = useState(false);
-    const [isModalResult, setIsModalResult] = useState(false);
-    const [isModalError, setIsModalError] = useState(false);
-    const showModalError = () => setIsModalError(true);
-    const handleCancelError = () => navigate(PATHS.MAIN);
-    const showModalReview = () => setIsModalReview(true);
-    const isShowAllComments = () => setShowAllComments(!showAllComments);
-    const handleCancel = () => setIsModalReview(false);
-    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+    const [isModalReview, setIsModalReview] = useState<boolean>(false);
+    const [isModalResult, setIsModalResult] = useState<boolean>(false);
+    const [isModalError, setIsModalError] = useState<boolean>(false);
+    const showModalError = (): void => setIsModalError(true);
+    const handleCancelError = (): void => navigate(PATHS.MAIN);
+    const showModalReview = (): void => setIsModalReview(true);
+    const isShowAllComments = (): void => setShowAllComments(!showAllComments);
+    const handleCancel = (): void => setIsModalReview(false);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
     const [review, setReview] = useState({ message: '', rating: 0 });
     const [createReview, { isLoading }] = useCreateReviewMutation();
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
     const createComment = async () => {
         await createReview(review)
@@ -47,7 +47,7 @@ export const CommentsPage: React.FC = () => {
             });
     };
 
-    const changeRate = (value: number) => {
+    const changeRate = (value: number): void => {
         value > 0 ? setIsSubmitDisabled(false) : setIsSubmitDisabled(true);
     };
 
@@ -56,7 +56,7 @@ export const CommentsPage: React.FC = () => {
         data &&
             setReviews(
                 [...data].sort(
-                    (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+                    (a: IFeedbacks, b: IFeedbacks) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
                 ),
             );
     }, [data, error]);
