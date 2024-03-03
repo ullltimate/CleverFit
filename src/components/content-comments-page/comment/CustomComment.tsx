@@ -24,7 +24,7 @@ export const CustomComment: React.FC<IFeedbacks> = ({
                             icon={<UserOutlined />}
                             style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
                         />{' '}
-                        <p className='comment-autor'>{fullName ? `${fullName}` : 'Пользователь'}</p>
+                        <p className='comment-autor'>{`${fullName}` || 'Пользователь'}</p>
                     </>
                 }
                 content={<p className='comment-text'>{message}</p>}

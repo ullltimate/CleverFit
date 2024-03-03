@@ -9,24 +9,23 @@ type IShowModal = {
     showModalReview: () => void;
 };
 
-export const EmptyComments: React.FC<IShowModal> = ({ showModalReview }) => {
-    return (
-        <>
-            <div className='comments-empty'>
-                <div className='text-wrapper'>
-                    <Title level={3}>Оставьте свой отзыв первым</Title>
-                    <Text type='secondary'>
-                        Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.
-                        Поделитесь своим мнением и опытом с другими пользователями, и помогите им
-                        сделать правильный выбор.
-                    </Text>
-                </div>
+export const EmptyComments: React.FC<IShowModal> = ({ showModalReview }) => (
+    <>
+        <div className='comments-empty'>
+            <div className='text-wrapper'>
+                <Title level={3}>Оставьте свой отзыв первым</Title>
+                <Text type='secondary'>
+                    Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении. Поделитесь
+                    своим мнением и опытом с другими пользователями, и помогите им сделать
+                    правильный выбор.
+                </Text>
             </div>
-            <div className='comments-empty-btns'>
-                <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
-                    Написать отзыв
-                </Button>
-            </div>
-        </>
-    );
-};
+        </div>
+        <div className='comments-empty-btns'>
+            <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
+                Написать отзыв
+            </Button>
+        </div>
+    </>
+);
+

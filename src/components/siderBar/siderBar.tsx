@@ -26,7 +26,7 @@ export const SiderBar: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    function changeBreakpoint(broken: boolean): void {
+    const changeBreakpoint = (broken: boolean): void => {
         if (broken) {
             setWidthCollapsed(1);
             setMobileWidth(true);
@@ -47,7 +47,7 @@ export const SiderBar: React.FC = () => {
         navigate(PATHS.AUTH);
     };
 
-    function onClick({ key }: key) {
+    const onClick = ({ key }: key) => {
         switch (key) {
             case 'exit':
                 logOut();
