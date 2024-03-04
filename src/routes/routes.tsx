@@ -6,10 +6,10 @@ import { ChangePassword } from '@components/content-auth-page/change-password/ch
 import { ConfirmEmail } from '@components/content-auth-page/confirm-email/confirm-email';
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
 import { CustomLayout } from '@components/layout/layout';
-import { MainLayout } from '@components/layout/MainLayout';
+import { MainLayout } from '@components/layout/main-layout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
-import { resultData } from '@constants/resultData';
+import { resultData } from '@constants/result-data';
 
 export const routes = (
     <Routes>

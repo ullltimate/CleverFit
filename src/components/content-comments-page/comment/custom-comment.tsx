@@ -3,7 +3,7 @@ import { Comment, Avatar, Tooltip, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
 import { Feedbacks } from '@tstypes/feedbacks';
 
-import './CustomComment.css';
+import './custom-comment.css';
 
 export const CustomComment: React.FC<Feedbacks> = ({
     fullName,

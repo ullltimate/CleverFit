@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePassordMutation } from '@services/auth';
-import { increment, userSelector } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/user-slice';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
 import { validateMessage, rulesPassword, rulesRepeatPassword } from '@constants/validation';

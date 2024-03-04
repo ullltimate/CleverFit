@@ -3,9 +3,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 import { authAPI } from '@services/auth';
-import userSlice from './reducers/userSlice';
+import userSlice from './reducers/user-slice';
 import { feedbackAPI } from '@services/feedbacks';
-import tokenSlice from './reducers/tokenSlice';
+import tokenSlice from './reducers/token-slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),

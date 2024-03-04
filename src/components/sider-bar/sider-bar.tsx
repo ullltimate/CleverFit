@@ -9,13 +9,13 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { increment } from '@redux/reducers/userSlice';
-import { saveToken } from '@redux/reducers/tokenSlice';
+import { increment } from '@redux/reducers/user-slice';
+import { saveToken } from '@redux/reducers/token-slice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { ExitIcon } from '@components/icons/exitIcon';
+import { ExitIcon } from '@components/icons/exit-icon';
 import { PATHS } from '@constants/paths';
 
-import './siderBar.css';
+import './sider-bar.css';
 
 const { Sider } = Layout;
 

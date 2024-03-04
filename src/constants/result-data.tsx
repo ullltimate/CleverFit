@@ -1,6 +1,6 @@
 import { CheckCircleFilled, CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import { PATHS } from './paths';
-import { ResultData } from '@tstypes/resultData';
+import { ResultData } from '@tstypes/result-data';
 
 export const resultData: ResultData = {
     error_login: {

@@ -4,10 +4,10 @@ import { Form, Input, Checkbox, Button } from 'antd';
 import { Rule } from 'antd/lib/form';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useCheckEmailMutation, useLoginMutation } from '@services/auth';
-import { increment, userSelector } from '@redux/reducers/userSlice';
-import { saveToken } from '@redux/reducers/tokenSlice';
+import { increment, userSelector } from '@redux/reducers/user-slice';
+import { saveToken } from '@redux/reducers/token-slice';
 import { Loader } from '@components/loader/Loader';
-import { ButtonGoogle } from '@components/content-auth-page/buttons/ButtonGoogle';
+import { ButtonGoogle } from '@components/content-auth-page/buttons/button-google';
 import { regEmail, rulesPassword, rulesEmail } from '@constants/validation';
 import { PATHS } from '@constants/paths';
 

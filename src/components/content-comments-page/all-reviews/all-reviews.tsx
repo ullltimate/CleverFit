@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
-import { CustomComment } from '../comment/CustomComment';
+import { CustomComment } from '../comment/custom-comment';
 import { Feedbacks } from '@tstypes/feedbacks';
 
-import './AllReviews.css';
+import './all-reviews.css';
 
 type AllCommentsProps = {
     showModalReview: () => void;
