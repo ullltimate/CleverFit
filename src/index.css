@@ -13,12 +13,23 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    --color-primary: #2f54eb;
+    --color-warning: #faad14;
+    --color-success: #52c41a;
+    --color-error: #ff4d4f;
+    --color-bg-card: #ffffff;
+    --color-bg-blue: #f0f5ff;
+    --color-grey: #d9d9d9;
+    --unit-16: 16px;
+    --unit-24: 24px;
+    --unit-32: 32px;
 }
 
 :root .ant-btn-primary {
     height: 40px;
-    background: #2f54eb;
-    border-color: #2f54eb;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 body {
@@ -65,7 +76,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;
-        background-color: #fff;
+        background-color: var(--color-bg-card);
     }
     a:hover {
         color: #747bff;

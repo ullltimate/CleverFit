@@ -3,7 +3,7 @@
 }
 
 .card-wrap .ant-btn-link {
-    color: #2f54eb;
+    color: var(--color-primary);
 }
 
 .card-wrap .ant-btn-link:hover {
@@ -16,7 +16,7 @@
 
 .card-wrap .ant-card p {
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: var(--unit-16);
     font-weight: 400;
     line-height: 21px;
     color: #262626;

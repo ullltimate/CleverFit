@@ -14,7 +14,7 @@ export const CustomComment: React.FC<Feedbacks> = ({
 }) => (
         <div className='comment'>
             <Comment
-                style={{ background: '#FFF' }}
+                style={{ background: 'var(--color-bg-card)' }}
                 avatar={
                     <>
                         <Avatar

@@ -3,22 +3,22 @@
 }
 .result .result-icon {
     font-size: 80px;
-    margin-bottom: 24px;
+    margin-bottom: var(--unit-24);
 }
 .result .icon-warning {
-    color: #faad14;
+    color: var(--color-warning);
 }
 .result .icon-success {
-    color: #52c41a;
+    color: var(--color-success);
 }
 .result .icon-error {
-    color: #ff4d4f;
+    color: var(--color-error);
 }
 .result .result-title {
     margin-bottom: 0px;
     font-weight: 500;
 }
 .result .result-button {
-    margin-top: 24px;
+    margin-top: var(--unit-24);
     width: 100%;
 }

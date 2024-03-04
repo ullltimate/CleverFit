@@ -4,13 +4,12 @@
 
 .comment .ant-comment-inner {
     justify-content: space-evenly;
-    padding: 16px;
+    padding: var(--unit-16);
 }
 
 .comment .ant-comment-avatar {
     width: 175px;
     text-align: center;
-    margin-bottom: 12px;
 }
 
 .comment-autor {
@@ -24,8 +23,8 @@
 }
 
 .comment .ant-rate {
-    font-size: 16px;
-    margin-right: 16px;
+    font-size: var(--unit-16);
+    margin-right: var(--unit-16);
 }
 
 .comment-text {
@@ -39,14 +38,14 @@
 .comment .ant-rate-star-full .anticon svg path:last-child,
 .comment .ant-rate-star-full .anticon svg path:first-child,
 .comment .ant-rate-star-zero .anticon svg path:last-child {
-    fill: #faad14;
+    fill: var(--color-warning);
 }
 
 .comment .ant-rate-star-zero .anticon svg path:first-child {
     fill: transparent;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 500px) {
     
     .comment .ant-comment-inner {
         flex-wrap: wrap;
@@ -55,7 +54,7 @@
 
     .comment-autor {
         display: inline-block;
-        padding: 0 0 0 16px;
+        padding: 0 0 0 var(--unit-16);
     }
 
     .comment .ant-avatar {
@@ -64,6 +63,7 @@
 
     .comment .ant-comment-avatar {
         text-align: left;
+        margin-bottom: 12px;
     }
 
 }

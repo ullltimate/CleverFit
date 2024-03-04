@@ -14,7 +14,7 @@
     height: 66px;
     position: fixed;
     top: 47%;
-    border-left: 20px solid #fff;
+    border-left: 20px solid var(--color-bg-card);
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
 }
@@ -56,7 +56,7 @@
 }
 
 .menu .ant-menu-item:not(:last-child) {
-    margin-top: 16px;
+    margin-top: var(--unit-16);
 }
 
 .menu .ant-menu-item:last-child {
@@ -82,9 +82,9 @@
         z-index: 1;
     }
     .trapezoid {
-        top: 24px;
+        top: var(--unit-24);
         height: 48px;
-        border-left: 32px solid #fff;
+        border-left: var(--unit-32) solid var(--color-bg-card);
     }
     .trigger {
         top: 10px;
@@ -100,7 +100,7 @@
         width: 18px;
     }
     .logo-full {
-        margin: 16px;
+        margin: var(--unit-16);
     }
     .menu .ant-menu-item:not(:last-child) {
         padding-right: 8px;

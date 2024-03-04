@@ -1,5 +1,5 @@
 .comments-empty {
-    background: #ffffff;
+    background: var(--color-bg-card);
     margin-top: 30vh;
 }
 
@@ -15,15 +15,9 @@
     text-align: center;
 }
 
-.comments-empty-btns .ant-btn-primary {
-    height: 40px;
-    background: #2f54eb;
-    border-color: #2f54eb;
-}
-
 @media screen and (max-width: 500px) {
     .text-wrapper {
-        padding: 48px 32px;
+        padding: 48px var(--unit-32);
     }
 
     .comments-empty-btns .ant-btn-primary {

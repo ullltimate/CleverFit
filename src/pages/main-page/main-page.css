@@ -11,22 +11,22 @@
     min-height: auto;
 }
 
-.site-layout .site-layout-background {
-    background: #fff;
+.site-layout .site-layout-background,
+.content-discription {
+    background: var(--color-bg-card);
 }
 
 .content-discription {
-    background: #fff;
     max-width: 752px;
 }
 
 .content-discription:first-child {
-    margin-bottom: 24px !important;
+    margin-bottom: var(--unit-24) !important;
 }
 
 .content-text {
     margin-bottom: 0px;
-    font-size: 16px;
+    font-size: var(--unit-16);
     font-weight: 400;
     line-height: 21px;
     color: #061178;
@@ -42,7 +42,7 @@
 
 .cards-wrapper {
     max-width: 752px;
-    margin-top: 16px;
+    margin-top: var(--unit-16);
 }
 
 .cards-wrapper .wrap {
@@ -63,7 +63,7 @@
     }
 
     .content-discription .ant-card-body {
-        padding: 16px;
+        padding: var(--unit-16);
     }
     
 }

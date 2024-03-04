@@ -2,14 +2,8 @@
     margin-top: 132px;
 }
 
-.comments-btns .ant-btn-primary {
-    height: 40px;
-    background: #2f54eb;
-    border-color: #2f54eb;
-}
-
 .comments-btns .ant-btn-link {
-    color: #2f54eb;
+    color: var(--color-primary);
 }
 
 .comments-list {
@@ -32,10 +26,6 @@
 .comments-modal .ant-result-subtitle {
     line-height: 18.2px;
 }
-.comments-modal .ant-btn-primary {
-    background: #2f54eb;
-    background-color: #2f54eb;
-}
 
 .modal-form .ant-rate-star-full .anticon svg path:last-child,
 .modal-form .ant-rate-star-full .anticon svg path:first-child,
@@ -43,7 +33,7 @@
 .modal-form .ant-rate-star-focused .anticon svg path:last-child,
 .modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:last-child,
 .modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:first-child {
-    fill: #faad14;
+    fill: var(--color-warning);
 }
 .modal-form .ant-rate-star-zero .anticon svg path:first-child,
 .modal-form .ant-rate-star-focused .anticon svg path:first-child {
@@ -56,11 +46,11 @@
 }
 .modal-error .ant-btn-text {
     height: 40px;
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--color-grey);
 }
 
 .modal-error .ant-result {
-    padding: 40px 32px;
+    padding: 40px var(--unit-32);
 }
 
 .modal-success .ant-btn-primary {
@@ -81,7 +71,7 @@
     }
 
     .comments-btns .ant-btn-primary {
-        margin-bottom: 16px;
+        margin-bottom: var(--unit-16);
     }
     .modal-error .ant-btn-text,
     .modal-error .ant-btn-primary {
@@ -92,12 +82,16 @@
         padding: 8px 0px;
     }
     .ant-modal-body {
-        padding: 24px 16px !important;
+        padding: var(--unit-24) var(--unit-16) !important;
     }
 }
 
 @media screen and (max-width: 370px) {
     .modal-success .ant-result {
         padding: 8px 0px;
+    }
+    .comments-modal .ant-result-subtitle {
+        max-width: 150px;
+        margin: 0 auto;
     }
 }
