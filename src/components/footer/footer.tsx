@@ -1,18 +1,41 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Row, Col, Button, Card } from 'antd';
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
+import { Loader } from '@components/loader/Loader';
+import { useLazyGetFeedbacksQuery } from '@services/feedbacks';
+import { PATHS } from '@constants/paths';
 
 import './footer.css';
 
 const { Meta } = Card;
 
 export const Footer: React.FC = () => {
+    const navigate = useNavigate();
+    const [getFeedbacks, { isLoading }] = useLazyGetFeedbacksQuery();
+
+    const showReviews = async () => {
+        await getFeedbacks()
+            .unwrap()
+            .then(() => navigate(PATHS.FEEDBACKS))
+            .catch((error) => {
+                navigate(PATHS.FEEDBACKS);
+                if (error.status === 403) {
+                    localStorage.removeItem('token');
+                    navigate(PATHS.AUTH);
+                }
+            });
+    };
+
     return (
         <>
+            {isLoading && <Loader />}
             <footer className='footer'>
                 <Row justify={'space-between'} wrap={true} style={{ flexWrap: 'wrap-reverse' }}>
                     <Col flex='none'>
-                        <Button type='link'>Смотреть отзывы</Button>
+                        <Button type='link' onClick={showReviews} data-test-id='see-reviews'>
+                            Смотреть отзывы
+                        </Button>
                     </Col>
                     <Col flex='none' className='footer-card'>
                         <Card

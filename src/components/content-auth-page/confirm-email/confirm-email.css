@@ -1,25 +1,31 @@
 .confirm-email {
     text-align: center;
 }
+
 .confirm-email .confirm-email__icon {
     font-size: 80px;
-    margin-bottom: 24px;
-    color: #2f54eb;
+    margin-bottom: var(--unit-24);
+    color: var(--color-primary);
 }
+
 .container {
-    margin: 24px auto;
+    margin: var(--unit-24) auto;
 }
+
 .character {
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--color-grey);
     border-radius: 2px;
 }
+
 .character-error {
-    border: 1px solid #ff4d4f;
+    border: 1px solid var(--color-error);
     border-radius: 2px;
 }
+
 .character__inactive {
     background: none;
 }
+
 .character__filled {
     font-size: 14px;
     font-weight: 400;

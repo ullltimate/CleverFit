@@ -1,0 +1,4 @@
+.breadcrumb {
+    background: var(--color-bg-blue);
+    padding: var(--unit-16) var(--unit-24);
+}

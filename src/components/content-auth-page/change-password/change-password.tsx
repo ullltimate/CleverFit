@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePassordMutation } from '@services/auth';
-import { increment } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/user-slice';
 import { Loader } from '@components/loader/Loader';
 import { PATHS } from '@constants/paths';
 import { validateMessage, rulesPassword, rulesRepeatPassword } from '@constants/validation';
-import { IChangePassord } from '@tstypes/types';
+import { RequestChangePass } from '@tstypes/api';
 
 import './change-password.css';
 
@@ -16,12 +16,12 @@ const { Title } = Typography;
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAppSelector((state) => state.userReducer);
+    const { user } = useAppSelector(userSelector);
     const dispatch = useAppDispatch();
     const [change, { isLoading }] = useChangePassordMutation();
 
     const onFinish = useCallback(
-        (values: IChangePassord) => {
+        (values: RequestChangePass) => {
             dispatch(increment({ email: user.email, password: values.password }));
             change(values)
                 .unwrap()
@@ -60,11 +60,7 @@ export const ChangePassword: React.FC = () => {
                 <Title level={3} className='change-password__title'>
                     Восстановление аккауанта
                 </Title>
-                <Form.Item
-                    name='password'
-                    help={validateMessage.password}
-                    rules={rulesPassword}
-                >
+                <Form.Item name='password' help={validateMessage.password} rules={rulesPassword}>
                     <Input.Password
                         type='password'
                         placeholder='Пароль'

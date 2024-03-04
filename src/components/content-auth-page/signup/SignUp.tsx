@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Grid } from 'antd';
-import { GooglePlusOutlined } from '@ant-design/icons';
+import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { increment } from '@redux/reducers/userSlice';
+import { increment, userSelector } from '@redux/reducers/user-slice';
 import { useSignupMutation } from '@services/auth';
 import { Loader } from '@components/loader/Loader';
+import { ButtonGoogle } from '@components/content-auth-page/buttons/button-google';
 import { rulesEmail, rulesPassword, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { PATHS } from '@constants/paths';
-import { IValuesSignupForm } from '@tstypes/types';
+import { ValuesSignupForm } from '@tstypes/types';
 
 import './signUp.css';
-
-const { useBreakpoint } = Grid;
 
 export const SignUp: React.FC = () => {
     const [form] = Form.useForm();
@@ -21,11 +19,10 @@ export const SignUp: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.userReducer);
-    const {xs} = useBreakpoint();
+    const { user } = useAppSelector(userSelector);
 
     const onFinish = useCallback(
-        (values: IValuesSignupForm) => {
+        (values: ValuesSignupForm) => {
             signup({ email: values.email, password: values.password })
                 .unwrap()
                 .then(() => {
@@ -60,17 +57,10 @@ export const SignUp: React.FC = () => {
                 onFinish={onFinish}
                 form={form}
             >
-                <Form.Item
-                    name='email'
-                    rules={rulesEmail}
-                >
+                <Form.Item name='email' rules={rulesEmail}>
                     <Input addonBefore='e-mail' data-test-id='registration-email' />
                 </Form.Item>
-                <Form.Item
-                    name='password'
-                    help={validateMessage.password}
-                    rules={rulesPassword}
-                >
+                <Form.Item name='password' help={validateMessage.password} rules={rulesPassword}>
                     <Input.Password
                         type='password'
                         placeholder='Пароль'
@@ -104,11 +94,7 @@ export const SignUp: React.FC = () => {
                         </Button>
                     )}
                 </Form.Item>
-                <Form.Item>
-                    <Button type='text' className='login-form-button'>
-                        {!xs && <GooglePlusOutlined />} Войти через Google
-                    </Button>
-                </Form.Item>
+                <ButtonGoogle />
             </Form>
         </>
     );

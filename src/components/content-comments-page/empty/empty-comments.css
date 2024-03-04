@@ -1,0 +1,30 @@
+.comments-empty {
+    background: var(--color-bg-card);
+    margin-top: 30vh;
+}
+
+.text-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 56px 0px;
+    text-align: center;
+}
+
+.comments-empty-btns {
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media screen and (max-width: 500px) {
+    .text-wrapper {
+        padding: 48px var(--unit-32);
+    }
+
+    .comments-empty-btns .ant-btn-primary {
+        width: 100%;
+    }
+
+    .comments-empty {
+        margin-top: 0;
+    }
+}

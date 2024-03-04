@@ -1,58 +1,52 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { headers, urlAPI } from '@constants/api';
+import { endpointsAPI, urlAPI } from '@constants/api';
 import { 
-    IResponseLogin, 
-    IRequestLogin, 
-    IResponseCheck, 
-    IRequestCheck, 
-    IResponseConfirm, 
-    IRequestConfirm, 
-    IResponseChangePass,
-    IRequestChangePass
+    ResponseLogin, 
+    RequestLogin, 
+    ResponseCheck, 
+    RequestCheck,
+    RequestConfirm, 
+    ResponseChangePass,
+    RequestChangePass
 } from '@tstypes/api';
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
     baseQuery: fetchBaseQuery({ baseUrl: urlAPI }),
     endpoints: (build) => ({
-        login: build.mutation<IResponseLogin, IRequestLogin>({
+        login: build.mutation<ResponseLogin, RequestLogin>({
             query: (body) => ({
-                url: '/auth/login',
+                url: endpointsAPI.auth.logIn,
                 method: 'POST',
-                headers: headers,
                 body,
             }),
         }),
-        signup: build.mutation<object, IRequestLogin>({
+        signup: build.mutation<object, RequestLogin>({
             query: (body) => ({
-                url: '/auth/registration',
+                url: endpointsAPI.auth.signUp,
                 method: 'POST',
-                headers: headers,
                 body,
             }),
         }),
-        checkEmail: build.mutation<IResponseCheck, IRequestCheck>({
+        checkEmail: build.mutation<ResponseCheck, RequestCheck>({
             query: (email) => ({
-                url: '/auth/check-email',
+                url: endpointsAPI.auth.checkEmail,
                 method: 'POST',
-                headers: headers,
                 body: email,
             }),
         }),
-        confirmEmail: build.mutation<IResponseConfirm, IRequestConfirm>({
+        confirmEmail: build.mutation<ResponseCheck, RequestConfirm>({
             query: (body) => ({
-                url: '/auth/confirm-email',
+                url: endpointsAPI.auth.confirmEmail,
                 method: 'POST',
-                headers: headers,
                 body,
                 credentials: 'include',
             }),
         }),
-        changePassord: build.mutation<IResponseChangePass, IRequestChangePass>({
+        changePassord: build.mutation<ResponseChangePass, RequestChangePass>({
             query: (body) => ({
-                url: '/auth/change-password',
+                url: endpointsAPI.auth.changePassword,
                 method: 'POST',
-                headers: headers,
                 body,
                 credentials: 'include',
             }),

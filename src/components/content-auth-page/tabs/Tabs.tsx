@@ -4,15 +4,20 @@ import { Tabs } from 'antd';
 import { LogIn } from '../login/LogIn';
 import { SignUp } from '../signup/SignUp';
 import { PATHS } from '@constants/paths';
-import { IAuthItemsTab } from '@tstypes/types';
 
 import './tabs.css';
+
+type AuthItemsTab = {
+    label: string,
+    key: string,
+    children: React.ReactNode,
+}
 
 export const CustomTabs: React.FC = () => {
     const [key, setKey] = useState('1');
     const navigate = useNavigate();
     const location = useLocation();
-    const itemsTab: IAuthItemsTab[] = [
+    const itemsTab: AuthItemsTab[] = [
         {
             label: `Вход`,
             key: '1',
