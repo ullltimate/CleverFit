@@ -16,6 +16,7 @@ import { ExitIcon } from '@components/icons/exit-icon';
 import { PATHS } from '@constants/paths';
 
 import './sider-bar.css';
+import { useLazyGetTrainingQuery } from '@services/trainings';
 
 const { Sider } = Layout;
 
@@ -25,6 +26,7 @@ export const SiderBar: React.FC = () => {
     const [mobileWidth, setMobileWidth] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [getTrainings] = useLazyGetTrainingQuery();
 
     const changeBreakpoint = (broken: boolean): void => {
         if (broken) {
@@ -110,7 +112,8 @@ export const SiderBar: React.FC = () => {
                         {
                             key: '1',
                             icon: !mobileWidth ? <CalendarTwoTone twoToneColor='#061178' /> : '',
-                            label: <Link to={PATHS.CALENDAR}>{!collapsed ? 'Календарь' : ''}</Link>,
+                            label: !collapsed ? 'Календарь' : '',
+                            onClick: () => {getTrainings().unwrap().then(() => navigate(PATHS.CALENDAR)).catch((error) => console.log(error));},
                         },
                         {
                             key: '2',
