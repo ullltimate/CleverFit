@@ -1,14 +1,19 @@
 import React from 'react';
-
-import './calendar-page.css';
-import { Calendar, ConfigProvider } from 'antd';
+import { Calendar } from 'antd';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
 import { Content } from 'antd/lib/layout/layout';
-import ru_Ru from 'antd/es/locale/ru_RU';
+import ru_Ru from 'antd/es/calendar/locale/ru_RU';
 import moment from 'moment';
 import 'moment/locale/ru';
+
+import './calendar-page.css';
+
 moment.locale('ru');
+moment.updateLocale('ru', {
+    weekdaysMin : ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+    monthsShort : ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'], 
+  })
 
 export const CalendarPage: React.FC = () => {
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
@@ -18,9 +23,7 @@ export const CalendarPage: React.FC = () => {
     return (
         <>
             <Content style={{ margin: 24 }}>
-            <ConfigProvider locale={ru_Ru}>
-                <Calendar onPanelChange={onPanelChange} />;
-            </ConfigProvider>
+                <Calendar onPanelChange={onPanelChange} locale={ru_Ru}/>;
             </Content>
         </>
     );
