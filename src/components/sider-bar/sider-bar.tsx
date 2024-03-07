@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     HeartFilled,
     TrophyFilled,
@@ -83,7 +83,7 @@ export const SiderBar: React.FC = () => {
                 onBreakpoint={(broken) => changeBreakpoint(broken)}
             >
                 <div className={`logo-${!collapsed ? 'full' : 'hidden'}`}>
-                    <a href=''>
+                    <Link to={PATHS.MAIN}>
                         <img
                             src='/Clever.svg'
                             alt='logo'
@@ -98,7 +98,7 @@ export const SiderBar: React.FC = () => {
                                 mobileWidth ? { opacity: `${!collapsed ? 1 : 0}` } : { opacity: 1 }
                             }
                         />
-                    </a>
+                    </Link>
                 </div>
                 <Menu
                     theme='light'
@@ -110,7 +110,7 @@ export const SiderBar: React.FC = () => {
                         {
                             key: '1',
                             icon: !mobileWidth ? <CalendarTwoTone twoToneColor='#061178' /> : '',
-                            label: !collapsed ? 'Календарь' : '',
+                            label: <Link to={PATHS.CALENDAR}>{!collapsed ? 'Календарь' : ''}</Link>,
                         },
                         {
                             key: '2',

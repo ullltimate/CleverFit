@@ -1,7 +1,9 @@
 export type CardInfo = {
     title: string,
     btnText: string,
-    btnIcon: React.ReactNode
+    btnIcon: React.ReactNode,
+    path: string,
+    dataTest: string
 }
 
 export type ValuesSignupForm = {

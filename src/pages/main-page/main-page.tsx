@@ -44,6 +44,8 @@ export const MainPage: React.FC = () => {
                                     title={e.title}
                                     btnText={e.btnText}
                                     btnIcon={e.btnIcon}
+                                    path={e.path}
+                                    dataTest={e.dataTest}
                                 />
                             ),
                         )}
