@@ -12,7 +12,10 @@ type EndpointsAPI = {
         changePassword: string,
     },
     feedback: string,
-    training: string 
+    training: string,
+    catalogs: {
+        training: string,
+    }, 
 }
 
 export const endpointsAPI: EndpointsAPI = {
@@ -25,5 +28,8 @@ export const endpointsAPI: EndpointsAPI = {
         changePassword: '/auth/change-password',
     },
     feedback: '/feedback',
-    training: '/training'
+    training: '/training',
+    catalogs: {
+        training: '/catalogs/training-list',
+    },
 }
