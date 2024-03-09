@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Badge, Calendar, Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
@@ -25,12 +25,32 @@ moment.updateLocale('ru', {
 export const CalendarPage: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
     const { data: trainingList, error: errorList, isLoading, refetch } = useGetTrainingListQuery();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [coordinates, setCoordinates] = useState<DOMRect>();
+    const [selectedDate, setSelectedDate] = useState('');
+    const currentMonth = moment().month();
+
+    //console.log(currentMonth)
+ 
+
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
+        const elem = document.querySelector('.ant-picker-cell-selected');
+        elem?.classList.remove('ant-picker-cell-selected');
     };
     //console.log(ru_Ru)
-    console.log(trainings, trainingList);
-    const onSelect = (date: Moment) => console.log(date.format('YYYY.MM.DD'));
+    //console.log(trainings, trainingList);
+    const onSelect = (date: Moment) => {
+        console.log(date)
+        setSelectedDate(date.format('YYYY-MM-DD'));
+        const elem = document.querySelector('.ant-picker-cell-selected');
+         showModal();
+    }
+
+    useEffect (() => {
+        const elem = document.querySelector('.ant-picker-cell-selected');
+        elem && setCoordinates(elem.getBoundingClientRect());
+    },[selectedDate])
 
     const modalError = useCallback(() => {
         Modal.error({
@@ -101,13 +121,51 @@ export const CalendarPage: React.FC = () => {
         );
     };
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    //const defineElement = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    //    const elem = e.target as Element;
+    //    if(elem.tagName === 'SPAN'){
+    //        setCoordinates((((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
+    //    } else if (elem.tagName === 'LI'){
+    //        setCoordinates(((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
+    //    }else {
+    //        setCoordinates(((elem.parentNode as Element).parentNode as Element).getBoundingClientRect());
+    //    }
+    //}
+
     return (
         <>
             {isLoading && <Loader />}
             <Header />
             <Content style={{ padding: 24, background: 'var(--color-bg-blue)', marginBottom: 42 }}>
-                <Calendar onPanelChange={onPanelChange} onSelect={onSelect} locale={ru_Ru} dateCellRender={dateCellRender}/>
+                <Calendar
+                    onPanelChange={onPanelChange}
+                    onSelect={onSelect}
+                    locale={ru_Ru}
+                    dateCellRender={dateCellRender}
+                />
             </Content>
+            <Modal title='Basic Modal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+            mask={false}
+            style={{position: 'absolute', top: `${coordinates && coordinates.top}px`, left: `${coordinates && coordinates.left}px`, maxWidth: 264}}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
+            <div className='modal-training'>
+                
+            </div>
         </>
     );
 };
