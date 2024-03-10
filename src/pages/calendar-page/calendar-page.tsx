@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Calendar, Empty, Grid, Modal } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { Badge, Button, Calendar, Drawer, Empty, Grid,  Modal, Select } from 'antd';
+import { ArrowLeftOutlined, CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
 import { Content } from 'antd/lib/layout/layout';
@@ -23,7 +23,7 @@ moment.updateLocale('ru', {
     week: {dow: 1}
   })
 
-const {useBreakpoint} = Grid;
+const { useBreakpoint } = Grid;
 
 export const CalendarPage: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
@@ -36,6 +36,9 @@ export const CalendarPage: React.FC = () => {
     const screens = useBreakpoint();
     const [selectedWeekDay, setSelectedWeekDay] = useState(moment().day());
     const [trainingsForDay, setTrainingsForDay] = useState<Training[]>();
+    const [isCreateExercise, setIsCreateExercise] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    console.log(trainingList)
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log(value.format('DD.MM.YYYY'), mode);
@@ -52,11 +55,17 @@ export const CalendarPage: React.FC = () => {
     useEffect(() => {
         const elemSelected = document.querySelector('.ant-picker-cell-selected');
         elemSelected && setCoordinates(elemSelected.getBoundingClientRect());
+        setIsCreateExercise(false);
     }, [selectedDate, screens]);
 
     useEffect(() => {
-        trainings && setTrainingsForDay(trainings.filter((e) => new Date(e.date).toLocaleString('ru').split(',')[0] === selectedDate))
-    },[trainings, selectedDate])
+        trainings &&
+            setTrainingsForDay(
+                trainings.filter(
+                    (e) => new Date(e.date).toLocaleString('ru').split(',')[0] === selectedDate,
+                ),
+            );
+    }, [trainings, selectedDate]);
 
     const modalError = useCallback(() => {
         Modal.error({
@@ -138,6 +147,18 @@ export const CalendarPage: React.FC = () => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setIsCreateExercise(false);
+    };
+
+    const handleChange = (value: string) => {
+        console.log(`selected ${value}`);
+      };    
+    const showDrawer = () => {
+      setOpenDrawer(true);
+    };
+
+    const closeDrawer = () => {
+      setOpenDrawer(false);
     };
 
     return (
@@ -154,6 +175,9 @@ export const CalendarPage: React.FC = () => {
             </Content>
             <div
                 className='modal-training'
+                data-test-id={`${
+                    !isCreateExercise ? 'modal-create-training' : 'modal-create-exercise'
+                }`}
                 style={{
                     display: `${isModalOpen ? 'block' : 'none'}`,
                     top: `${coordinates?.top}px`,
@@ -166,41 +190,87 @@ export const CalendarPage: React.FC = () => {
                     width: 264,
                 }}
             >
-                <div className='modal-title'>
-                    <h4 className='title'>Тренировки на {selectedDate}</h4>
-                    <CloseOutlined onClick={handleCancel} />
-                </div>
-                <p className='modal-subtitle' style={{display: `${trainingsForDay?.length === 0 ? 'block': 'none'}`}}>Нет активных тренировок</p>
-                <div className='modal-content'>
-                    <ul className='events' style={{ listStyleType: 'none' }}>
-                    {trainingsForDay &&
-                    trainingsForDay.length != 0 ?
-                        trainingsForDay
-                                .map((e) => (
-                                    <li key={e._id}>
-                                        <Badge
-                                            color={
-                                                colorTrainings.find((el) => el.name === e.name)
-                                                    ?.color
-                                            }
-                                            text={e.name}
-                                        />
-                                    </li>
-                                )) :
-                                <Empty
+                {!isCreateExercise ? (
+                    <>
+                        <div className='modal-title'>
+                            <h4 className='title'>Тренировки на {selectedDate}</h4>
+                            <CloseOutlined onClick={handleCancel} />
+                        </div>
+                        <p
+                            className='modal-subtitle'
+                            style={{
+                                display: `${trainingsForDay?.length === 0 ? 'block' : 'none'}`,
+                            }}
+                        >
+                            Нет активных тренировок
+                        </p>
+                        <div className='modal-content'>
+                            <ul className='events' style={{ listStyleType: 'none' }}>
+                                {trainingsForDay && trainingsForDay.length != 0 ? (
+                                    trainingsForDay.map((e) => (
+                                        <li key={e._id} className='list-item'>
+                                            <Badge
+                                                color={
+                                                    colorTrainings.find((el) => el.name === e.name)
+                                                        ?.color
+                                                }
+                                                text={e.name}
+                                            />
+                                            <EditOutlined style={{color: 'var(--color-primary)'}} onClick={() => setIsCreateExercise(true)}/>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <Empty
+                                        image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+                                        imageStyle={{
+                                            height: 32,
+                                        }}
+                                        description={false}
+                                    />
+                                )}
+                            </ul>
+                        </div>
+                        <Button
+                            type='primary'
+                            className='modal-btn'
+                            onClick={() => setIsCreateExercise(true)}
+                        >
+                            {trainingsForDay?.length != 0
+                                ? 'Добавить тренировку'
+                                : 'Создать тренировку'}
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <div className='create-exercise' >
+                            <ArrowLeftOutlined style={{width: 16}} onClick={() => setIsCreateExercise(false)}/>
+                            <Select
+                                defaultValue="Выбор типа тренировки"
+                                style={{ width: 228 }}
+                                onChange={handleChange}
+                                options={trainingList?.map((e) => ({value: e.key, label: e.name}))}
+                            />
+                        </div>
+                        <div className='modal-content'>
+                            <Empty
                                 image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
                                 imageStyle={{
                                     height: 32,
                                 }}
                                 description={false}
-                            />}
-
-                    </ul>
-                </div>
-                <Button type='primary' className='modal-btn'>
-                    Создать тренировку
-                </Button>
+                            />
+                        </div>
+                        <Button type='text' className='modal-btn' onClick={showDrawer}>Добавить утпражнения</Button>
+                        <Button type='link' className='modal-btn'>Сохранить</Button>
+                    </>
+                )}
             </div>
+            <Drawer title={<><PlusOutlined /><h4 style={{display: 'inline-block'}}>Добавление упражнений</h4></>} placement="right" onClose={closeDrawer} open={openDrawer} maskStyle={{background: 'transparent'}}>
+                <div className='drawer-name'>
+                    <p className='name-training'>силовая</p>
+                    <p className='date-training'>дата</p>
+                </div>
+            </Drawer>
         </>
     );
 };

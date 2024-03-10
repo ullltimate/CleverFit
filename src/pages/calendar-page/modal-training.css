@@ -15,6 +15,9 @@
     font-weight: 700;
     margin-bottom: 0;
 }
+.modal-content{
+    min-height: 64px;
+}
 .modal-subtitle{
     color: var(--color-disabled);
     font-size: 14px;
@@ -25,5 +28,16 @@
     margin: 12px 0; 
 }
 .events{
-    padding: 0;
+    padding: var(--unit-16) 0;
+}
+.create-exercise{
+    display: flex;
+}
+.list-item{
+    display: flex;
+    justify-content: space-between;
+}
+.drawer-name{
+    display: flex;
+    justify-content: space-between;
 }
