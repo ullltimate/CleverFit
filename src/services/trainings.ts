@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { endpointsAPI, urlAPI } from '@constants/api';
 import { store } from '@redux/configure-store';
 
-type Training = {
+export type Training = {
     _id: string;
     name: string;
     date: string;

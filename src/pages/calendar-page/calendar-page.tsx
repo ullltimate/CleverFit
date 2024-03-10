@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Badge, Calendar, Modal } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Badge, Button, Calendar, Empty, Grid, Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
@@ -10,10 +10,11 @@ import 'moment/locale/ru';
 import { Header } from '@components/header/header';
 import { Loader } from '@components/loader/Loader';
 import { useGetTrainingListQuery } from '@services/catalogs';
-import { useGetTrainingQuery } from '@services/trainings';
+import { Training, useGetTrainingQuery } from '@services/trainings';
 import { colorTrainings } from '@constants/calendar';
 
 import './calendar-page.css';
+import './modal-training.css';
 
 moment.locale('ru');
 moment.updateLocale('ru', {
@@ -22,35 +23,40 @@ moment.updateLocale('ru', {
     week: {dow: 1}
   })
 
+const {useBreakpoint} = Grid;
+
 export const CalendarPage: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
     const { data: trainingList, error: errorList, isLoading, refetch } = useGetTrainingListQuery();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [coordinates, setCoordinates] = useState<DOMRect>();
     const [selectedDate, setSelectedDate] = useState('');
-    const currentMonth = moment().month();
-
-    //console.log(currentMonth)
- 
+    const widthCreateTraining = 264;
+    //const currentMonth = moment().month();
+    const screens = useBreakpoint();
+    const [selectedWeekDay, setSelectedWeekDay] = useState(moment().day());
+    const [trainingsForDay, setTrainingsForDay] = useState<Training[]>();
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
-        console.log(value.format('YYYY-MM-DD'), mode);
+        console.log(value.format('DD.MM.YYYY'), mode);
         const elem = document.querySelector('.ant-picker-cell-selected');
         elem?.classList.remove('ant-picker-cell-selected');
     };
-    //console.log(ru_Ru)
-    //console.log(trainings, trainingList);
-    const onSelect = (date: Moment) => {
-        console.log(date)
-        setSelectedDate(date.format('YYYY-MM-DD'));
-        const elem = document.querySelector('.ant-picker-cell-selected');
-         showModal();
-    }
 
-    useEffect (() => {
-        const elem = document.querySelector('.ant-picker-cell-selected');
-        elem && setCoordinates(elem.getBoundingClientRect());
-    },[selectedDate])
+    const onSelect = (date: Moment) => {
+        setSelectedWeekDay(date.day());
+        setSelectedDate(date.format('DD.MM.YYYY'));
+        showModal();
+    };
+
+    useEffect(() => {
+        const elemSelected = document.querySelector('.ant-picker-cell-selected');
+        elemSelected && setCoordinates(elemSelected.getBoundingClientRect());
+    }, [selectedDate, screens]);
+
+    useEffect(() => {
+        trainings && setTrainingsForDay(trainings.filter((e) => new Date(e.date).toLocaleString('ru').split(',')[0] === selectedDate))
+    },[trainings, selectedDate])
 
     const modalError = useCallback(() => {
         Modal.error({
@@ -92,7 +98,8 @@ export const CalendarPage: React.FC = () => {
 
     const getListData = (value: Moment) => {
         const listData: ListData[] = [];
-        (trainings && trainingList) &&
+        trainings &&
+            trainingList &&
             trainings.map((el) => {
                 if (
                     value.format('DD.MM.YYYY') ===
@@ -104,7 +111,7 @@ export const CalendarPage: React.FC = () => {
                     });
                 }
             });
-        
+
         return listData || [];
     };
 
@@ -125,24 +132,13 @@ export const CalendarPage: React.FC = () => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
+    //const handleOk = () => {
+    //    setIsModalOpen(false);
+    //};
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    //const defineElement = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //    const elem = e.target as Element;
-    //    if(elem.tagName === 'SPAN'){
-    //        setCoordinates((((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
-    //    } else if (elem.tagName === 'LI'){
-    //        setCoordinates(((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
-    //    }else {
-    //        setCoordinates(((elem.parentNode as Element).parentNode as Element).getBoundingClientRect());
-    //    }
-    //}
 
     return (
         <>
@@ -156,15 +152,54 @@ export const CalendarPage: React.FC = () => {
                     dateCellRender={dateCellRender}
                 />
             </Content>
-            <Modal title='Basic Modal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
-            mask={false}
-            style={{position: 'absolute', top: `${coordinates && coordinates.top}px`, left: `${coordinates && coordinates.left}px`, maxWidth: 264}}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
-            <div className='modal-training'>
-                
+            <div
+                className='modal-training'
+                style={{
+                    display: `${isModalOpen ? 'block' : 'none'}`,
+                    top: `${coordinates?.top}px`,
+                    left: `${
+                        coordinates &&
+                        (selectedWeekDay === 0
+                            ? coordinates.right - widthCreateTraining
+                            : coordinates.left)
+                    }px`,
+                    width: 264,
+                }}
+            >
+                <div className='modal-title'>
+                    <h4 className='title'>Тренировки на {selectedDate}</h4>
+                    <CloseOutlined onClick={handleCancel} />
+                </div>
+                <p className='modal-subtitle' style={{display: `${trainingsForDay?.length === 0 ? 'block': 'none'}`}}>Нет активных тренировок</p>
+                <div className='modal-content'>
+                    <ul className='events' style={{ listStyleType: 'none' }}>
+                    {trainingsForDay &&
+                    trainingsForDay.length != 0 ?
+                        trainingsForDay
+                                .map((e) => (
+                                    <li key={e._id}>
+                                        <Badge
+                                            color={
+                                                colorTrainings.find((el) => el.name === e.name)
+                                                    ?.color
+                                            }
+                                            text={e.name}
+                                        />
+                                    </li>
+                                )) :
+                                <Empty
+                                image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+                                imageStyle={{
+                                    height: 32,
+                                }}
+                                description={false}
+                            />}
+
+                    </ul>
+                </div>
+                <Button type='primary' className='modal-btn'>
+                    Создать тренировку
+                </Button>
             </div>
         </>
     );
