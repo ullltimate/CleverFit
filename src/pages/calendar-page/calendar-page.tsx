@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Calendar, Drawer, Empty, Grid,  Modal, Select } from 'antd';
+import { Badge, Button, Calendar, Drawer, Empty, Form, Grid,  InputNumber,  Modal, Select, Space } from 'antd';
 import { ArrowLeftOutlined, CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
@@ -31,6 +31,7 @@ export const CalendarPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [coordinates, setCoordinates] = useState<DOMRect>();
     const [selectedDate, setSelectedDate] = useState('');
+    //const [selectedDateForSelector, setselectedDateForSelector]= useState('');
     const widthCreateTraining = 264;
     //const currentMonth = moment().month();
     const screens = useBreakpoint();
@@ -38,22 +39,85 @@ export const CalendarPage: React.FC = () => {
     const [trainingsForDay, setTrainingsForDay] = useState<Training[]>();
     const [isCreateExercise, setIsCreateExercise] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    console.log(trainingList)
+    //console.log(trainingList)
+    const [firstLastDate, setFirstLastDate] = useState<FirstLastDate>();
+    const [valueCalendar, setValueCalendar] = useState<Moment>(moment());
+    const [currentMonth, setCurrentMonth] = useState<number>(moment().month());
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
-        console.log(value.format('DD.MM.YYYY'), mode);
+        console.log('panel', value.format('DD.MM.YYYY'), mode);
         const elem = document.querySelector('.ant-picker-cell-selected');
         elem?.classList.remove('ant-picker-cell-selected');
+        if(value.isBefore(firstLastDate?.firstDate, 'day') || value.isAfter(firstLastDate?.lastDate, 'day')){
+            console.log('ff')
+            setValueCalendar(value);
+            setCurrentMonth(value.month())
+            setFirstLastDate(getFirstDateAndLastDateOnThePanel(value));
+        }
     };
 
+    useEffect(()=>{
+        console.log('изменение панели первоя и последняя ячейка ', firstLastDate?.firstDate.format('DD.MM.YYYY'))
+    },[firstLastDate])
+
+    const getFirstDateAndLastDateOnThePanel = (date: Moment) => {
+        const firstDate = moment(date).startOf("month");
+        const lastDate = moment(date).endOf("month");
+        
+      
+        const firstDateDay = firstDate.day() - 1 ;
+        firstDate.subtract(firstDateDay, "days");
+        lastDate.add(42 - Number(lastDate.format("DD")) - firstDateDay, "days");
+      
+        return {
+          firstDate,
+          lastDate,
+        };
+      };
+    type FirstLastDate = {
+        firstDate: Moment,
+        lastDate: Moment
+    }
+    useEffect(() => {
+        setFirstLastDate(getFirstDateAndLastDateOnThePanel(moment()))
+    },[])
+
+    useEffect(() => {
+        console.log('Изменение value:', valueCalendar.format('DD-MM-YYYY'), valueCalendar.month())
+    },[valueCalendar])
+
+    const onChange = (date: Moment) => {
+        console.log('onChange', date.format('DD.MM.YYYY'))
+    }
+
     const onSelect = (date: Moment) => {
+        console.log('onSelect', date.format('DD.MM.YYYY'))
         setSelectedWeekDay(date.day());
         setSelectedDate(date.format('DD.MM.YYYY'));
+        //setselectedDateForSelector(date.format('YYYY-MM-DD'))
         showModal();
+        console.log(date.isBefore(firstLastDate?.firstDate, 'day'))
+        if(date.isBefore(firstLastDate?.firstDate, 'day') 
+            || date.isAfter(firstLastDate?.lastDate, 'day')){
+            setValueCalendar(date)
+        }else{
+            if(date.isBefore(moment(valueCalendar).startOf('month'))){
+                setValueCalendar(moment(valueCalendar).startOf('month'))
+            }else if(date.isAfter(moment(valueCalendar).endOf('month'))){
+                setValueCalendar(moment(valueCalendar).endOf('month'))
+            }else{
+                date.month(currentMonth)
+                setValueCalendar(date)
+            }
+        }
     };
+    
 
     useEffect(() => {
         const elemSelected = document.querySelector('.ant-picker-cell-selected');
+        //console.log(selectedDateForSelector);
+        //const elementik = document.querySelector(`[title='${selectedDateForSelector}']`)
+        //console.log(elementik)
         elemSelected && setCoordinates(elemSelected.getBoundingClientRect());
         setIsCreateExercise(false);
     }, [selectedDate, screens]);
@@ -171,6 +235,9 @@ export const CalendarPage: React.FC = () => {
                     onSelect={onSelect}
                     locale={ru_Ru}
                     dateCellRender={dateCellRender}
+                    //onChange={onChange}
+                    value={valueCalendar}
+                    onChange={onChange}
                 />
             </Content>
             <div
@@ -270,6 +337,23 @@ export const CalendarPage: React.FC = () => {
                     <p className='name-training'>силовая</p>
                     <p className='date-training'>дата</p>
                 </div>
+                <Form>
+                    <Space direction='horizontal'>
+                        <Form.Item>
+                            <div>Подходы</div>
+                            <InputNumber addonBefore="+" />
+                        </Form.Item>
+                        <Form.Item>
+                            <div>Вес, кг</div>
+                            <InputNumber />
+                        </Form.Item>x
+                        <Form.Item>
+                            <div>Количество</div>
+                            <InputNumber />
+                        </Form.Item>
+                    </Space>
+                </Form>
+                <Button type='link'><PlusOutlined />Добавить ещё</Button>
             </Drawer>
         </>
     );
