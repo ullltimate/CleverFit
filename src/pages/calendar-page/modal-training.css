@@ -27,7 +27,7 @@
     width: 100%;
     margin: 12px 0; 
 }
-.events{
+.modal-events{
     padding: var(--unit-16) 0;
 }
 .create-exercise{
@@ -40,4 +40,7 @@
 .drawer-name{
     display: flex;
     justify-content: space-between;
+}
+.drawer-buttons{
+    background: var(--color-bg-grey);
 }

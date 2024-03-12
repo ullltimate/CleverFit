@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Calendar, Drawer, Empty, Form,  InputNumber,  Modal, Select, Space } from 'antd';
-import { ArrowLeftOutlined, CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Badge, Button, Calendar, Drawer, Empty, Modal, Select } from 'antd';
+import { ArrowLeftOutlined, CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
 import { Content } from 'antd/lib/layout/layout';
@@ -9,6 +9,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import { Header } from '@components/header/header';
 import { Loader } from '@components/loader/Loader';
+import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { useGetTrainingListQuery } from '@services/catalogs';
 import { Training, useGetTrainingQuery } from '@services/trainings';
 import { colorTrainings } from '@constants/calendar';
@@ -31,9 +32,10 @@ export const CalendarPage: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState('');
     const widthCreateTraining = 264;
     const [selectedWeekDay, setSelectedWeekDay] = useState(moment().day());
-    const [trainingsForDay, setTrainingsForDay] = useState<Training[]>();
+    const [trainingsForDay, setTrainingsForDay] = useState<Training[]>([]);
     const [isCreateExercise, setIsCreateExercise] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [valueEditTrain, setValueEditTrain] = useState("Выбор типа тренировки");
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log('panel', value.format('DD.MM.YYYY'), mode);
@@ -120,6 +122,7 @@ export const CalendarPage: React.FC = () => {
     };
 
     const showModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, date:Moment) => {
+        setIsCreateExercise(false)
         e.stopPropagation();
         setSelectedDate(date.format('DD.MM.YYYY'));
         setSelectedWeekDay(date.day());
@@ -140,8 +143,9 @@ export const CalendarPage: React.FC = () => {
     };
 
     const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-      };    
+       trainingList && setValueEditTrain(trainingList.filter(train => train.key === value)[0].name)
+    };
+
     const showDrawer = () => {
       setOpenDrawer(true);
     };
@@ -149,6 +153,17 @@ export const CalendarPage: React.FC = () => {
     const closeDrawer = () => {
       setOpenDrawer(false);
     };
+
+    const editTraining = (nameTrain: string) => {
+        setIsCreateExercise(true);
+        setValueEditTrain(nameTrain);
+    }
+
+    const addTrain = () => {
+        setIsCreateExercise(true);
+        setValueEditTrain("Выбор типа тренировки");
+    }
+
 
     return (
         <>
@@ -202,8 +217,8 @@ export const CalendarPage: React.FC = () => {
                             Нет активных тренировок
                         </p>
                         <div className='modal-content'>
-                            <ul className='events' style={{ listStyleType: 'none' }}>
-                                {trainingsForDay && trainingsForDay.length != 0 ? (
+                            <ul className='modal-events' style={{ listStyleType: 'none' }}>
+                                {trainingsForDay.length != 0 ? (
                                     trainingsForDay.map((e) => (
                                         <li key={e._id} className='list-item'>
                                             <Badge
@@ -213,7 +228,7 @@ export const CalendarPage: React.FC = () => {
                                                 }
                                                 text={e.name}
                                             />
-                                            <EditOutlined style={{color: 'var(--color-primary)'}} onClick={() => setIsCreateExercise(true)}/>
+                                            <EditOutlined style={{color: 'var(--color-primary)'}} onClick={() => editTraining(e.name)}/>
                                         </li>
                                     ))
                                 ) : (
@@ -230,7 +245,7 @@ export const CalendarPage: React.FC = () => {
                         <Button
                             type='primary'
                             className='modal-btn'
-                            onClick={() => setIsCreateExercise(true)}
+                            onClick={() => addTrain()}
                         >
                             {trainingsForDay?.length != 0
                                 ? 'Добавить тренировку'
@@ -242,48 +257,64 @@ export const CalendarPage: React.FC = () => {
                         <div className='create-exercise' >
                             <ArrowLeftOutlined style={{width: 16}} onClick={() => setIsCreateExercise(false)}/>
                             <Select
-                                defaultValue="Выбор типа тренировки"
+                                defaultValue={valueEditTrain}
                                 style={{ width: 228 }}
                                 onChange={handleChange}
-                                options={trainingList?.map((e) => ({value: e.key, label: e.name}))}
+                                options={trainingList?.map((e) => ({value: e.key, label: e.name})).filter(name => trainingsForDay.every(train => !name.label.includes(train.name) ))}
                             />
                         </div>
                         <div className='modal-content'>
-                            <Empty
-                                image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
-                                imageStyle={{
-                                    height: 32,
-                                }}
-                                description={false}
-                            />
+                            {
+                                valueEditTrain != 'Выбор типа тренировки' 
+                                ? 
+                                <ul>
+                                    {
+                                        trainingsForDay
+                                            .find(train => train.name ===valueEditTrain)?.exercises
+                                            .map(e => 
+                                                <li key={e._id} className='list-item'>
+                                                    <p>{e.name}</p>
+                                                    <EditOutlined style={{color: 'var(--color-primary)'}}/>
+                                                </li>
+                                            )
+                                    }
+                                </ul>
+                                : 
+                                <Empty
+                                    image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+                                    imageStyle={{ height: 32}}
+                                    description={false}
+                                />
+                            }
                         </div>
                         <Button type='text' className='modal-btn' onClick={showDrawer}>Добавить утпражнения</Button>
                         <Button type='link' className='modal-btn'>Сохранить</Button>
                     </>
                 )}
             </div>
-            <Drawer title={<><PlusOutlined /><h4 style={{display: 'inline-block'}}>Добавление упражнений</h4></>} placement="right" onClose={closeDrawer} open={openDrawer} maskStyle={{background: 'transparent'}}>
+            <Drawer width={408} 
+                    title={<><PlusOutlined style={{marginRight: 6}} /><h4 style={{display: 'inline-block', margin: 0, fontSize: 20, fontWeight: 500}}>Добавление упражнений</h4></>} 
+                    placement="right" 
+                    onClose={closeDrawer} 
+                    open={openDrawer} 
+                    maskStyle={{background: 'transparent'}}
+                    headerStyle={{padding: 'var(--unit-16) var(--unit-32)', border: 'none'}}
+                    bodyStyle={{padding: '0px var(--unit-32)'}}
+            >
                 <div className='drawer-name'>
-                    <p className='name-training'>силовая</p>
-                    <p className='date-training'>дата</p>
+                    <Badge
+                        color={
+                            colorTrainings.find((el) => el.name === valueEditTrain)?.color
+                        }
+                        text={valueEditTrain}
+                    />
+                    <p className='date-training'>{selectedDate}</p>
                 </div>
-                <Form>
-                    <Space direction='horizontal'>
-                        <Form.Item>
-                            <div>Подходы</div>
-                            <InputNumber addonBefore="+" />
-                        </Form.Item>
-                        <Form.Item>
-                            <div>Вес, кг</div>
-                            <InputNumber />
-                        </Form.Item>x
-                        <Form.Item>
-                            <div>Количество</div>
-                            <InputNumber />
-                        </Form.Item>
-                    </Space>
-                </Form>
-                <Button type='link'><PlusOutlined />Добавить ещё</Button>
+                <DrawerForm />
+                <div className='drawer-buttons'>
+                    <Button type='link' style={{width: 170}}><PlusOutlined />Добавить ещё</Button>
+                    <Button type='text' style={{width: 170, display: 'none'}} disabled ><MinusOutlined />Удалить</Button>
+                </div>
             </Drawer>
         </>
     );

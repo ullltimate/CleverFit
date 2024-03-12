@@ -1,0 +1,20 @@
+.form-label{
+    background: var(--color-bg-grey);
+    padding: 4px 8px;
+    margin-bottom: 6px;
+}
+.item-approaches{
+    width: 120px;
+    margin-right: 32px !important;
+}
+.item-weight,
+.item-count{
+    width: 90px;
+}
+.drawer-form .item-separator{
+    color: var(--color-bg-grey);
+    margin-bottom: 0;
+}
+.drawer-form .ant-space{
+    gap: 2px !important;
+}
