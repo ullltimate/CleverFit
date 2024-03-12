@@ -23,103 +23,22 @@ moment.updateLocale('ru', {
     week: {dow: 1}
   })
 
-//const { useBreakpoint } = Grid;
-
 export const CalendarPage: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
     const { data: trainingList, error: errorList, isLoading, refetch } = useGetTrainingListQuery();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [coordinates, setCoordinates] = useState<DOMRect>();
     const [selectedDate, setSelectedDate] = useState('');
-    //const [selectedDateForSelector, setselectedDateForSelector]= useState('');
     const widthCreateTraining = 264;
-    //const currentMonth = moment().month();
-    //const screens = useBreakpoint();
     const [selectedWeekDay, setSelectedWeekDay] = useState(moment().day());
     const [trainingsForDay, setTrainingsForDay] = useState<Training[]>();
     const [isCreateExercise, setIsCreateExercise] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    //console.log(trainingList)
-    //const [firstLastDate, setFirstLastDate] = useState<FirstLastDate>();
-    //const [valueCalendar, setValueCalendar] = useState<Moment>(moment());
-    //const [currentMonth, setCurrentMonth] = useState<number>(moment().month());
-
-    //ВЕСЬ ЗАКОМЕНТИРОВАННЫЙ КОД МЕНЯЕТ ДЕФОЛТНОЕ ПОВЕДЕНИЕ ПЕРЕЛИСТЫВАНИЯ КАЛЕНДАРЯ СИЛАМИ ANTD
-    //но ломает координаты
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log('panel', value.format('DD.MM.YYYY'), mode);
         setIsModalOpen(false)
-        //const elem = document.querySelector('.ant-picker-cell-selected');
-        //elem?.classList.remove('ant-picker-cell-selected');
-        //if(value.isBefore(firstLastDate?.firstDate, 'day') || value.isAfter(firstLastDate?.lastDate, 'day')){
-        //    setValueCalendar(value);
-        //    setCurrentMonth(value.month())
-        //    setFirstLastDate(getFirstDateAndLastDateOnThePanel(value));
-        //}
-    };
-
-    //useEffect(()=>{
-    //    console.log('изменение панели первая и последняя ячейка ', firstLastDate?.firstDate.format('DD.MM.YYYY'))
-    //},[firstLastDate])
-
-    //const getFirstDateAndLastDateOnThePanel = (date: Moment) => {
-    //    const firstDate = moment(date).startOf("month");
-    //    const lastDate = moment(date).endOf("month");
-    //    
-    //  
-    //    const firstDateDay = firstDate.day() - 1 ;
-    //    firstDate.subtract(firstDateDay, "days");
-    //    lastDate.add(42 - Number(lastDate.format("DD")) - firstDateDay, "days");
-    //  
-    //    return {
-    //      firstDate,
-    //      lastDate,
-    //    };
-    //  };
-    //type FirstLastDate = {
-    //    firstDate: Moment,
-    //    lastDate: Moment
-    //}
-    //useEffect(() => {
-    //    setFirstLastDate(getFirstDateAndLastDateOnThePanel(moment()))
-    //},[])
-
-    //useEffect(() => {
-    //    console.log('Изменение value:', valueCalendar.format('DD-MM-YYYY'), valueCalendar.month())
-    //},[valueCalendar])
-
-    const onSelect = (date: Moment) => {
-        console.log('onSelect', date.format('DD.MM.YYYY'))
-        setSelectedWeekDay(date.day());
-        setSelectedDate(date.format('DD.MM.YYYY'));
-        //setselectedDateForSelector(date.format('YYYY-MM-DD'))
-        //showModal();
-        //console.log(date.isBefore(firstLastDate?.firstDate, 'day'))
-        //if(date.isBefore(firstLastDate?.firstDate, 'day') 
-        //    || date.isAfter(firstLastDate?.lastDate, 'day')){
-        //    setValueCalendar(date)
-        //}else{
-        //    if(date.isBefore(moment(valueCalendar).startOf('month'))){
-        //        setValueCalendar(moment(valueCalendar).startOf('month'))
-        //    }else if(date.isAfter(moment(valueCalendar).endOf('month'))){
-        //        setValueCalendar(moment(valueCalendar).endOf('month'))
-        //    }else{
-        //        date.month(currentMonth)
-        //        setValueCalendar(date)
-        //    }
-        //}
-    };
-    
-
-    //useEffect(() => {
-    //    const elemSelected = document.querySelector('.ant-picker-cell-selected');
-    //    //console.log(selectedDateForSelector);
-    //    //const elementik = document.querySelector(`[title='${selectedDateForSelector}']`)
-    //    //console.log(elementik)
-    //    elemSelected && setCoordinates(elemSelected.getBoundingClientRect());
-    //    setIsCreateExercise(false);
-    //}, [selectedDate, screens]);
+    };   
 
     useEffect(() => {
         trainings &&
@@ -215,10 +134,6 @@ export const CalendarPage: React.FC = () => {
         setIsModalOpen(true);
     };
 
-    //const handleOk = () => {
-    //    setIsModalOpen(false);
-    //};
-
     const handleCancel = () => {
         setIsModalOpen(false);
         setIsCreateExercise(false);
@@ -242,9 +157,7 @@ export const CalendarPage: React.FC = () => {
             <Content style={{ padding: 24, background: 'var(--color-bg-blue)', marginBottom: 42 }}>
                 <Calendar
                     onPanelChange={onPanelChange}
-                    onSelect={onSelect}
                     locale={ru_Ru}
-                    //dateCellRender={dateCellRender}
                     dateFullCellRender={(date) => (
                         <div className='date-cell' style={{ zIndex: 0 }} onClick={(e) => showModal(e, date)}>
                             <div className='ant-picker-calendar-date-value'>
@@ -255,7 +168,6 @@ export const CalendarPage: React.FC = () => {
                             </div>
                         </div>
                     )}
-                    //value={valueCalendar}
                 />
             </Content>
             <div
