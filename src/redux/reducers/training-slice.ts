@@ -1,7 +1,7 @@
 import { RootState } from '@redux/configure-store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-type Exercise = {
+export type Exercise = {
     name: string;
     replays: number;
     weight: number;
@@ -49,10 +49,19 @@ export const trainingSlice = createSlice({
         resetExercises: (state) => {
             state.exercises = [];
         },
+        editExercises: (state, { payload: exercise }: PayloadAction<Partial<Exercise> & { index: number }>) => {
+            state.exercises[exercise.index] = {
+                ...state.exercises[exercise.index],
+                ...exercise,
+            }
+        },
+        removeExercises: (state, action: PayloadAction<number[]>) => {
+            state.exercises = state.exercises.filter((_, index) => !action.payload.includes(index))
+        },
     },
 });
 
-export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises } = trainingSlice.actions;
+export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises, editExercises, removeExercises } = trainingSlice.actions;
 export const trainingSelector = (state: RootState) => state.trainingReducer;
 
 export default trainingSlice.reducer;
