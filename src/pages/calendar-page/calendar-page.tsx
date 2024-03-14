@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Calendar, Drawer, Empty, Modal, Select } from 'antd';
+import { Badge, Button, Calendar, Drawer, Empty, Modal, Select, Grid } from 'antd';
 import { ArrowLeftOutlined, CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 import type { Moment } from 'moment';
@@ -13,9 +13,12 @@ import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer
 import { useGetTrainingListQuery } from '@services/catalogs';
 import { Training, useGetTrainingQuery } from '@services/trainings';
 import { colorTrainings } from '@constants/calendar';
+import { addExercises, resetExercises, saveTrainingDate, setExercises } from '@redux/reducers/training-slice';
 
 import './calendar-page.css';
 import './modal-training.css';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { trainingSelector } from '@redux/reducers/training-slice';
 
 moment.locale('ru');
 moment.updateLocale('ru', {
@@ -23,6 +26,8 @@ moment.updateLocale('ru', {
     monthsShort : ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'], 
     week: {dow: 1}
   })
+
+const {useBreakpoint} = Grid;
 
 export const CalendarPage: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
@@ -36,6 +41,22 @@ export const CalendarPage: React.FC = () => {
     const [isCreateExercise, setIsCreateExercise] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [valueEditTrain, setValueEditTrain] = useState("Выбор типа тренировки");
+    const [exercisesForDay, setExercisesForDay] = useState<Exercise[]>([]);
+    const [elemForCoordinates, setElemForCoordinates] = useState<Element>();
+
+    const screens = useBreakpoint();
+    const dispatch = useAppDispatch();
+    const {date, name, exercises} = useAppSelector(trainingSelector);
+
+
+    type Exercise = {
+        name: string;
+        replays: number;
+        weight: number;
+        approaches: number;
+        isImplementation?: boolean;
+        _id?: string;
+    }
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log('panel', value.format('DD.MM.YYYY'), mode);
@@ -50,6 +71,17 @@ export const CalendarPage: React.FC = () => {
                 ),
             );
     }, [trainings, selectedDate]);
+
+    useEffect(() => {
+        const exersices = trainingsForDay.find(train => train.name === valueEditTrain);
+        if(exersices) {
+            setExercisesForDay(exersices.exercises);
+            //dispatch(setExercises(exersices.exercises))
+        } else {
+            setExercisesForDay([]);
+            //dispatch(addExercises());
+        }
+    },[trainings, selectedDate, valueEditTrain, trainingsForDay])
 
     const modalError = useCallback(() => {
         Modal.error({
@@ -122,11 +154,22 @@ export const CalendarPage: React.FC = () => {
     };
 
     const showModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, date:Moment) => {
+        dispatch(resetExercises());
         setIsCreateExercise(false)
         e.stopPropagation();
         setSelectedDate(date.format('DD.MM.YYYY'));
         setSelectedWeekDay(date.day());
         const elem = e.target as Element;
+        setElemForCoordinates(elem);
+        //defineCoordinates(elem);
+        setIsModalOpen(true);
+    };
+
+    useEffect(() => {
+       elemForCoordinates && defineCoordinates(elemForCoordinates);
+    },[screens, elemForCoordinates])
+
+    const defineCoordinates = (elem: Element) => {
         if(elem.tagName === 'SPAN'){
             setCoordinates((((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
         } else if (elem.tagName === 'LI'){
@@ -134,8 +177,7 @@ export const CalendarPage: React.FC = () => {
         }else {
             setCoordinates(((elem.parentNode as Element).parentNode as Element).getBoundingClientRect());
         }
-        setIsModalOpen(true);
-    };
+    }
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -143,7 +185,8 @@ export const CalendarPage: React.FC = () => {
     };
 
     const handleChange = (value: string) => {
-       trainingList && setValueEditTrain(trainingList.filter(train => train.key === value)[0].name)
+       trainingList && setValueEditTrain(trainingList.filter(train => train.key === value)[0].name);
+       dispatch(resetExercises());
     };
 
     const showDrawer = () => {
@@ -157,6 +200,7 @@ export const CalendarPage: React.FC = () => {
     const editTraining = (nameTrain: string) => {
         setIsCreateExercise(true);
         setValueEditTrain(nameTrain);
+        dispatch(resetExercises());
     }
 
     const addTrain = () => {
@@ -195,7 +239,7 @@ export const CalendarPage: React.FC = () => {
                     top: `${coordinates?.top}px`,
                     left: `${
                         coordinates &&
-                        (selectedWeekDay === 0
+                        (selectedWeekDay === 0 || selectedWeekDay === 6
                             ? coordinates.right - widthCreateTraining
                             : coordinates.left)
                     }px`,
@@ -267,14 +311,13 @@ export const CalendarPage: React.FC = () => {
                             {
                                 valueEditTrain != 'Выбор типа тренировки' 
                                 ? 
-                                <ul>
+                                <ul style={{padding: '12px 0'}}>
                                     {
-                                        trainingsForDay
-                                            .find(train => train.name ===valueEditTrain)?.exercises
+                                        exercisesForDay
                                             .map(e => 
                                                 <li key={e._id} className='list-item'>
                                                     <p>{e.name}</p>
-                                                    <EditOutlined style={{color: 'var(--color-primary)'}}/>
+                                                    <EditOutlined style={{color: 'var(--color-primary)'}} onClick={() => {dispatch(setExercises(exercisesForDay)); setOpenDrawer(true)}}/>
                                                 </li>
                                             )
                                     }
@@ -287,8 +330,8 @@ export const CalendarPage: React.FC = () => {
                                 />
                             }
                         </div>
-                        <Button type='text' className='modal-btn' onClick={showDrawer}>Добавить утпражнения</Button>
-                        <Button type='link' className='modal-btn'>Сохранить</Button>
+                        <Button type='text' className='modal-btn btn-text' disabled={valueEditTrain != 'Выбор типа тренировки' ? false : true} onClick={() => {dispatch(addExercises()); showDrawer()}}>Добавить утпражнения</Button>
+                        <Button type='link' className='modal-btn' disabled>Сохранить</Button>
                     </>
                 )}
             </div>
@@ -310,9 +353,17 @@ export const CalendarPage: React.FC = () => {
                     />
                     <p className='date-training'>{selectedDate}</p>
                 </div>
-                <DrawerForm />
+                {   
+                    exercises.map((e: any, i: number)=> 
+                        <DrawerForm key={i} 
+                                    name={e.name} 
+                                    approaches={e.approaches} 
+                                    replays={e.replays}
+                                    weight={e.weight}
+                        />)
+                }
                 <div className='drawer-buttons'>
-                    <Button type='link' style={{width: 170}}><PlusOutlined />Добавить ещё</Button>
+                    <Button type='link' style={{width: 170}} onClick={() => dispatch(addExercises())}><PlusOutlined />Добавить ещё</Button>
                     <Button type='text' style={{width: 170, display: 'none'}} disabled ><MinusOutlined />Удалить</Button>
                 </div>
             </Drawer>

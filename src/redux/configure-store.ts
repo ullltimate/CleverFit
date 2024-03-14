@@ -8,6 +8,7 @@ import { feedbackAPI } from '@services/feedbacks';
 import tokenSlice from './reducers/token-slice';
 import { trainingAPI } from '@services/trainings';
 import { catalogsAPI } from '@services/catalogs';
+import trainingSlice from './reducers/training-slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -22,6 +23,7 @@ export const store = configureStore({
         tokenReducer: tokenSlice,
         [trainingAPI.reducerPath]: trainingAPI.reducer,
         [catalogsAPI.reducerPath]: catalogsAPI.reducer,
+        trainingReducer: trainingSlice,
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
