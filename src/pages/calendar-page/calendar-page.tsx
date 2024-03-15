@@ -13,7 +13,7 @@ import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer
 import { useGetTrainingListQuery } from '@services/catalogs';
 import { Training, useCreateTrainingMutation, useGetTrainingQuery, useUpdateTrainingMutation } from '@services/trainings';
 import { colorTrainings } from '@constants/calendar';
-import { Exercise, addExercises, resetExercises, saveTrainingDate, saveTrainingId, saveTrainingName, setExercises } from '@redux/reducers/training-slice';
+import { Exercise, addExercises, removeExercises, resetExercises, saveTrainingDate, saveTrainingId, saveTrainingName, setExercises } from '@redux/reducers/training-slice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { trainingSelector } from '@redux/reducers/training-slice';
 import './calendar-page.css';
@@ -45,6 +45,7 @@ export const CalendarPage: React.FC = () => {
     const [disabledCreateTraining, setDisabledCreateTraining] = useState(false);
     const [selectedDateInvalidFormat, setSelectedDateInvalidFormat] = useState('');
     const [isEditTraining, setIsEditTraining] = useState(false);
+    const [indexesForDelete, setIndexesForDelete] = useState<number[]>([]);
 
     const screens = useBreakpoint();
     const dispatch = useAppDispatch();
@@ -121,6 +122,7 @@ export const CalendarPage: React.FC = () => {
             onOk() {
                 refetch();
                 setIsModalOpen(false);
+                setOpenDrawer(false);
             },
         });
     }, [refetch]);
@@ -169,6 +171,7 @@ export const CalendarPage: React.FC = () => {
     const showModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, date: Moment) => {
         dispatch(resetExercises());
         dispatch(saveTrainingDate(date.toJSON()));
+        setIndexesForDelete([])
         setIsCreateExercise(false);
         e.stopPropagation();
         setSelectedDate(date.format('DD.MM.YYYY'));
@@ -243,18 +246,29 @@ export const CalendarPage: React.FC = () => {
         dispatch(saveTrainingName(valueEditTrain));
     }, [valueEditTrain, dispatch, trainingsForDay]);
 
-    const createTrain = () => {
-        createTraining({ date, name, exercises }).unwrap().then(() => setIsCreateExercise(false)).catch(() => modalError(false));
+    const createTrain = async () => {
+        await createTraining({ date, name, exercises }).unwrap().then(() => setIsCreateExercise(false)).catch(() => modalError(false));
     };
-    const updateTrain = () => {
-        updateTraining({ date, name, exercises, id }).unwrap().then().catch();
+    const updateTrain = async () => {
+        await updateTraining({ date, name, exercises, id })
+            .unwrap()
+            .then(() => {setIsCreateExercise(false)})
+            .catch(() => {
+                modalError(false); 
+                const exersicess = trainingsForDay.find((train) => train.name === valueEditTrain)
+                console.log(exersicess?.exercises)
+                exersicess && (dispatch(setExercises(exersicess.exercises)), setExercisesForDay(exersicess.exercises))
+            });
     };
     const save = () => {
-        id === '' ? createTrain() : updateTrain();
+        id === '' ?  createTrain() : updateTrain();
     };
+
 
     //console.log(exercisesForDay)
     //console.log(trainingsForDay)
+    //console.log(indexesForDelete)
+    //console.log(isEditTraining)
 
     return (
         <>
@@ -427,7 +441,7 @@ export const CalendarPage: React.FC = () => {
                             disabled={exercisesForDay.filter((e) => e.name != '').length === 0}
                             onClick={save}
                         >
-                            Сохранить
+                            {isEditTraining ? 'Сохранить изменения' : 'Сохранить'}
                         </Button>
                     </>
                 )}
@@ -471,13 +485,15 @@ export const CalendarPage: React.FC = () => {
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        key={i}
+                        key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}
                         replays={e.replays}
                         weight={e.weight}
                         isEditTraining={isEditTraining}
                         index={i}
+                        indexes={indexesForDelete}
+                        setIndexes={setIndexesForDelete}
                     />
                 ))}
                 <div className='drawer-buttons'>
@@ -492,7 +508,15 @@ export const CalendarPage: React.FC = () => {
                     <Button
                         type='text'
                         style={{ width: 170, display: `${!isEditTraining ? 'none' : 'inline'}` }}
-                        disabled
+                        disabled={indexesForDelete.length === 0}
+                        onClick={() => {
+                            dispatch(removeExercises(indexesForDelete));
+                            //const updateExerc = exercises.filter((_, index) => !indexesForDelete.includes(index))
+                            //console.log(updateExerc)
+                            //updateTraining({ date, name, exercises: updateExerc, id }).unwrap().then(() => {dispatch(removeExercises(indexesForDelete)) }).catch((error)=>console.log(error));
+                            setIndexesForDelete([]);
+                            //closeDrawer()
+                        }}
                     >
                         <MinusOutlined />
                         Удалить

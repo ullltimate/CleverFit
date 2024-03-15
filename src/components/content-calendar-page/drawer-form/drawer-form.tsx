@@ -12,15 +12,12 @@ type DrawerProps = {
     replays: number;
     weight: number;
     isEditTraining: boolean;
+    indexes: number[];
+    setIndexes: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, weight, isEditTraining, index}) => {
+export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, weight, isEditTraining, index, indexes, setIndexes}) => {
     const dispatch = useAppDispatch();
-    
-    //const onValuesChange = (changeValue: DrawerProps, allValues: DrawerProps) => {
-    //    console.log(changeValue,allValues);
-    //}
-
     const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editExercises({ name: event.target.value as string, index }))
     }
@@ -33,6 +30,9 @@ export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, we
     const onChangeReplays = (value: number | null) => {
         dispatch(editExercises({ replays: value as number, index }))
     }
+    const onChangeCheckbox = () => {
+        (indexes.includes(index)) ? setIndexes(indexes.filter((e) => e !== index)) : setIndexes((indexes) =>  indexes.concat(index));
+    }
     //console.log({name, approaches, replays, weight})
     return (
         <Form className='drawer-form'
@@ -40,7 +40,7 @@ export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, we
             initialValues={{name, approaches, replays, weight}}
         >
             <Form.Item name='name'>
-                <Input placeholder='Упражнение' onChange={onChangeName} data-test-id={`modal-drawer-right-input-exercise${index}`} addonAfter={(isEditTraining ? <Checkbox data-test-id={`modal-drawer-right-checkbox-exercise${index}`} /> : '')}/>
+                <Input placeholder='Упражнение' onChange={onChangeName} data-test-id={`modal-drawer-right-input-exercise${index}`} addonAfter={(isEditTraining ? <Checkbox data-test-id={`modal-drawer-right-checkbox-exercise${index}`} checked={indexes.includes(index)} onChange={onChangeCheckbox}/> : '')}/>
             </Form.Item>
         <Space direction='horizontal'>
             <Form.Item className='item-approaches'>
