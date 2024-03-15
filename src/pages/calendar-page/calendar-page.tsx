@@ -11,9 +11,9 @@ import { Header } from '@components/header/header';
 import { Loader } from '@components/loader/Loader';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { useGetTrainingListQuery } from '@services/catalogs';
-import { Training, useGetTrainingQuery } from '@services/trainings';
+import { Training, useCreateTrainingMutation, useGetTrainingQuery, useUpdateTrainingMutation } from '@services/trainings';
 import { colorTrainings } from '@constants/calendar';
-import { Exercise, addExercises, resetExercises, saveTrainingDate, saveTrainingName, setExercises } from '@redux/reducers/training-slice';
+import { Exercise, addExercises, resetExercises, saveTrainingDate, saveTrainingId, saveTrainingName, setExercises } from '@redux/reducers/training-slice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { trainingSelector } from '@redux/reducers/training-slice';
 import './calendar-page.css';
@@ -48,11 +48,13 @@ export const CalendarPage: React.FC = () => {
 
     const screens = useBreakpoint();
     const dispatch = useAppDispatch();
-    const { date, name, exercises } = useAppSelector(trainingSelector);
+    const { date, name, exercises, id } = useAppSelector(trainingSelector);
+    const [createTraining] = useCreateTrainingMutation();
+    const [updateTraining] = useUpdateTrainingMutation();
 
     useEffect(() => {
-        console.log({ date, name, exercises });
-    }, [date, exercises, name]);
+        console.log({ date, name, exercises, id });
+    }, [date, exercises, name, id]);
 
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log('panel', value.format('DD.MM.YYYY'), mode);
@@ -77,7 +79,7 @@ export const CalendarPage: React.FC = () => {
         }
     }, [trainings, selectedDate, valueEditTrain, trainingsForDay]);
 
-    const modalError = useCallback(() => {
+    const modalError = useCallback((isErrorList: boolean) => {
         Modal.error({
             className: 'error-list',
             centered: true,
@@ -91,23 +93,40 @@ export const CalendarPage: React.FC = () => {
             maskStyle: { background: '#799CD41A', backdropFilter: 'blur(5px)' },
             title: (
                 <span data-test-id='modal-error-user-training-title'>
-                    При открытии данных произошла ошибка
+                    {   
+                        isErrorList 
+                        ? 'При открытии данных произошла ошибка'
+                        : 'При сохранении данных произошла ошибка '
+                    }
                 </span>
             ),
             content: (
                 <div>
-                    <p data-test-id='modal-error-user-training-subtitle'>Попробуйте ещё раз.</p>
+                    <p data-test-id='modal-error-user-training-subtitle'>
+                       {
+                            isErrorList
+                            ? 'Попробуйте ещё раз.'
+                            : 'Придётся попробовать ещё раз'
+                       }
+                    </p>
                 </div>
             ),
-            okText: <span data-test-id='modal-error-user-training-button'>Обновить</span>,
+            okText: <span data-test-id='modal-error-user-training-button'>
+                        {
+                            isErrorList
+                            ? 'Обновить'
+                            : 'Закрыть'
+                       }
+                    </span>,
             onOk() {
                 refetch();
+                setIsModalOpen(false);
             },
         });
     }, [refetch]);
 
     useEffect(() => {
-        errorList && modalError();
+        errorList && modalError(true);
     }, [errorList, modalError]);
 
     type ListData = {
@@ -190,7 +209,7 @@ export const CalendarPage: React.FC = () => {
     };
 
     const closeDrawer = () => {
-        setExercisesForDay(exercises)
+        setExercisesForDay(exercises);
         setOpenDrawer(false);
     };
 
@@ -212,10 +231,30 @@ export const CalendarPage: React.FC = () => {
     }, [trainingsForDay, selectedDateInvalidFormat]);
 
     useEffect(() => {
+        const training = trainingsForDay.find((e) => e.name === valueEditTrain);
+        if (training) {
+            dispatch(saveTrainingId(training._id));
+            dispatch(resetExercises());
+            dispatch(setExercises(training.exercises));
+        } else {
+            dispatch(saveTrainingId(''));
+            dispatch(resetExercises());
+        }
         dispatch(saveTrainingName(valueEditTrain));
-    }, [valueEditTrain, dispatch]);
+    }, [valueEditTrain, dispatch, trainingsForDay]);
 
-    console.log(exercisesForDay)
+    const createTrain = () => {
+        createTraining({ date, name, exercises }).unwrap().then(() => setIsCreateExercise(false)).catch(() => modalError(false));
+    };
+    const updateTrain = () => {
+        updateTraining({ date, name, exercises, id }).unwrap().then().catch();
+    };
+    const save = () => {
+        id === '' ? createTrain() : updateTrain();
+    };
+
+    //console.log(exercisesForDay)
+    //console.log(trainingsForDay)
 
     return (
         <>
@@ -278,7 +317,7 @@ export const CalendarPage: React.FC = () => {
                         <div className='modal-content'>
                             <ul className='modal-events' style={{ listStyleType: 'none' }}>
                                 {trainingsForDay.length != 0 ? (
-                                    trainingsForDay.map((e) => (
+                                    trainingsForDay.map((e, i) => (
                                         <li key={e._id} className='list-item'>
                                             <Badge
                                                 color={
@@ -288,9 +327,11 @@ export const CalendarPage: React.FC = () => {
                                                 text={e.name}
                                             />
                                             <EditOutlined
-                                                data-test-id={`modal-update-training-edit-button${e._id}`}
+                                                data-test-id={`modal-update-training-edit-button${i}`}
                                                 style={{ color: 'var(--color-primary)' }}
-                                                onClick={() => editTraining(e.name)}
+                                                onClick={() => {
+                                                    editTraining(e.name);
+                                                }}
                                             />
                                         </li>
                                     ))
@@ -339,19 +380,22 @@ export const CalendarPage: React.FC = () => {
                         <div className='modal-content'>
                             {valueEditTrain != 'Выбор типа тренировки' ? (
                                 <ul style={{ padding: '12px 0' }}>
-                                    {exercisesForDay.filter((e) => e.name != '').map((e, i) => (
-                                        <li key={i} className='list-item'>
-                                            <p>{e.name}</p>
-                                            <EditOutlined
-                                                style={{ color: 'var(--color-primary)' }}
-                                                onClick={() => {
-                                                    dispatch(setExercises(exercisesForDay));
-                                                    setIsEditTraining(true);
-                                                    setOpenDrawer(true);
-                                                }}
-                                            />
-                                        </li>
-                                    ))}
+                                    {exercisesForDay
+                                        .filter((e) => e.name != '')
+                                        .map((e, i) => (
+                                            <li key={i} className='list-item'>
+                                                <p>{e.name}</p>
+                                                <EditOutlined
+                                                    data-test-id={`modal-update-training-edit-button${i}`}
+                                                    style={{ color: 'var(--color-primary)' }}
+                                                    onClick={() => {
+                                                        dispatch(setExercises(exercisesForDay));
+                                                        setIsEditTraining(true);
+                                                        setOpenDrawer(true);
+                                                    }}
+                                                />
+                                            </li>
+                                        ))}
                                 </ul>
                             ) : (
                                 <Empty
@@ -367,14 +411,22 @@ export const CalendarPage: React.FC = () => {
                             disabled={!(valueEditTrain != 'Выбор типа тренировки')}
                             onClick={() => {
                                 dispatch(setExercises(exercisesForDay));
-                                dispatch(addExercises());                                
-                                (exercisesForDay.length === 0) ? setIsEditTraining(false) : setIsEditTraining(true);
+                                dispatch(addExercises());
+                                exercisesForDay.length === 0
+                                    ? setIsEditTraining(false)
+                                    : setIsEditTraining(true);
+                                setIsEditTraining(false);
                                 showDrawer();
                             }}
                         >
                             Добавить упражнения
                         </Button>
-                        <Button type='link' className='modal-btn' disabled={exercisesForDay.length === 0}>
+                        <Button
+                            type='link'
+                            className='modal-btn'
+                            disabled={exercisesForDay.filter((e) => e.name != '').length === 0}
+                            onClick={save}
+                        >
                             Сохранить
                         </Button>
                     </>
@@ -386,7 +438,11 @@ export const CalendarPage: React.FC = () => {
                 closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
                 title={
                     <>
-                        {!isEditTraining ? <PlusOutlined style={{ marginRight: 6 }} /> : <EditOutlined style={{ marginRight: 6 }} />}
+                        {!isEditTraining ? (
+                            <PlusOutlined style={{ marginRight: 6 }} />
+                        ) : (
+                            <EditOutlined style={{ marginRight: 6 }} />
+                        )}
                         <h4
                             style={{
                                 display: 'inline-block',
@@ -421,7 +477,6 @@ export const CalendarPage: React.FC = () => {
                         replays={e.replays}
                         weight={e.weight}
                         isEditTraining={isEditTraining}
-                        id={e._id}
                         index={i}
                     />
                 ))}
@@ -434,7 +489,11 @@ export const CalendarPage: React.FC = () => {
                         <PlusOutlined />
                         Добавить ещё
                     </Button>
-                    <Button type='text' style={{ width: 170, display: `${!isEditTraining ? 'none' : 'inline'}` }} disabled>
+                    <Button
+                        type='text'
+                        style={{ width: 170, display: `${!isEditTraining ? 'none' : 'inline'}` }}
+                        disabled
+                    >
                         <MinusOutlined />
                         Удалить
                     </Button>

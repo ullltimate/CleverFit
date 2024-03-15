@@ -38,13 +38,31 @@ export const trainingAPI = createApi({
             return headers;
         },
     }),
+    tagTypes: ['Trainings'],
     endpoints: (build) => ({
         getTraining: build.query<Training[], void>({
             query: () => ({
                 url: endpointsAPI.training,
             }),
+            providesTags: () => ['Trainings'],
         }),
+        createTraining: build.mutation({
+            query: (body) => ({
+                url: endpointsAPI.training,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Trainings'],
+        }),
+        updateTraining: build.mutation({
+            query: (body) => ({
+                url: `${endpointsAPI.training}/${body.id}`,
+                method: 'PUT',
+                body,
+            }),
+            invalidatesTags: ['Trainings'],
+        })
     }),
 });
 
-export const { useGetTrainingQuery, useLazyGetTrainingQuery } = trainingAPI;
+export const { useGetTrainingQuery, useLazyGetTrainingQuery, useCreateTrainingMutation, useUpdateTrainingMutation } = trainingAPI;

@@ -21,12 +21,14 @@ type InitialState = {
     date: string,
     name: string,
     exercises: Exercise[],
+    id?: string,
 }
 
 const initialState: InitialState = {
     date: '',
     name: '',
-    exercises: [initialExercise]
+    exercises: [initialExercise],
+    id: '',
 }
 
 
@@ -34,6 +36,9 @@ export const trainingSlice = createSlice({
     name: 'training',
     initialState,
     reducers: {
+        saveTrainingId: (state, action: PayloadAction<string>) => {
+            state.id = action.payload;
+        },
         saveTrainingDate: (state, action: PayloadAction<string>) => {
             state.date = action.payload;
         },
@@ -61,7 +66,7 @@ export const trainingSlice = createSlice({
     },
 });
 
-export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises, editExercises, removeExercises } = trainingSlice.actions;
+export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises, editExercises, removeExercises, saveTrainingId } = trainingSlice.actions;
 export const trainingSelector = (state: RootState) => state.trainingReducer;
 
 export default trainingSlice.reducer;

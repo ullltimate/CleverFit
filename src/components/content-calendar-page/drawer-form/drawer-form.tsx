@@ -12,10 +12,9 @@ type DrawerProps = {
     replays: number;
     weight: number;
     isEditTraining: boolean;
-    id?: string;
 }
 
-export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, weight, isEditTraining, id, index}) => {
+export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, weight, isEditTraining, index}) => {
     const dispatch = useAppDispatch();
     
     //const onValuesChange = (changeValue: DrawerProps, allValues: DrawerProps) => {
@@ -41,26 +40,26 @@ export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, we
             initialValues={{name, approaches, replays, weight}}
         >
             <Form.Item name='name'>
-                <Input placeholder='Упражнение' onChange={onChangeName} data-test-id={`modal-drawer-right-input-exercise${id}`} addonAfter={(isEditTraining ? <Checkbox data-test-id={`modal-drawer-right-checkbox-exercise${id}`} /> : '')}/>
+                <Input placeholder='Упражнение' onChange={onChangeName} data-test-id={`modal-drawer-right-input-exercise${index}`} addonAfter={(isEditTraining ? <Checkbox data-test-id={`modal-drawer-right-checkbox-exercise${index}`} /> : '')}/>
             </Form.Item>
         <Space direction='horizontal'>
             <Form.Item className='item-approaches'>
                 <div className='form-label'>Подходы</div>
                 <Form.Item name='approaches'>
-                    <InputNumber addonBefore="+" onChange={onChangeAproaches} data-test-id={`modal-drawer-right-input-approach${id}`}/>
+                    <InputNumber addonBefore="+" onChange={onChangeAproaches} data-test-id={`modal-drawer-right-input-approach${index}`}/>
                 </Form.Item>
             </Form.Item>
             <Form.Item className='item-weight'>
                 <div className='form-label'>Вес, кг</div>
                 <Form.Item name='weight'>
-                    <InputNumber onChange={onChangeWeight} data-test-id={`modal-drawer-right-input-weight${id}`}/>
+                    <InputNumber onChange={onChangeWeight} data-test-id={`modal-drawer-right-input-weight${index}`}/>
                 </Form.Item>
             </Form.Item>
             <Form.Item className='item-separator'>x</Form.Item>
             <Form.Item className='item-count'>
                 <div className='form-label'>Количество</div>
                 <Form.Item name='replays'>
-                    <InputNumber onChange={onChangeReplays} data-test-id={`modal-drawer-right-input-quantity${id}`}/>
+                    <InputNumber onChange={onChangeReplays} data-test-id={`modal-drawer-right-input-quantity${index}`}/>
                 </Form.Item>
             </Form.Item>
         </Space>
