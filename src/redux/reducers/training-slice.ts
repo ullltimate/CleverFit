@@ -21,6 +21,7 @@ type InitialState = {
     date: string,
     name: string,
     exercises: Exercise[],
+    isImplementation: boolean,
     id?: string,
 }
 
@@ -29,6 +30,7 @@ const initialState: InitialState = {
     name: '',
     exercises: [initialExercise],
     id: '',
+    isImplementation: false,
 }
 
 
@@ -63,10 +65,13 @@ export const trainingSlice = createSlice({
         removeExercises: (state, action: PayloadAction<number[]>) => {
             state.exercises = state.exercises.filter((_, index) => !action.payload.includes(index))
         },
+        setIsImplementation: (state, action: PayloadAction<boolean>) => {
+            state.isImplementation = action.payload;
+        },
     },
 });
 
-export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises, editExercises, removeExercises, saveTrainingId } = trainingSlice.actions;
+export const { addExercises, saveTrainingDate, saveTrainingName, setExercises, resetExercises, editExercises, removeExercises, saveTrainingId, setIsImplementation } = trainingSlice.actions;
 export const trainingSelector = (state: RootState) => state.trainingReducer;
 
 export default trainingSlice.reducer;
