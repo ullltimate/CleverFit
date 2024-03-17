@@ -53,10 +53,6 @@ export const CalendarPage: React.FC = () => {
     const [updateTraining] = useUpdateTrainingMutation();
     const windowSize = useResize();
 
-    //useEffect(() => {
-    //    console.log({ date, name, exercises, id });
-    //}, [date, exercises, name, id]);
-
     const onPanelChange = (value: Moment, mode: CalendarMode) => {
         console.log('panel', value.format('DD.MM.YYYY'), mode);
         setIsModalOpen(false);
