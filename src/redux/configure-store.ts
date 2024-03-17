@@ -9,6 +9,7 @@ import tokenSlice from './reducers/token-slice';
 import { trainingAPI } from '@services/trainings';
 import { catalogsAPI } from '@services/catalogs';
 import trainingSlice from './reducers/training-slice';
+import { screenSizeSlice } from './reducers/resize-slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -24,6 +25,7 @@ export const store = configureStore({
         [trainingAPI.reducerPath]: trainingAPI.reducer,
         [catalogsAPI.reducerPath]: catalogsAPI.reducer,
         trainingReducer: trainingSlice,
+        screenSizeReducer: screenSizeSlice.reducer,
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

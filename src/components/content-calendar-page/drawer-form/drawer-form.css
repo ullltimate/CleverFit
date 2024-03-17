@@ -18,3 +18,11 @@
 .drawer-form .ant-space{
     gap: 2px !important;
 }
+.drawer-form .ant-form-item{
+    margin-bottom: 8px;
+}
+@media screen and (max-width: 630px) {
+    .item-approaches{
+        margin-right: 16px !important;
+    }
+}
