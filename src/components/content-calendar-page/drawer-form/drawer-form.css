@@ -1,11 +1,11 @@
 .form-label{
     background: var(--color-bg-grey);
-    padding: 4px 8px;
+    padding: 4px var(--unit-8);
     margin-bottom: 6px;
 }
 .drawer-form .item-approaches{
     width: 120px;
-    margin-right: 32px ;
+    margin-right: var(--unit-32) ;
 }
 .item-weight,
 .item-count{
@@ -19,10 +19,10 @@
     gap: 2px !important;
 }
 .drawer-form .ant-form-item{
-    margin-bottom: 8px;
+    margin-bottom: var(--unit-8);
 }
 @media screen and (max-width: 630px) {
     .drawer-form .item-approaches{
-        margin-right: 16px;
+        margin-right: var(--unit-16);
     }
 }

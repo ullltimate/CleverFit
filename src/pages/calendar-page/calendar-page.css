@@ -4,21 +4,21 @@
     background: transparent !important;
 }
 .main-wrapper .ant-picker-calendar .ant-picker-panel thead th{
-    padding-right: 8px;
+    padding-right: var(--unit-8);
     color: var(--color-disabled);
 }
 .main-wrapper .date-cell{
-    border-top: 1px solid #F0F0F0;
+    border-top: 1px solid var(--color-bg-grey);
 }
 .main-wrapper table{
     border-spacing: 10px 0px;
     border-collapse: separate;
 }
 .date-cell .ant-picker-calendar-date-value{
-    padding: 4px 8px 0;
+    padding: 4px var(--unit-8) 0;
 }
 .events{
-    padding-left: 8px;
+    padding-left: var(--unit-8);
 }
 .ant-drawer-header-title{
     flex-direction: row-reverse;
@@ -61,12 +61,12 @@
         background: var(--color-bg-card) !important;
     }
     .main-wrapper .ant-picker-calendar .ant-picker-panel thead th{
-        padding: 8px 0;
+        padding: var(--unit-8) 0;
         color: inherit;
-        font-weight: 500;
+        font-weight: var(--font-weight-500);
     }
     .date-cell{
-        height: 24px;
+        height: var(--unit-24);
     }
 }
 @media screen and (max-width: 480px) {
@@ -74,10 +74,10 @@
         display: flex;
     }
     .main-wrapper .ant-picker-calendar-mini{
-        margin: 0px 24px;
+        margin: 0px var(--unit-24);
     }
     .main-wrapper .ant-picker-calendar-header .ant-picker-calendar-mode-switch{
-        margin: 0 0 0 8px;
+        margin: 0 0 0 var(--unit-8);
         max-width: 105px;
     }
     .main-wrapper .ant-picker-calendar-header .ant-picker-calendar-month-select{
