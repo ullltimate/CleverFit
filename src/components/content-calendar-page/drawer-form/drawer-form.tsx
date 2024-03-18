@@ -1,9 +1,9 @@
 import React from 'react';
 import { Checkbox, Form, Input, InputNumber, Space } from 'antd';
-
-import './drawer-form.css';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { editExercises } from '@redux/reducers/training-slice';
+
+import './drawer-form.css';
 
 type DrawerProps = {
     index: number;
@@ -22,21 +22,20 @@ export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, we
         dispatch(editExercises({ name: event.target.value as string, index }))
     }
     const onChangeAproaches = (value: number | null) => {
-        dispatch(editExercises({ approaches: value as number, index }))
+        value && dispatch(editExercises({ approaches: value, index }))
     }
     const onChangeWeight = (value: number | null) => {
-        dispatch(editExercises({ weight: value as number, index }))
+        value &&  dispatch(editExercises({ weight: value, index }))
     }    
     const onChangeReplays = (value: number | null) => {
-        dispatch(editExercises({ replays: value as number, index }))
+        value &&  dispatch(editExercises({ replays: value, index }))
     }
     const onChangeCheckbox = () => {
         (indexes.includes(index)) ? setIndexes(indexes.filter((e) => e !== index)) : setIndexes((indexes) =>  indexes.concat(index));
     }
-    //console.log({name, approaches, replays, weight})
+
     return (
         <Form className='drawer-form'
-            //onValuesChange={onValuesChange}
             initialValues={{name, approaches, replays, weight}}
         >
             <Form.Item name='name'>
@@ -55,7 +54,7 @@ export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, we
                     <InputNumber onChange={onChangeWeight} data-test-id={`modal-drawer-right-input-weight${index}`}/>
                 </Form.Item>
             </Form.Item>
-            <Form.Item className='item-separator'>x</Form.Item>
+            <div className='item-separator'>x</div>
             <Form.Item className='item-count'>
                 <div className='form-label'>Количество</div>
                 <Form.Item name='replays'>

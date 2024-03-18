@@ -13,7 +13,7 @@
 }
 .drawer-form .item-separator{
     color: var(--color-bg-grey);
-    margin-bottom: 0;
+    padding-top: 20px;
 }
 .drawer-form .ant-space{
     gap: 2px !important;
