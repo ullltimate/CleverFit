@@ -32,7 +32,7 @@ export const SiderBar: React.FC = () => {
         if (broken) {
             setWidthCollapsed(1);
             setMobileWidth(true);
-            setCollapsed(true)
+            setCollapsed(true);
         } else {
             setWidthCollapsed(64);
             setMobileWidth(false);
@@ -54,7 +54,14 @@ export const SiderBar: React.FC = () => {
         switch (key) {
             case 'exit':
                 logOut();
-        }
+                break;
+            case 'calendar':
+                getTrainings()
+                    .unwrap()
+                    .then(() => navigate(PATHS.CALENDAR))
+                    .catch((error) => console.log(error));
+                break;
+            }
     }
 
     return (
@@ -80,25 +87,25 @@ export const SiderBar: React.FC = () => {
                 collapsed={collapsed}
                 theme='light'
                 width={mobileWidth ? 106 : 208}
-                style={!mobileWidth ? { height: '100%' } : { height: '100vh' }}
+                style={mobileWidth ? { height: '100vh' } : { height: '100%' }}
                 collapsedWidth={widthCollapsed}
                 breakpoint='sm'
                 onBreakpoint={(broken) => changeBreakpoint(broken)}
             >
-                <div className={`logo-${!collapsed ? 'full' : 'hidden'}`}>
+                <div className={`logo-${collapsed ? 'hidden' : 'full'}`}>
                     <Link to={PATHS.MAIN}>
                         <img
                             src='/Clever.svg'
                             alt='logo'
                             className='logo-clever'
-                            style={{ opacity: `${!collapsed ? 1 : 0}` }}
+                            style={{ opacity: `${collapsed ? 0 : 1}` }}
                         />
                         <img
                             src='/fit.svg'
                             alt='logo'
                             className={`logo-fit ${mobileWidth ? 'logo-collapsed' : ''}`}
                             style={
-                                mobileWidth ? { opacity: `${!collapsed ? 1 : 0}` } : { opacity: 1 }
+                                mobileWidth ? { opacity: `${collapsed ? 0 : 1}` } : { opacity: 1 }
                             }
                         />
                     </Link>
@@ -111,34 +118,29 @@ export const SiderBar: React.FC = () => {
                     onClick={onClick}
                     items={[
                         {
-                            key: '1',
-                            icon: !mobileWidth ? <CalendarTwoTone twoToneColor='#061178' /> : '',
-                            label: !collapsed ? 'Календарь' : '',
-                            onClick: () => {getTrainings().unwrap().then(() => navigate(PATHS.CALENDAR)).catch((error) => console.log(error));},
+                            key: 'calendar',
+                            icon: mobileWidth ? '' : <CalendarTwoTone twoToneColor='#061178' />,
+                            label: collapsed ? '' : 'Календарь',
                         },
                         {
                             key: '2',
-                            icon: !mobileWidth ? <HeartFilled style={{ color: '#061178' }} /> : '',
-                            label: !collapsed ? 'Тренировки' : '',
+                            icon: mobileWidth ? '' : <HeartFilled style={{ color: '#061178' }} />,
+                            label: collapsed ? '' : 'Тренировки',
                         },
                         {
                             key: '3',
-                            icon: !mobileWidth ? <TrophyFilled style={{ color: '#061178' }} /> : '',
-                            label: !collapsed ? 'Достижения' : '',
+                            icon: mobileWidth ? '' : <TrophyFilled style={{ color: '#061178' }} />,
+                            label: collapsed ? '' : 'Достижения',
                         },
                         {
                             key: '4',
-                            icon: !mobileWidth ? (
-                                <IdcardOutlined style={{ color: '#061178' }} />
-                            ) : (
-                                ''
-                            ),
-                            label: !collapsed ? 'Профиль' : '',
+                            icon: mobileWidth ? '' : <IdcardOutlined style={{ color: '#061178' }} />,
+                            label: collapsed ? '' : 'Профиль',
                         },
                         {
                             key: 'exit',
-                            icon: !mobileWidth ? <ExitIcon /> : '',
-                            label: !collapsed ? 'Выход' : '',
+                            icon: mobileWidth ? '' : <ExitIcon />,
+                            label: collapsed ? '' : 'Выход',
                         },
                     ]}
                 />
