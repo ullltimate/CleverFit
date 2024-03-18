@@ -1,18 +1,29 @@
-import React from 'react';
-import { Card, Layout, Row } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Layout, Modal, Result, Row } from 'antd';
 import { Header } from '@components/header/header';
 import { Footer } from '@components/footer/footer';
 import { ContentCard } from '@components/content-main-page/card';
 import { contentCards } from '@constants/main-content-cards';
 import { CardInfo } from '@tstypes/types';
+import { trainingAPI } from '@services/trainings';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 import './main-page.css';
 
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
+    const handleCancelError = (): void => setIsModalError(false);
+    const [isModalError, setIsModalError] = useState(false);
+    const isError = useAppSelector((state) => trainingAPI.endpoints.getTraining.select()(state).error)
+
+    useEffect(() => {
+        isError && setIsModalError(true)
+    },[isError])
+    
     return (
         <>
+            
             <Header />
             <Content style={{ margin: 24 }}>
                 <Card bordered={false} className='content-discription'>
@@ -44,6 +55,8 @@ export const MainPage: React.FC = () => {
                                     title={e.title}
                                     btnText={e.btnText}
                                     btnIcon={e.btnIcon}
+                                    path={e.path}
+                                    dataTest={e.dataTest}
                                 />
                             ),
                         )}
@@ -51,6 +64,27 @@ export const MainPage: React.FC = () => {
                 </div>
             </Content>
             <Footer />
+            <Modal
+                open={isModalError}
+                footer={null}
+                centered
+                closable={false}
+                data-test-id='modal-no-review'
+                maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
+            >
+                <div className='comments-modal'>
+                    <Result
+                        status='500'
+                        title='Что-то пошло не так'
+                        subTitle='Произошла ошибка, попробуйте ещё раз.'
+                        extra={
+                            <Button type='primary' onClick={handleCancelError}>
+                                Назад
+                            </Button>
+                        }
+                    />
+                </div>
+            </Modal>
         </>
     );
 };

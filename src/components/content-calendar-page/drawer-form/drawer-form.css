@@ -1,0 +1,28 @@
+.form-label{
+    background: var(--color-bg-grey);
+    padding: 4px var(--unit-8);
+    margin-bottom: 6px;
+}
+.drawer-form .item-approaches{
+    width: 120px;
+    margin-right: var(--unit-32) ;
+}
+.item-weight,
+.item-count{
+    width: 90px;
+}
+.drawer-form .item-separator{
+    color: var(--color-bg-grey);
+    padding-top: 20px;
+}
+.drawer-form .ant-space{
+    gap: 2px !important;
+}
+.drawer-form .ant-form-item{
+    margin-bottom: var(--unit-8);
+}
+@media screen and (max-width: 630px) {
+    .drawer-form .item-approaches{
+        margin-right: var(--unit-16);
+    }
+}

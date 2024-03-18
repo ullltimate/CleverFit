@@ -16,6 +16,7 @@ type Paths = {
         SUCCESS_CHANGE_PASSWORD: string,
     },
     FEEDBACKS: string,
+    CALENDAR: string,
 }
 
 export const PATHS: Paths = {
@@ -36,4 +37,5 @@ export const PATHS: Paths = {
         SUCCESS_CHANGE_PASSWORD: '/result/success-change-password',
     },
     FEEDBACKS: '/feedbacks',
+    CALENDAR: '/calendar',
 };

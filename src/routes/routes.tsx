@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AuthPage } from '@pages/auth-page';
 import { MainPage } from '@pages/main-page';
 import { CommentsPage } from '@pages/comments-page';
+import { CalendarPage } from '@pages/calendar-page';
 import { ChangePassword } from '@components/content-auth-page/change-password/change-password';
 import { ConfirmEmail } from '@components/content-auth-page/confirm-email/confirm-email';
 import { CustomTabs } from '@components/content-auth-page/tabs/Tabs';
@@ -169,6 +170,7 @@ export const routes = (
             <Route element={<MainLayout />}>
                 <Route path={PATHS.MAIN} element={<MainPage />} />
                 <Route path={PATHS.FEEDBACKS} element={<CommentsPage />} />
+                <Route path={PATHS.CALENDAR} element={<CalendarPage />} />
             </Route>
         </Route>
     </Routes>
