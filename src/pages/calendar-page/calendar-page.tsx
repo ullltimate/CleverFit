@@ -216,9 +216,7 @@ export const CalendarPage: React.FC = () => {
         dispatch(resetExercises());
     };
 
-    const showDrawer = () => {
-        setOpenDrawer(true);
-    };
+    const showDrawer = () => setOpenDrawer(true);
 
     const closeDrawer = () => {
         setExercisesForDay(exercises);
@@ -278,9 +276,7 @@ export const CalendarPage: React.FC = () => {
                 exersicess && (dispatch(setExercises(exersicess.exercises)), setExercisesForDay(exersicess.exercises))
             });
     };
-    const save = () => {
-        id === '' ?  createTrain() : updateTrain();
-    };
+    const save = () => id === '' ?  createTrain() : updateTrain();
 
     return (
         <>

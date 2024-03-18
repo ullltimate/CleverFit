@@ -18,21 +18,11 @@ type DrawerProps = {
 
 export const DrawerForm: React.FC<DrawerProps> = ({name, approaches, replays, weight, isEditTraining, index, indexes, setIndexes}) => {
     const dispatch = useAppDispatch();
-    const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(editExercises({ name: event.target.value as string, index }))
-    }
-    const onChangeAproaches = (value: number | null) => {
-        value && dispatch(editExercises({ approaches: value, index }))
-    }
-    const onChangeWeight = (value: number | null) => {
-        value &&  dispatch(editExercises({ weight: value, index }))
-    }    
-    const onChangeReplays = (value: number | null) => {
-        value &&  dispatch(editExercises({ replays: value, index }))
-    }
-    const onChangeCheckbox = () => {
-        (indexes.includes(index)) ? setIndexes(indexes.filter((e) => e !== index)) : setIndexes((indexes) =>  indexes.concat(index));
-    }
+    const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => dispatch(editExercises({ name: event.target.value as string, index }));
+    const onChangeAproaches = (value: number | null) =>  value && dispatch(editExercises({ approaches: value, index }));
+    const onChangeWeight = (value: number | null) =>  value &&  dispatch(editExercises({ weight: value, index }));
+    const onChangeReplays = (value: number | null) =>  value &&  dispatch(editExercises({ replays: value, index }));
+    const onChangeCheckbox = () =>  (indexes.includes(index)) ? setIndexes(indexes.filter((e) => e !== index)) : setIndexes((indexes) =>  indexes.concat(index));
 
     return (
         <Form className='drawer-form'
