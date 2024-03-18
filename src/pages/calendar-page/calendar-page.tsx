@@ -183,7 +183,6 @@ export const CalendarPage: React.FC = () => {
     };
 
     const defineCoordinates = useCallback((elem: Element) => {
-        console.log(elem)
         if(elem.tagName === 'SPAN'){
             setCoordinates((((((elem.parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).parentNode as Element).getBoundingClientRect());
         } else if (elem.tagName === 'LI'){
@@ -475,7 +474,7 @@ export const CalendarPage: React.FC = () => {
             </div>
             <Drawer
                 width={screenSize<630 ? 360 : 408}
-                style={{marginTop: `${screenSize<630 ? '85px': '0px'}`}}
+                style={{marginTop: `${screenSize<630 ? '85px': '0px'}`, borderRadius: 15}}
                 data-test-id='modal-drawer-right'
                 closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
                 title={

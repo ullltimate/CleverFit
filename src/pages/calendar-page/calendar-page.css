@@ -24,12 +24,16 @@
     flex-direction: row-reverse;
     align-items: center;
 }
-.ant-drawer-close{
+.ant-drawer-header-title .ant-drawer-close{
     padding: 0;
-    margin: 0 !important;
+    margin: 0;
 }
 .ant-drawer .ant-btn-link{
     color: var(--color-primary);
+}
+.ant-drawer-content,
+.ant-drawer-content-wrapper{
+    border-radius: 15px;
 }
 
 @media screen and (max-width: 835px) {

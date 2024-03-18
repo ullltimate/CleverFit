@@ -3,9 +3,9 @@
     padding: 4px 8px;
     margin-bottom: 6px;
 }
-.item-approaches{
+.drawer-form .item-approaches{
     width: 120px;
-    margin-right: 32px !important;
+    margin-right: 32px ;
 }
 .item-weight,
 .item-count{
@@ -22,7 +22,7 @@
     margin-bottom: 8px;
 }
 @media screen and (max-width: 630px) {
-    .item-approaches{
-        margin-right: 16px !important;
+    .drawer-form .item-approaches{
+        margin-right: 16px;
     }
 }

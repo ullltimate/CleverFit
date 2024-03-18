@@ -32,6 +32,7 @@ export const SiderBar: React.FC = () => {
         if (broken) {
             setWidthCollapsed(1);
             setMobileWidth(true);
+            setCollapsed(true)
         } else {
             setWidthCollapsed(64);
             setMobileWidth(false);

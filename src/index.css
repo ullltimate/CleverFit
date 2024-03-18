@@ -28,7 +28,8 @@
     --unit-32: 32px;
 }
 
-:root .ant-btn-primary {
+:root .ant-btn-primary,
+:root .ant-btn-primary:focus {
     height: 40px;
     background: var(--color-primary);
     border-color: var(--color-primary);
