@@ -17,6 +17,7 @@ type Paths = {
     },
     FEEDBACKS: string,
     CALENDAR: string,
+    PROFILE: string,
 }
 
 export const PATHS: Paths = {
@@ -38,4 +39,5 @@ export const PATHS: Paths = {
     },
     FEEDBACKS: '/feedbacks',
     CALENDAR: '/calendar',
+    PROFILE: '/profile',
 };

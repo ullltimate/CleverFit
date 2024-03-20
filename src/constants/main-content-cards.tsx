@@ -21,7 +21,7 @@ export const contentCards: CardInfo[] = [
         title: 'Заполнить профиль',
         btnText: 'Профиль',
         btnIcon: <IdcardOutlined />,
-        path: '',
-        dataTest: ''
+        path: PATHS.PROFILE,
+        dataTest: 'menu-button-profile'
     },
 ];

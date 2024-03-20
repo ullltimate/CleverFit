@@ -61,7 +61,9 @@ export const SiderBar: React.FC = () => {
                     .then(() => navigate(PATHS.CALENDAR))
                     .catch((error) => console.log(error));
                 break;
-            }
+            case 'profile':
+                navigate(PATHS.PROFILE)
+        }
     }
 
     return (
@@ -133,7 +135,7 @@ export const SiderBar: React.FC = () => {
                             label: collapsed ? '' : 'Достижения',
                         },
                         {
-                            key: '4',
+                            key: 'profile',
                             icon: mobileWidth ? '' : <IdcardOutlined style={{ color: '#061178' }} />,
                             label: collapsed ? '' : 'Профиль',
                         },

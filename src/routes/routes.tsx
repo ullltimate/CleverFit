@@ -11,6 +11,7 @@ import { MainLayout } from '@components/layout/main-layout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
 import { resultData } from '@constants/result-data';
+import { ProfilePage } from '@pages/profile-page';
 
 export const routes = (
     <Routes>
@@ -171,6 +172,7 @@ export const routes = (
                 <Route path={PATHS.MAIN} element={<MainPage />} />
                 <Route path={PATHS.FEEDBACKS} element={<CommentsPage />} />
                 <Route path={PATHS.CALENDAR} element={<CalendarPage />} />
+                <Route path={PATHS.PROFILE} element={<ProfilePage />} />
             </Route>
         </Route>
     </Routes>
