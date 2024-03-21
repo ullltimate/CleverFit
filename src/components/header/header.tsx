@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Typography } from 'antd';
+import { useLocation } from 'react-router-dom';
 import { SettingOutlined } from '@ant-design/icons';
+import { PATHS } from '@constants/paths';
+import { Button, Typography } from 'antd';
 
 import './header.css';
-import { useLocation } from 'react-router-dom';
-import { PATHS } from '@constants/paths';
 
 const { Title } = Typography;
 

@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { endpointsAPI, urlAPI } from '@constants/api';
 import { store } from '@redux/configure-store';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 type TrainingList = {
     name: string;
@@ -13,9 +13,11 @@ export const catalogsAPI = createApi({
         baseUrl: urlAPI,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('token') || store.getState().tokenReducer.token;
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+
             return headers;
         },
     }),

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button } from 'antd';
-import { CustomComment } from '../comment/custom-comment';
 import { Feedbacks } from '@tstypes/feedbacks';
+import { Button } from 'antd';
+
+import { CustomComment } from '../comment/custom-comment';
 
 import './all-reviews.css';
 
@@ -18,7 +19,7 @@ export const AllComments: React.FC<AllCommentsProps> = ({
     showAllComments,
     isShowAllComments,
 }) => (
-    <>
+    <React.Fragment>
         <div className='comments-list'>
             {showAllComments
                 ? reviews.map((e: Feedbacks) => (
@@ -52,5 +53,5 @@ export const AllComments: React.FC<AllCommentsProps> = ({
                 {showAllComments ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
             </Button>
         </div>
-    </>
+    </React.Fragment>
 );

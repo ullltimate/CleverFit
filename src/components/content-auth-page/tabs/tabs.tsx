@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Tabs } from 'antd';
-import { LogIn } from '../login/LogIn';
-import { SignUp } from '../signup/SignUp';
 import { PATHS } from '@constants/paths';
+import { Tabs } from 'antd';
+
+import { LogIn } from '../login/login';
+import { SignUp } from '../signup/signup';
 
 import './tabs.css';
 
@@ -19,34 +20,42 @@ export const CustomTabs: React.FC = () => {
     const location = useLocation();
     const itemsTab: AuthItemsTab[] = [
         {
-            label: `Вход`,
+            label: 'Вход',
             key: '1',
             children: <LogIn />,
         },
         {
-            label: `Регистрация`,
+            label: 'Регистрация',
             key: '2',
             children: <SignUp />,
         },
     ];
 
     useEffect(() => {
-        location.pathname === PATHS.REGISTRATION ? setKey('2') : setKey('1');
+        if(location.pathname === PATHS.REGISTRATION) {
+            setKey('2')
+        } else {
+            setKey('1')
+        };
     }, [location.pathname]);
 
     return (
-        <>
+        <React.Fragment>
             <img src='/logo.svg' className='logo' alt='logo' />
             <Tabs
                 activeKey={key}
-                centered
+                centered={true}
                 tabBarGutter={0}
                 items={itemsTab}
                 onChange={(k: string) => {
                     setKey(k);
-                    key === '2' ? navigate(PATHS.AUTH) : navigate(PATHS.REGISTRATION);
+                    if(key === '2') {
+                        navigate(PATHS.AUTH)
+                    } else {
+                        navigate(PATHS.REGISTRATION)
+                    };
                 }}
             />
-        </>
+        </React.Fragment>
     );
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Col, Card, Button } from 'antd';
-import { CardInfo } from '@tstypes/types';
 import { useLazyGetTrainingQuery } from '@services/trainings';
+import { CardInfo } from '@tstypes/types';
+import { Button,Card, Col } from 'antd';
 
 import './card.css';
 
@@ -13,7 +13,7 @@ export const ContentCard: React.FC<CardInfo> = ({ title, btnText, btnIcon, path,
     const onClick = async () => {
         switch (btnText){
             case 'Календарь':
-                await getTrainings().unwrap().then(() => navigate(path)).catch((error) => console.log(error));
+                await getTrainings().unwrap().then(() => navigate(path));
                 break;
             case 'Профиль':
                 navigate(path)

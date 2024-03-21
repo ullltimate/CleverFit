@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Layout, Modal, Result, Row } from 'antd';
-import { Header } from '@components/header/header';
-import { Footer } from '@components/footer/footer';
 import { ContentCard } from '@components/content-main-page/card';
+import { Footer } from '@components/footer/footer';
+import { Header } from '@components/header/header';
 import { contentCards } from '@constants/main-content-cards';
-import { CardInfo } from '@tstypes/types';
-import { trainingAPI } from '@services/trainings';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { trainingAPI } from '@services/trainings';
+import { CardInfo } from '@tstypes/types';
+import { Button, Card, Layout, Modal, Result, Row } from 'antd';
 
 import './main-page.css';
 
 const { Content } = Layout;
 
 export const MainPage: React.FC = () => {
-    const handleCancelError = (): void => setIsModalError(false);
     const [isModalError, setIsModalError] = useState(false);
+    const handleCancelError = (): void => setIsModalError(false);
     const isError = useAppSelector((state) => trainingAPI.endpoints.getTraining.select()(state).error)
 
     useEffect(() => {
-        isError && setIsModalError(true)
+        if(isError) setIsModalError(true);
     },[isError])
     
     return (
-        <>
-            
+        <React.Fragment>
             <Header />
             <Content style={{ margin: 24 }}>
                 <Card bordered={false} className='content-discription'>
@@ -51,6 +50,7 @@ export const MainPage: React.FC = () => {
                         {contentCards.map(
                             (e: CardInfo, i: number): React.ReactNode => (
                                 <ContentCard
+                                    // eslint-disable-next-line react/no-array-index-key
                                     key={i}
                                     title={e.title}
                                     btnText={e.btnText}
@@ -67,7 +67,7 @@ export const MainPage: React.FC = () => {
             <Modal
                 open={isModalError}
                 footer={null}
-                centered
+                centered={true}
                 closable={false}
                 data-test-id='modal-no-review'
                 maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
@@ -85,6 +85,6 @@ export const MainPage: React.FC = () => {
                     />
                 </div>
             </Modal>
-        </>
+        </React.Fragment>
     );
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Modal, Rate, Result } from 'antd';
-import { Content } from 'antd/lib/layout/layout';
-import TextArea from 'antd/lib/input/TextArea';
 import { StarTwoTone } from '@ant-design/icons';
-import { Loader } from '@components/loader/Loader';
 import { AllComments } from '@components/content-comments-page/all-reviews/all-reviews';
 import { EmptyComments } from '@components/content-comments-page/empty/empty-comments';
-import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
+import { Loader } from '@components/loader/loader';
 import { PATHS } from '@constants/paths';
+import { useCreateReviewMutation, useGetFeedbacksQuery } from '@services/feedbacks';
 import { Feedbacks } from '@tstypes/feedbacks';
+import { Button, Form, Modal, Rate, Result } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
+import { Content } from 'antd/lib/layout/layout';
 
 import './comments-page.css';
 
@@ -48,12 +48,16 @@ export const CommentsPage: React.FC = () => {
     };
 
     const changeRate = (value: number): void => {
-        value > 0 ? setIsSubmitDisabled(false) : setIsSubmitDisabled(true);
+        if(value > 0) {
+            setIsSubmitDisabled(false)
+        } else {
+            setIsSubmitDisabled(true)
+        };
     };
 
     useEffect(() => {
-        error && showModalError();
-        data &&
+        if(error) showModalError();
+        if(data)
             setReviews(
                 [...data].sort(
                     (a: Feedbacks, b: Feedbacks) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
@@ -62,7 +66,7 @@ export const CommentsPage: React.FC = () => {
     }, [data, error]);
 
     return (
-        <>
+        <React.Fragment>
             <Content style={{ margin: 24 }}>
                 {(isFetching || isLoading) && <Loader />}
                 {reviews &&
@@ -79,7 +83,7 @@ export const CommentsPage: React.FC = () => {
             </Content>
             <Modal
                 title='Ваш отзыв'
-                centered
+                centered={true}
                 maskStyle={{ background: '#799CD41A', backdropFilter: 'blur(5px)' }}
                 open={isModalReview}
                 onCancel={handleCancel}
@@ -104,9 +108,9 @@ export const CommentsPage: React.FC = () => {
                         <Form.Item name='rating'>
                             <Rate
                                 onChange={changeRate}
-                                allowClear
+                                allowClear={true}
                                 character={<StarTwoTone />}
-                            ></Rate>
+                             />
                         </Form.Item>
                         <Form.Item name='message'>
                             <TextArea
@@ -120,7 +124,7 @@ export const CommentsPage: React.FC = () => {
             <Modal
                 open={isModalResult}
                 footer={null}
-                centered
+                centered={true}
                 closable={false}
                 maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
             >
@@ -169,7 +173,7 @@ export const CommentsPage: React.FC = () => {
             <Modal
                 open={isModalError}
                 footer={null}
-                centered
+                centered={true}
                 closable={false}
                 maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
             >
@@ -186,6 +190,6 @@ export const CommentsPage: React.FC = () => {
                     />
                 </div>
             </Modal>
-        </>
+        </React.Fragment>
     );
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Breadcrumb } from 'antd';
 import { BreadCrumbRoute, routes } from '@constants/breadcrumbs';
 import { PATHS } from '@constants/paths';
+import { Breadcrumb } from 'antd';
 
 import './breadcrumb.css';
 
@@ -29,6 +29,7 @@ export const CustomBreadcrumb: React.FC = () => {
             <Breadcrumb>
                 {currentRoutes &&
                     currentRoutes.map((e: BreadCrumbRoute, i: number) => (
+                        // eslint-disable-next-line react/no-array-index-key
                         <Breadcrumb.Item key={i}>
                             {e.path ? <Link to={e.path}>{e.name}</Link> : e.name}
                         </Breadcrumb.Item>
