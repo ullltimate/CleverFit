@@ -1,6 +1,7 @@
 type UrlAPI = string;
 
 export const urlAPI: UrlAPI = 'https://marathon-api.clevertec.ru';
+export const urlForImage = 'https://training-api.clevertec.ru';
 
 type EndpointsAPI = {
     auth: {
@@ -16,6 +17,11 @@ type EndpointsAPI = {
     catalogs: {
         training: string,
     }, 
+    user: {
+        me: string,
+        user: string
+    },
+    upload: string
 }
 
 export const endpointsAPI: EndpointsAPI = {
@@ -32,4 +38,9 @@ export const endpointsAPI: EndpointsAPI = {
     catalogs: {
         training: '/catalogs/training-list',
     },
+    user: {
+        me: '/user/me',
+        user: '/user'
+    },
+    upload: '/upload-image'
 }

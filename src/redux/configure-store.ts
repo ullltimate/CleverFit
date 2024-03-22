@@ -4,11 +4,13 @@ import { authAPI } from '@services/auth';
 import { catalogsAPI } from '@services/catalogs';
 import { feedbackAPI } from '@services/feedbacks';
 import { trainingAPI } from '@services/trainings';
+import { userAPI } from '@services/user';
 import { createBrowserHistory } from 'history';
 
 import { screenSizeReducer } from './reducers/resize-slice';
 import {tokenReducer} from './reducers/token-slice';
 import {trainingReducer}from './reducers/training-slice';
+import { userFullReducer } from './reducers/user-full-slice';
 import {userReducer} from './reducers/user-slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
@@ -26,6 +28,8 @@ export const store = configureStore({
         [catalogsAPI.reducerPath]: catalogsAPI.reducer,
         trainingReducer,
         screenSizeReducer,
+        [userAPI.reducerPath]: userAPI.reducer,
+        userFullReducer,
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -34,6 +38,7 @@ export const store = configureStore({
             feedbackAPI.middleware,
             trainingAPI.middleware,
             catalogsAPI.middleware,
+            userAPI.middleware,
         ),
 });
 
