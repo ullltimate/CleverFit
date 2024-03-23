@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SettingOutlined } from '@ant-design/icons';
 import { PATHS } from '@constants/paths';
 import { Button, Typography } from 'antd';
@@ -10,6 +10,7 @@ const { Title } = Typography;
 
 export const Header: React.FC = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <header className='header' style={{paddingTop: location.pathname === PATHS.PROFILE ? 'var(--unit-16)' : ''}}>
@@ -31,7 +32,7 @@ export const Header: React.FC = () => {
                         </Title>
                     )
                 }
-                <Button type='text' className='header-btn' data-test-id='header-settings'>
+                <Button type='text' className='header-btn' data-test-id='header-settings' onClick={() => navigate(PATHS.SETTINGS)}>
                     <SettingOutlined className='header-btn__icon' />
                     <span className='header-btn__text'>Настройки</span>
                 </Button>
