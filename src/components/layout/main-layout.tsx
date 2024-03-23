@@ -13,20 +13,20 @@ export const MainLayout: React.FC = () => {
     const { token } = useAppSelector(tokenSelector);
     const navigate = useNavigate();
     const location = useLocation();
-    const {data} = useGetUserQuery();
+    const { data } = useGetUserQuery();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if(data){
+        if (data) {
             dispatch(saveEmail(data.email));
             dispatch(saveFirstName(data.firstName));
             dispatch(saveLastName(data.lastName));
             dispatch(saveImage(data.imgSrc));
-        } 
-    },[data, dispatch])
+        }
+    }, [data, dispatch]);
 
     useEffect(() => {
-        if(token === '' && !localStorage.getItem('token')) navigate(PATHS.AUTH);
+        if (token === '' && !localStorage.getItem('token')) navigate(PATHS.AUTH);
     }, [navigate, token]);
 
     return (
@@ -34,7 +34,9 @@ export const MainLayout: React.FC = () => {
             <Layout>
                 <SiderBar />
                 <Layout className='site-layout'>
-                    {location.pathname !== PATHS.PROFILE && <CustomBreadcrumb />}
+                    {(location.pathname === PATHS.CALENDAR ||
+                        location.pathname === PATHS.MAIN ||
+                        location.pathname === PATHS.FEEDBACKS) && <CustomBreadcrumb />}
                     <Outlet />
                 </Layout>
             </Layout>
