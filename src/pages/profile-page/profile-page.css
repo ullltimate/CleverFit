@@ -1,0 +1,13 @@
+.info-wrapper{
+    display: flex;
+    gap: var(--unit-24);
+}
+.info{
+    width: 350px;
+}
+
+@media screen and (max-width: 370px) {
+    .info-wrapper{
+        flex-wrap: wrap-reverse;
+    }
+}

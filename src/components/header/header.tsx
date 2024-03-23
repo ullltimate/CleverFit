@@ -12,17 +12,26 @@ export const Header: React.FC = () => {
     const location = useLocation();
 
     return (
-        <header className='header'>
+        <header className='header' style={{paddingTop: location.pathname === PATHS.PROFILE ? 'var(--unit-16)' : ''}}>
             <div className='header-wrapper'>
-                <Title className='header-title'>
-                    {location.pathname === PATHS.MAIN && (
+                {location.pathname === PATHS.MAIN && (
+                    <Title className='header-title'>
                         <span>
                             Приветствуем тебя в CleverFit — приложении,
                             <br /> которое поможет тебе добиться своей мечты!
                         </span>
-                    )}
-                </Title>
-                <Button type='text' className='header-btn'>
+                    </Title>
+                )}
+                {
+                    location.pathname === PATHS.PROFILE && (
+                        <Title level={4} className='header-title'>
+                            <span>
+                                Профиль
+                            </span>
+                        </Title>
+                    )
+                }
+                <Button type='text' className='header-btn' data-test-id='header-settings'>
                     <SettingOutlined className='header-btn__icon' />
                     <span className='header-btn__text'>Настройки</span>
                 </Button>
