@@ -1,15 +1,15 @@
 import { RootState } from '@redux/configure-store';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
-type UserFull = {
+export type UserFull = {
     email: string;
-    firstName: string;
-    lastName: string;
-    birthday: string;
-    imgSrc: string;
-    readyForJointTraining: boolean;
-    sendNotification: boolean;
-    tariff: {
+    firstName?: string;
+    lastName?: string;
+    birthday?: string;
+    imgSrc?: string;
+    readyForJointTraining?: boolean;
+    sendNotification?: boolean;
+    tariff?: {
         tariffId: string;
         expired: string;
     };

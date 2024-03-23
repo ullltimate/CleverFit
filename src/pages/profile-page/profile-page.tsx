@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CustomUpload } from '@components/constent-profile-page/upload/custom-upload';
 import { Header } from '@components/header/header';
 import { rulesEmail, rulesPassword, rulesRepeatPassword, validateMessage } from '@constants/validation';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { UserFull, userFullSelector } from '@redux/reducers/user-full-slice';
 import { Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
 
 import './profile-page.css';
@@ -9,6 +11,23 @@ import './profile-page.css';
 const { Content } = Layout;
 
 export const ProfilePage: React.FC = () => {
+    const {email, firstName, lastName, birthday} = useAppSelector(userFullSelector);
+    const [form] = Form.useForm();
+    const [initialValues, setInitialValues] = useState<UserFull>({email, firstName, lastName, birthday});
+    const [disabledSave, setDisabledSave] = useState(true);
+
+    useEffect(() => {
+        form.resetFields();
+    },[initialValues, form])
+
+    useEffect(() => {
+        setInitialValues({email, firstName, lastName, birthday})
+    },[email, firstName, lastName, birthday])
+
+    const onFinish = (values: UserFull) => {
+        console.log(values)
+    }
+
     const modalError = (isErrorSave: boolean) => {
         Modal.error({
             className: 'error-list',
@@ -43,7 +62,12 @@ export const ProfilePage: React.FC = () => {
             <Header />
             <Content style={{ margin: 24 }}>
                 <Card className='profile' style={{ height: '100%' }}>
-                    <Form name='profile' style={{maxWidth: 480}}>
+                    <Form name='profile' 
+                        style={{maxWidth: 480}}
+                        form={form}
+                        initialValues={initialValues}
+                        onFinish={onFinish}
+                    >
                         <h5>Личная информация</h5>
                         <div className='info-wrapper'>
                             <Form.Item data-test-id='profile-avatar'>
@@ -88,7 +112,7 @@ export const ProfilePage: React.FC = () => {
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button type='primary' disabled={true} htmlType='submit' data-test-id='profile-submit'>
+                            <Button type='primary' disabled={disabledSave} htmlType='submit' data-test-id='profile-submit'>
                                 Сохранить изменения
                             </Button>
                         </Form.Item>
