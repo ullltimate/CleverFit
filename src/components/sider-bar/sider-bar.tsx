@@ -12,6 +12,7 @@ import { ExitIcon } from '@components/icons/exit-icon';
 import { PATHS } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { saveToken } from '@redux/reducers/token-slice';
+import { resetUser } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
 import { useLazyGetTrainingQuery } from '@services/trainings';
 import { Layout, Menu } from 'antd';
@@ -48,6 +49,7 @@ export const SiderBar: React.FC = () => {
         dispatch(increment({ email: '', password: '' }));
         dispatch(saveToken(''));
         navigate(PATHS.AUTH);
+        dispatch(resetUser());
     };
 
     const onClick = ({ key }: Key) => {

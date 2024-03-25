@@ -36,7 +36,14 @@ export const userAPI = createApi({
                 url: endpointsAPI.user.me,
             }),
         }),
+        updateUser: build.mutation({
+            query: (body) => ({
+                url: endpointsAPI.user.user,
+                method: 'PUT',
+                body,
+            })
+        })
     }),
 });
 
-export const { useGetUserQuery } = userAPI;
+export const { useGetUserQuery, useLazyGetUserQuery, useUpdateUserMutation } = userAPI;

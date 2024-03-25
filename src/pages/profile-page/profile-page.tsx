@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CustomUpload } from '@components/constent-profile-page/upload/custom-upload';
 import { Header } from '@components/header/header';
-import { rulesEmail, rulesPassword, rulesRepeatPassword, validateMessage } from '@constants/validation';
+import { regPassword, rulesEmail, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { UserFull, userFullSelector } from '@redux/reducers/user-full-slice';
 import { Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
@@ -11,21 +11,35 @@ import './profile-page.css';
 const { Content } = Layout;
 
 export const ProfilePage: React.FC = () => {
-    const {email, firstName, lastName, birthday} = useAppSelector(userFullSelector);
+    const {email, firstName, lastName, birthday, imgSrc} = useAppSelector(userFullSelector);
     const [form] = Form.useForm();
-    const [initialValues, setInitialValues] = useState<UserFull>({email, firstName, lastName, birthday});
+    const [initialValues, setInitialValues] = useState<UserFull>({imgSrc, firstName, lastName, birthday, email});
     const [disabledSave, setDisabledSave] = useState(true);
+    const [initFormValues, setInitFormValues] = useState<UserFull>();
 
     useEffect(() => {
         form.resetFields();
+        if(initialValues) setInitFormValues(initialValues);
     },[initialValues, form])
 
     useEffect(() => {
-        setInitialValues({email, firstName, lastName, birthday})
-    },[email, firstName, lastName, birthday])
+        setInitialValues({imgSrc, firstName, lastName, birthday: birthday ? new Date(birthday) : '', email})
+    },[email, firstName, lastName, birthday, imgSrc])
 
     const onFinish = (values: UserFull) => {
-        console.log(values)
+        console.log(values);
+        
+    }
+
+    const onValuesChange = (_, allValues: UserFull) => {
+        console.log(JSON.stringify(allValues))
+        console.log(JSON.stringify(initFormValues))
+        console.log(JSON.stringify(allValues) === JSON.stringify(initFormValues))
+        if (JSON.stringify(allValues) === JSON.stringify(initFormValues)) {
+            setDisabledSave(true)
+        } else {
+            setDisabledSave(false)
+        }
     }
 
     const modalError = (isErrorSave: boolean) => {
@@ -67,12 +81,11 @@ export const ProfilePage: React.FC = () => {
                         form={form}
                         initialValues={initialValues}
                         onFinish={onFinish}
+                        onValuesChange={onValuesChange}
                     >
                         <h5>Личная информация</h5>
                         <div className='info-wrapper'>
-                            <Form.Item data-test-id='profile-avatar'>
-                                <CustomUpload modalError={modalError} />
-                            </Form.Item>
+                            <CustomUpload modalError={modalError} setDisabledSave={setDisabledSave}/>
                             <div className='info'>
                                 <Form.Item name='firstName'>
                                     <Input placeholder='Имя' data-test-id='profile-name'/>
@@ -81,7 +94,7 @@ export const ProfilePage: React.FC = () => {
                                     <Input placeholder='Фамилия' data-test-id='profile-surname'/>
                                 </Form.Item>
                                 <Form.Item name='birthday'>
-                                    <DatePicker placeholder='Дата рождения' format='DD.MM.YYYY' style={{width: '100%'}} data-test-id='profile-birthday'/>
+                                    <DatePicker placeholder='Дата рождения' format='DD.MM.YYYY' style={{width: '100%'}} data-test-id='profile-birthday' allowClear={false}/>
                                 </Form.Item>
                             </div>
                         </div>
@@ -92,7 +105,7 @@ export const ProfilePage: React.FC = () => {
                         <Form.Item
                             name='password'
                             help={validateMessage.password}
-                            rules={rulesPassword}
+                            rules={[{ required: false, pattern: regPassword, message: validateMessage.password}]}
                         >
                             <Input.Password
                                 type='password'

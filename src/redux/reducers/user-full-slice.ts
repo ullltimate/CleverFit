@@ -5,7 +5,7 @@ export type UserFull = {
     email: string;
     firstName?: string;
     lastName?: string;
-    birthday?: string;
+    birthday?: string | Date;
     imgSrc?: string;
     readyForJointTraining?: boolean;
     sendNotification?: boolean;
@@ -48,10 +48,11 @@ export const userFullSlice = createSlice({
         saveImage: (state, action: PayloadAction<string>) => {
             state.imgSrc = action.payload;
         },
+        resetUser: () => initialState,
     },
 });
 
-export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage } = userFullSlice.actions;
+export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage, resetUser } = userFullSlice.actions;
 export const userFullSelector = (state: RootState) => state.userFullReducer
 
 export const userFullReducer = userFullSlice.reducer;
