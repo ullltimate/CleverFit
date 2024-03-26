@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { CustomUpload } from '@components/constent-profile-page/upload/custom-upload';
 import { Header } from '@components/header/header';
+import { urlForImage } from '@constants/api';
 import { regPassword, rulesEmail, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useResize } from '@hooks/use-resize';
 import { UserFull, userFullSelector } from '@redux/reducers/user-full-slice';
-import { Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
+import { useUpdateUserMutation } from '@services/user';
+import { Alert, Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
 
 import './profile-page.css';
 
@@ -16,31 +19,10 @@ export const ProfilePage: React.FC = () => {
     const [initialValues, setInitialValues] = useState<UserFull>({imgSrc, firstName, lastName, birthday, email});
     const [disabledSave, setDisabledSave] = useState(true);
     const [initFormValues, setInitFormValues] = useState<UserFull>();
-
-    useEffect(() => {
-        form.resetFields();
-        if(initialValues) setInitFormValues(initialValues);
-    },[initialValues, form])
-
-    useEffect(() => {
-        setInitialValues({imgSrc, firstName, lastName, birthday: birthday ? new Date(birthday) : '', email})
-    },[email, firstName, lastName, birthday, imgSrc])
-
-    const onFinish = (values: UserFull) => {
-        console.log(values);
-        
-    }
-
-    const onValuesChange = (_, allValues: UserFull) => {
-        console.log(JSON.stringify(allValues))
-        console.log(JSON.stringify(initFormValues))
-        console.log(JSON.stringify(allValues) === JSON.stringify(initFormValues))
-        if (JSON.stringify(allValues) === JSON.stringify(initFormValues)) {
-            setDisabledSave(true)
-        } else {
-            setDisabledSave(false)
-        }
-    }
+    const [upgateUser] = useUpdateUserMutation();
+    const [visible, setVisible] = useState(false);
+    const handleCloseAlert = () => setVisible(false);
+    const windowSize = useResize();
 
     const modalError = (isErrorSave: boolean) => {
         Modal.error({
@@ -71,10 +53,48 @@ export const ProfilePage: React.FC = () => {
         });
     };
 
+    useEffect(() => {
+        form.resetFields();
+        if(initialValues) setInitFormValues(initialValues);
+    },[initialValues, form])
+
+    useEffect(() => {
+        setInitialValues({imgSrc, firstName, lastName, birthday: birthday ? new Date(birthday) : '', email})
+    },[email, firstName, lastName, birthday, imgSrc])
+
+    const onFinish = (values: UserFull) => {
+        console.log(values);
+        const omitUndefined = (obj: UserFull) => Object.fromEntries(Object.entries(obj).filter(([, value]) => value !== undefined && value !== ''));
+        const filteredValues = omitUndefined(values);
+
+        console.log(filteredValues)
+        if(filteredValues.imgSrc && typeof filteredValues.imgSrc !== 'string'){
+            filteredValues.imgSrc = `${urlForImage}${filteredValues.imgSrc.fileList[0].response.url}`
+        }
+
+        upgateUser(filteredValues)
+            .unwrap()
+            .then(() => {
+                setDisabledSave(true)
+                setVisible(true)})
+            .catch(() => modalError(true))
+    }
+
+    const onValuesChange = (_, allValues: UserFull) => {
+        console.log(JSON.stringify(allValues))
+        console.log(JSON.stringify(initFormValues))
+        console.log(JSON.stringify(allValues) === JSON.stringify(initFormValues))
+        if (JSON.stringify(allValues) === JSON.stringify(initFormValues)) {
+            setDisabledSave(true)
+        } else {
+            setDisabledSave(false)
+        }
+    }
+
     return (
         <React.Fragment>
             <Header />
-            <Content style={{ margin: 24 }}>
+            <Content style={{ margin: `${windowSize.windowSize > 480 ? '24px' : '24px 0px'}` }}>
                 <Card className='profile' style={{ height: '100%' }}>
                     <Form name='profile' 
                         style={{maxWidth: 480}}
@@ -130,6 +150,14 @@ export const ProfilePage: React.FC = () => {
                             </Button>
                         </Form.Item>
                     </Form>
+                    {visible ? (
+                        <Alert message="Данные профиля успешно обновлены" 
+                            className='alert'
+                            type="success" 
+                            closable={true} 
+                            onClose={handleCloseAlert} 
+                            data-test-id='alert' />
+                    ) : null}
                 </Card>
             </Content>
         </React.Fragment>

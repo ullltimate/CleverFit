@@ -5,9 +5,19 @@
 .info{
     width: 350px;
 }
+.alert{
+    position: fixed !important;
+    bottom: 70px;
+    left: 40%;
+    max-width: 400px;
+}
 
 @media screen and (max-width: 370px) {
     .info-wrapper{
         flex-wrap: wrap-reverse;
+    }
+    .alert{
+        max-width: 310px;
+        left: 7%;
     }
 }

@@ -14,15 +14,15 @@ export const MainLayout: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const [getUserFull, { data }] = useLazyGetUserQuery();
+    const [getUser, { data }] = useLazyGetUserQuery();
 
     useEffect(() => {
         if (token === '' && !localStorage.getItem('token')){ 
             navigate(PATHS.AUTH)
         } else {
-            getUserFull();
+            setTimeout(getUser, 1000);
         }
-    }, [getUserFull, navigate, token]);
+    }, [getUser, navigate, token]);
 
     useEffect(() => {
         if (data) {
