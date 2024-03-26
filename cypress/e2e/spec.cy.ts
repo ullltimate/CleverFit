@@ -551,6 +551,7 @@ describe('Sprint 5', () => {
             body: {},
         }).as('postFeedback');
         cy.contains('Написать отзыв').click();
+        cy.get('.ant-modal ul li').eq(4).click();
         cy.get(`[data-test-id=${DATA_TEST_ID.newReviewSubmitBtn}]`).click();
         cy.wait('@postFeedback');
     });
