@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
                     )}
                     {location.pathname === PATHS.PROFILE && <span>Профиль</span>}
                     {location.pathname === PATHS.SETTINGS && (
-                        <Button type='text' data-test-id='settings-back' onClick={() => navigate(PATHS.PROFILE)}>
+                        <Button type='text' data-test-id='settings-back' onClick={() => navigate(location.state)}>
                             <ArrowLeftOutlined /> Настройки
                         </Button>
                     )}
@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
                         type='text'
                         className='header-btn'
                         data-test-id='header-settings'
-                        onClick={() => navigate(PATHS.SETTINGS)}
+                        onClick={() => navigate(PATHS.SETTINGS, {state: location.pathname})}
                     >
                         <SettingOutlined className='header-btn__icon' />
                         <span className='header-btn__text'>Настройки</span>

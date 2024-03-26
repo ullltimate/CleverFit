@@ -1,0 +1,28 @@
+.settings-title{
+    font-size: var(--font-size-20);
+}
+.settings .site-card-wrapper .ant-card-head,
+.settings .site-card-wrapper .ant-card-body{
+    padding: 0;
+}
+.settings-card{
+    max-width: 240px;
+    text-align: center;
+}
+.settings .site-card-wrapper .ant-card-body .setting-card__btn{
+    margin: 25px 0;
+    height: 42px;
+}
+.settings  .settings-list{
+    max-width: 500px;
+    margin-top: var(--unit-24);
+}
+.settings .ant-list-split .ant-list-item {
+    border-bottom: none;
+}
+.settings-item__text{
+    margin: 0;
+}
+.settings .ant-list-split .ant-list-item{
+    padding: 16px 0 0;
+}

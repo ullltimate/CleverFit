@@ -7,6 +7,18 @@ type TrainingList = {
     key: string;
 };
 
+type TariffList = {
+    _id: string;
+    name: string;
+    periods: [
+        {
+            text: string;
+            cost: number;
+            days: number;
+        },
+    ];
+};
+
 export const catalogsAPI = createApi({
     reducerPath: 'catalogsAPI',
     baseQuery: fetchBaseQuery({
@@ -27,7 +39,12 @@ export const catalogsAPI = createApi({
                 url: endpointsAPI.catalogs.training,
             }),
         }),
+        getTariffList: build.query<TariffList[], void>({
+            query: () => ({
+                url: endpointsAPI.catalogs.tariff,
+            }),
+        }),
     }),
 });
 
-export const { useGetTrainingListQuery } = catalogsAPI;
+export const { useGetTrainingListQuery, useGetTariffListQuery } = catalogsAPI;

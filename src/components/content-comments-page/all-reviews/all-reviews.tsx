@@ -1,7 +1,7 @@
 import React from 'react';
 import { Feedbacks } from '@tstypes/feedbacks';
-import { Button } from 'antd';
 
+import { ButtonsComment } from '../buttons-comment/buttons-comment';
 import { CustomComment } from '../comment/custom-comment';
 
 import './all-reviews.css';
@@ -45,13 +45,6 @@ export const AllComments: React.FC<AllCommentsProps> = ({
                           />
                       ))}
         </div>
-        <div className='comments-btns'>
-            <Button type='primary' onClick={showModalReview} data-test-id='write-review'>
-                Написать отзыв
-            </Button>
-            <Button type='link' onClick={isShowAllComments} data-test-id='all-reviews-button'>
-                {showAllComments ? 'Свернуть все отзывы' : 'Развернуть все отзывы'}
-            </Button>
-        </div>
+        <ButtonsComment showModalReview={showModalReview} isShowAllComments={isShowAllComments} showAllComments={showAllComments}/>
     </React.Fragment>
 );
