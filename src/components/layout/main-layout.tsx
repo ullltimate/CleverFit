@@ -20,7 +20,7 @@ export const MainLayout: React.FC = () => {
         if (token === '' && !localStorage.getItem('token')){ 
             navigate(PATHS.AUTH)
         } else {
-            setTimeout(getUser, 1000);
+            getUser();
         }
     }, [getUser, navigate, token]);
 
