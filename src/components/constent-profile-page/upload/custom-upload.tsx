@@ -10,24 +10,29 @@ import type { UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 
 type CustomUploadProps = {
-    modalError: (isErrorSave: boolean) => void,
+    modalError: (isErrorSave: boolean) => void;
     setDisabledSave: Dispatch<SetStateAction<boolean>>;
-}
-export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabledSave}) => {
+};
+export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisabledSave }) => {
     const { token } = useAppSelector(tokenSelector);
     const tokenForHeader = localStorage.getItem('token') || token;
-    const {imgSrc} = useAppSelector(userFullSelector);
+    const { imgSrc } = useAppSelector(userFullSelector);
     const windowSize = useResize();
-    const initialFile = useMemo(() => ({
-        uid: '1',
-        name: `${windowSize.windowSize<370 ? '' : 'image.png'}`,
-        url: imgSrc,
-    }),[imgSrc, windowSize.windowSize])
-    const [fileList, setFileList] = useState<UploadFile[]>((imgSrc === '' || !imgSrc) ? [] : [initialFile]);
+    const initialFile = useMemo(
+        () => ({
+            uid: '1',
+            name: `${windowSize.windowSize < 370 ? '' : 'image.png'}`,
+            url: imgSrc,
+        }),
+        [imgSrc, windowSize.windowSize],
+    );
+    const [fileList, setFileList] = useState<UploadFile[]>(
+        imgSrc === '' || !imgSrc ? [] : [initialFile],
+    );
 
     useEffect(() => {
-        if(imgSrc) setFileList([initialFile])
-    },[imgSrc, initialFile])
+        if (imgSrc) setFileList([initialFile]);
+    }, [imgSrc, initialFile]);
 
     const uploadButton = (
         <div>
@@ -36,32 +41,43 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
                 style={{
                     marginTop: 8,
                     maxWidth: 70,
-                    color: 'var(--color-disabled)'
+                    color: 'var(--color-disabled)',
                 }}
-            >Загрузить фото профиля</div>
+            >
+                Загрузить фото профиля
+            </div>
         </div>
     );
-    const uploudButtonMobile = (
-        <Button icon={<UploadOutlined />}>Загрузить</Button>
-    )
-   
+    const uploudButtonMobile = <Button icon={<UploadOutlined />}>Загрузить</Button>;
 
-    const handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => {
-
-        setFileList(newFileList)
+    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+        setFileList(newFileList);
         const newFile = newFileList[0];
 
         if (newFile) {
             if (newFile.status === 'error') {
-                modalError(false)
+                modalError(false);
                 setDisabledSave(true);
             }
-            if(newFile.response){
-                if(newFile.response.url){
-                    setFileList([{...initialFile, name: `${windowSize.windowSize<370 ? '' : newFile.response.name}`, url: `${urlForImage}${newFile.response.url}`}]);
-                    setDisabledSave(false)
+            if (newFile.response) {
+                if (newFile.response.url) {
+                    setFileList([
+                        {
+                            ...initialFile,
+                            name: `${windowSize.windowSize < 370 ? '' : newFile.response.name}`,
+                            url: `${urlForImage}${newFile.response.url}`,
+                        },
+                    ]);
+                    setDisabledSave(false);
                 } else {
-                    setFileList([{...initialFile, url: '', name: `${windowSize.windowSize<370 ? '' : newFile.name}`, status: 'error'}])
+                    setFileList([
+                        {
+                            ...initialFile,
+                            url: '',
+                            name: `${windowSize.windowSize < 370 ? '' : newFile.name}`,
+                            status: 'error',
+                        },
+                    ]);
                 }
             }
         }
@@ -69,28 +85,30 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
     const onRemove = (file: UploadFile) => {
         const files: UploadFile[] = [];
 
-        if(file) setFileList(files);
-      };
+        if (file) setFileList(files);
+    };
 
     return (
-        <Form.Item data-test-id='profile-avatar' name='imgSrc'>
-            {
-                (windowSize.windowSize<370 && fileList.length < 1) &&
-                    <p className='profile-avatar__subtitle'>Загрузить фото профиля:</p>
-            }
-            <Upload
-                action={`${urlAPI}${endpointsAPI.upload}`}
-                headers={{ Authorization: `Bearer ${tokenForHeader}` }}
-                maxCount={1}
-                listType={`${windowSize.windowSize<370 ? 'picture' : 'picture-card'}`}
-                fileList={fileList}
-                onPreview={() => {}}
-                onChange={handleChange}
-                onRemove={onRemove}
-                progress={{ strokeWidth: 2, showInfo: false ,strokeColor:'#108ee9'}}
-            >
-                {fileList.length < 1 && ((windowSize.windowSize<370) ? uploudButtonMobile : uploadButton)}
-            </Upload>
+        <Form.Item>
+            {windowSize.windowSize < 370 && fileList.length < 1 && (
+                <p className='profile-avatar__subtitle'>Загрузить фото профиля:</p>
+            )}
+            <Form.Item data-test-id='profile-avatar' name='imgSrc'>
+                <Upload
+                    action={`${urlAPI}${endpointsAPI.upload}`}
+                    headers={{ Authorization: `Bearer ${tokenForHeader}` }}
+                    maxCount={1}
+                    listType={`${windowSize.windowSize < 370 ? 'picture' : 'picture-card'}`}
+                    fileList={fileList}
+                    onPreview={() => {}}
+                    onChange={handleChange}
+                    onRemove={onRemove}
+                    progress={{ strokeWidth: 2, showInfo: false, strokeColor: '#108ee9' }}
+                >
+                    {fileList.length < 1 &&
+                        (windowSize.windowSize < 370 ? uploudButtonMobile : uploadButton)}
+                </Upload>
+            </Form.Item>
         </Form.Item>
     );
 };
