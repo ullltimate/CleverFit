@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /// <reference types="cypress" />
 
 const DATA_TEST_ID = {
@@ -49,26 +50,58 @@ describe('Sprint 5', () => {
         }
     }
 
-    beforeEach(() => {
+    function beforeEach(testName: string) {
         cy.visit('/');
         cy.intercept('POST', 'auth/login', { accessToken: 'SUPERUSER' }).as('login');
         cy.visit('/auth');
         cy.get('[data-test-id=login-email]').type('valadzkoaliaksei@tut.by');
         cy.get('[data-test-id=login-password]').type('1234qqQQ');
         cy.get('[data-test-id=login-submit-button]').click();
+
+        if (testName === 'profile') {
+            cy.intercept('GET', 'me', {
+                statusCode: 200,
+                body: {
+                    email: 'valadzkoaliaksei@tut.by',
+                    readyForJointTraining: false,
+                    sendNotification: false,
+                },
+            }).as('getUser');
+        }
+
+        if (testName === 'profileGoogle') {
+            cy.intercept('GET', 'me', {
+                statusCode: 200,
+                body: {
+                    email: 'thebestdeveloperintheworld@gmail.com',
+                    imgSrc: 'https://lh3.googleusercontent.com/a/ACg8ocK7Zxx6eMSuA-4_oUDsUIoh-RERhwB6mjReSs5L_kjQeg=s96-c',
+                    readyForJointTraining: false,
+                    sendNotification: false,
+                },
+            }).as('getUser');
+        }
+
+        if (testName === 'settingsPro') {
+            cy.intercept('GET', 'me', {
+                statusCode: 200,
+                body: {
+                    email: 'valadzkoaliaksei@tut.by',
+                    readyForJointTraining: true,
+                    sendNotification: false,
+                    tariff: {
+                        tariffId: '65df21ca9013cb64beacbd56',
+                        expired: '2025-03-09T10:18:40.805Z',
+                    },
+                },
+            }).as('getUser');
+        }
+
         cy.url().should('include', '/main');
-    });
+    }
 
     it('profile page', () => {
         // получение данных пользователя при входе
-        cy.intercept('GET', 'me', {
-            statusCode: 200,
-            body: {
-                email: 'valadzkoaliaksei@tut.by',
-                readyForJointTraining: false,
-                sendNotification: false,
-            },
-        }).as('getUser');
+        beforeEach('profile');
         cy.wait('@getUser');
 
         // страница профиля без аватара
@@ -191,20 +224,11 @@ describe('Sprint 5', () => {
         cy.get(`[data-test-id=${DATA_TEST_ID.profileSubmit}]`).should('be.enabled');
         cy.get(`[data-test-id=${DATA_TEST_ID.profileSubmit}]`).click();
         cy.wait('@updateUserWithError');
-        cy.wait(1000);
         takeScreenshots('profile-modal-error', resolutionLaptop);
     });
 
     it('profile page with google photo', () => {
-        cy.intercept('GET', 'me', {
-            statusCode: 200,
-            body: {
-                email: 'thebestdeveloperintheworld@gmail.com',
-                imgSrc: 'https://lh3.googleusercontent.com/a/ACg8ocK7Zxx6eMSuA-4_oUDsUIoh-RERhwB6mjReSs5L_kjQeg=s96-c',
-                readyForJointTraining: false,
-                sendNotification: false,
-            },
-        }).as('getUser');
+        beforeEach('profileGoogle');
         cy.wait('@getUser');
         cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonProfile}]`).click();
         cy.url().should('include', '/profile');
@@ -226,14 +250,8 @@ describe('Sprint 5', () => {
     });
 
     it('settings page', () => {
-        cy.intercept('GET', 'me', {
-            statusCode: 200,
-            body: {
-                email: 'valadzkoaliaksei@tut.by',
-                readyForJointTraining: false,
-                sendNotification: false,
-            },
-        }).as('getUser');
+        beforeEach('profile');
+        cy.wait('@getUser');
         cy.intercept('GET', 'tariff-list', {
             statusCode: 200,
             body: [
@@ -260,7 +278,6 @@ describe('Sprint 5', () => {
                 },
             ],
         }).as('getTarifList');
-        cy.wait('@getUser');
 
         // кнопка назад
         cy.get(`[data-test-id=${DATA_TEST_ID.headerSettings}]`).click();
@@ -343,18 +360,7 @@ describe('Sprint 5', () => {
     });
 
     it('settings page pro', () => {
-        cy.intercept('GET', 'me', {
-            statusCode: 200,
-            body: {
-                email: 'valadzkoaliaksei@tut.by',
-                readyForJointTraining: true,
-                sendNotification: false,
-                tariff: {
-                    tariffId: '65df21ca9013cb64beacbd56',
-                    expired: '2025-03-09T10:18:40.805Z',
-                },
-            },
-        }).as('getUser');
+        beforeEach('settingsPro');
         cy.intercept('GET', 'tariff-list', {
             statusCode: 200,
             body: [
@@ -463,14 +469,7 @@ describe('Sprint 5', () => {
     });
 
     it('feedbacks', () => {
-        cy.intercept('GET', 'me', {
-            statusCode: 200,
-            body: {
-                email: 'valadzkoaliaksei@tut.by',
-                readyForJointTraining: false,
-                sendNotification: false,
-            },
-        }).as('getUser');
+        beforeEach('profile');
         cy.intercept('GET', 'tariff-list', {
             statusCode: 200,
             body: [
