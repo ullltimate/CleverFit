@@ -63,11 +63,9 @@ export const ProfilePage: React.FC = () => {
     },[email, firstName, lastName, birthday, imgSrc])
 
     const onFinish = (values: UserFull) => {
-        console.log(values);
         const omitUndefined = (obj: UserFull) => Object.fromEntries(Object.entries(obj).filter(([, value]) => value !== undefined && value !== ''));
         const filteredValues = omitUndefined(values);
 
-        console.log(filteredValues)
         if(filteredValues.imgSrc && typeof filteredValues.imgSrc !== 'string'){
             filteredValues.imgSrc = `${urlForImage}${filteredValues.imgSrc.fileList[0].response.url}`
         }
@@ -81,9 +79,6 @@ export const ProfilePage: React.FC = () => {
     }
 
     const onValuesChange = (_, allValues: UserFull) => {
-        console.log(JSON.stringify(allValues))
-        console.log(JSON.stringify(initFormValues))
-        console.log(JSON.stringify(allValues) === JSON.stringify(initFormValues))
         if (JSON.stringify(allValues) === JSON.stringify(initFormValues)) {
             setDisabledSave(true)
         } else {

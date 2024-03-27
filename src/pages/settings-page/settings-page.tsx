@@ -21,6 +21,7 @@ import { useBuyTariffMutation } from '@services/tariff';
 import { useUpdateUserMutation } from '@services/user';
 import { Button, Card, Col, Drawer, Layout, List, Modal, Radio, RadioChangeEvent, Result, Row, Space, Switch, Table, Tooltip } from 'antd';
 import Column from 'antd/lib/table/Column';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -47,16 +48,11 @@ export const SettingsPage: React.FC = () => {
     const navigate = useNavigate();
     const [isDisabledTheme, setIsDisabledTheme] = useState(true);
 
-    console.log(tariffList);
-    console.log(readyForJointTraining, sendNotification);
-    console.log(tariff)
-
     useEffect(() => {
         if(tariff) setIsDisabledTheme(false)
     },[tariff])
 
     const onChangeJointTraining = (checked: boolean) => {
-        console.log(`switch to ${checked}`);
         dispatch(saveJoinTrainings(checked));
         upgateUser({email, readyForJointTraining: checked})
             .unwrap()
@@ -64,19 +60,14 @@ export const SettingsPage: React.FC = () => {
             .catch(() => {});
     };
     const onChangesendNotification = (checked: boolean) => {
-        console.log(`switch to ${checked}`);
         dispatch(savesendNotification(checked));
         upgateUser({email, sendNotification: checked})
             .unwrap()
             .then(() => {})
             .catch(() => {});
     };
-    const onChangeTheme = (checked: boolean) => {
-        console.log(`switch to ${checked}`);
-    };
 
     const onChangeRadio = (e: RadioChangeEvent) => {
-        console.log(e.target.value)
         setValueRadio(e.target.value);
         setIsDisabledPay(false)
     };
@@ -206,7 +197,6 @@ export const SettingsPage: React.FC = () => {
                             <Switch
                                 disabled={isDisabledTheme}
                                 data-test-id='tariff-theme'
-                                onChange={onChangeTheme}
                             />
                         </List.Item>
                     </List>

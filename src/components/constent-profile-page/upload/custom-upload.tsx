@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { endpointsAPI, urlAPI, urlForImage } from '@constants/api';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useResize } from '@hooks/use-resize';
 import { tokenSelector } from '@redux/reducers/token-slice';
-import { saveImage, userFullSelector } from '@redux/reducers/user-full-slice';
+import { userFullSelector } from '@redux/reducers/user-full-slice';
 import { Button, Form, Upload } from 'antd';
 import type { UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { useResize } from '@hooks/use-resize';
 
 type CustomUploadProps = {
     modalError: (isErrorSave: boolean) => void,
@@ -18,8 +18,6 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
     const tokenForHeader = localStorage.getItem('token') || token;
     const {imgSrc} = useAppSelector(userFullSelector);
     const windowSize = useResize();
-    //const dispatch = useAppDispatch();
-    console.log(imgSrc)
     const initialFile = useMemo(() => ({
         uid: '1',
         name: `${windowSize.windowSize<370 ? '' : 'image.png'}`,
@@ -52,7 +50,6 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
 
         setFileList(newFileList)
         const newFile = newFileList[0];
-        console.log(newFile)
 
         if (newFile) {
             if (newFile.status === 'error') {
@@ -60,10 +57,9 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
                 setDisabledSave(true);
             }
             if(newFile.response){
-                console.log(newFile.response)
                 if(newFile.response.url){
                     setFileList([{...initialFile, name: `${windowSize.windowSize<370 ? '' : newFile.response.name}`, url: `${urlForImage}${newFile.response.url}`}]);
-                    //dispatch(saveImage(`${urlForImage}${newFile.response.url}`));
+                    setDisabledSave(false)
                 } else {
                     setFileList([{...initialFile, url: '', name: `${windowSize.windowSize<370 ? '' : newFile.name}`, status: 'error'}])
                 }
@@ -73,7 +69,6 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({modalError, setDisabl
     const onRemove = (file: UploadFile) => {
         const files: UploadFile[] = [];
 
-        //dispatch(saveImage(''));
         if(file) setFileList(files);
       };
 
