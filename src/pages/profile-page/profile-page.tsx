@@ -74,7 +74,9 @@ export const ProfilePage: React.FC = () => {
             .unwrap()
             .then(() => {
                 setDisabledSave(true)
-                setVisible(true)})
+                setVisible(true)
+                form.setFieldValue('password', '')
+                form.setFieldValue('confirmPassword', '')})
             .catch(() => modalError(true))
     }
 
