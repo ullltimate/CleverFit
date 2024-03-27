@@ -25,6 +25,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.1",
     "@reduxjs/toolkit": "^2.2.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "antd": "^4.24.15",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
@@ -37,8 +38,8 @@
     "react-router-dom": "^6.22.0",
     "react-verification-input": "^4.1.0",
     "redux-first-history": "^5.2.0",
-    "vite": "^5.0.6",
-    "@vitejs/plugin-react": "^4.2.1"
+    "uuid": "^9.0.1",
+    "vite": "^5.0.6"
   },
   "devDependencies": {
     "@types/css-modules": "^1.0.5",

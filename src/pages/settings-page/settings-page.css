@@ -26,3 +26,62 @@
 .settings .ant-list-split .ant-list-item{
     padding: 16px 0 0;
 }
+.description-tariffs .ant-table table {
+    border-spacing: 10px 0;
+	border-collapse: separate;
+}
+.description-tariffs .ant-table-cell{
+    padding: 8px 0;
+    text-align: center;
+    border: none;
+}
+.description-tariffs th.ant-table-cell{
+    min-width: 55px;
+    margin: 16px 5px;
+}
+.description-tariffs tr > td:first-child{
+    text-align: left;
+}
+.description-tariffs .ant-table-thead > tr > th:first-child {
+    background: transparent;
+}
+.description-tariffs .ant-table-thead > tr > th:nth-child(2){
+    background: var(--color-bg-grey);
+}
+.description-tariffs .ant-table-thead > tr > th:last-child{
+    background: var(--color-bg-blue);
+}
+.description-tariffs .ant-table-tbody > tr.ant-table-row:hover > td, 
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+    background: transparent;
+}
+.description-tariffs .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background: transparent;
+}
+.costs-tariff span,
+.costs-tariff span.ant-radio + *{
+    padding: 0px;
+}
+.costs-tariff .ant-radio-wrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 300px;
+}
+.tariff-cost{
+    font-weight: 600;
+    margin-right: var(--unit-24);
+}
+.tariff-title{
+    margin-right: 150px;
+}
+.costs-tariff-title{
+    font-weight: var(--font-eight-700);
+    font-size: var(--font-size-14);
+    padding: 86px 0 var(--unit-24) 8px;
+    margin: 0;
+}
+.costs-tariff .ant-space-vertical{
+    gap: var(--unit-16) !important;
+}
