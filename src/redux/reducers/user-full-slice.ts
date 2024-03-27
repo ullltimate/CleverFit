@@ -1,6 +1,11 @@
 import { RootState } from '@redux/configure-store';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
+type Tariff = {
+    tariffId: string;
+    expired: string;
+}
+
 export type UserFull = {
     email: string;
     firstName?: string;
@@ -9,10 +14,7 @@ export type UserFull = {
     imgSrc?: string;
     readyForJointTraining?: boolean;
     sendNotification?: boolean;
-    tariff?: {
-        tariffId: string;
-        expired: string;
-    };
+    tariff?: Tariff;
 }
 
 const initialState: UserFull = {
@@ -54,11 +56,14 @@ export const userFullSlice = createSlice({
         savesendNotification: (state, action: PayloadAction<boolean>) => {
             state.sendNotification = action.payload;
         },
+        saveTariff: (state, action: PayloadAction<Tariff>) => {
+            state.tariff = action.payload;
+        },
         resetUser: () => initialState,
     },
 });
 
-export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage, saveJoinTrainings, savesendNotification, resetUser } = userFullSlice.actions;
+export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage, saveJoinTrainings, savesendNotification, saveTariff, resetUser } = userFullSlice.actions;
 export const userFullSelector = (state: RootState) => state.userFullReducer
 
 export const userFullReducer = userFullSlice.reducer;

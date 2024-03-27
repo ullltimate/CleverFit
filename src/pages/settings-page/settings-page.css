@@ -77,7 +77,7 @@
     margin-right: 150px;
 }
 .costs-tariff-title{
-    font-weight: var(--font-eight-700);
+    font-weight: var(--font-weight-700);
     font-size: var(--font-size-14);
     padding: 86px 0 var(--unit-24) 8px;
     margin: 0;
@@ -90,4 +90,12 @@
 }
 .modal-tariff-result .ant-result {
     padding: 48px var(--unit-8);
+}
+.tariff-pro-title{
+    text-align: center;
+    padding: 14px 40px;
+    margin: var(--unit-24) 0;
+    background: var(--color-bg-blue);
+    font-size: var(--unit-16);
+    font-weight: var(--font-weight-500);
 }

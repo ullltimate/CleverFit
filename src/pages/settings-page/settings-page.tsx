@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,13 +13,14 @@ import { descriptionTariffs } from '@constants/settinds-data';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
 import { saveToken } from '@redux/reducers/token-slice';
-import { resetUser, saveJoinTrainings, userFullSelector } from '@redux/reducers/user-full-slice';
+import { resetUser, saveJoinTrainings, savesendNotification, userFullSelector } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
 import { useGetTariffListQuery } from '@services/catalogs';
 import { useBuyTariffMutation } from '@services/tariff';
 import { useUpdateUserMutation } from '@services/user';
 import { Button, Card, Col, Drawer, Layout, List, Modal, Radio, RadioChangeEvent, Result, Row, Space, Switch, Table, Tooltip } from 'antd';
 import Column from 'antd/lib/table/Column';
+import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
 import './settings-page.css';
@@ -38,14 +39,20 @@ export const SettingsPage: React.FC = () => {
     const showDrawer = () => setOpenDrawer(true);
     const onCloseDrawer = () => setOpenDrawer(false);
     const [isModalResult, setIsModalResult] = useState(false);
-    const {email, readyForJointTraining, sendNotification} = useAppSelector(userFullSelector);
+    const {email, readyForJointTraining, sendNotification, tariff} = useAppSelector(userFullSelector);
     const [upgateUser] = useUpdateUserMutation();
     const dispatch = useAppDispatch();
     const [buyTariff] = useBuyTariffMutation();
     const navigate = useNavigate();
+    const [isDisabledTheme, setIsDisabledTheme] = useState(true);
 
     console.log(tariffList);
     console.log(readyForJointTraining, sendNotification);
+    console.log(tariff)
+
+    useEffect(() => {
+        if(tariff) setIsDisabledTheme(false)
+    },[tariff])
 
     const onChangeJointTraining = (checked: boolean) => {
         console.log(`switch to ${checked}`);
@@ -57,8 +64,8 @@ export const SettingsPage: React.FC = () => {
     };
     const onChangesendNotification = (checked: boolean) => {
         console.log(`switch to ${checked}`);
-        dispatch(saveJoinTrainings(checked));
-        upgateUser({email, readyForJointTraining: checked})
+        dispatch(savesendNotification(checked));
+        upgateUser({email, sendNotification: checked})
             .unwrap()
             .then(() => {})
             .catch(() => {});
@@ -131,12 +138,12 @@ export const SettingsPage: React.FC = () => {
                                 >
                                     <img src='./pro-tariff-disable.jpg' alt='free-tariff' />
                                     <Button
-                                        type='primary'
+                                        type={`${tariff ? 'text' : 'primary'}`}
                                         className='setting-card__btn'
                                         data-test-id='activate-tariff-btn'
                                         onClick={showDrawer}
                                     >
-                                        Активировать
+                                        {tariff ? `активен до ${moment(tariff.expired).format('DD.MM')}` :'Активировать'}
                                     </Button>
                                 </Card>
                             </Col>
@@ -160,7 +167,7 @@ export const SettingsPage: React.FC = () => {
                             </p>
                             <Switch
                                 data-test-id='tariff-trainings'
-                                defaultChecked={readyForJointTraining}
+                                checked={readyForJointTraining}
                                 onChange={onChangeJointTraining}
                             />
                         </List.Item>
@@ -181,7 +188,7 @@ export const SettingsPage: React.FC = () => {
                             </p>
                             <Switch
                                 data-test-id='tariff-notifications'
-                                defaultChecked={sendNotification}
+                                checked={sendNotification}
                                 onChange={onChangesendNotification}
                             />
                         </List.Item>
@@ -196,7 +203,7 @@ export const SettingsPage: React.FC = () => {
                                 </Tooltip>
                             </p>
                             <Switch
-                                disabled={true}
+                                disabled={isDisabledTheme}
                                 data-test-id='tariff-theme'
                                 onChange={onChangeTheme}
                             />
@@ -230,6 +237,7 @@ export const SettingsPage: React.FC = () => {
                         padding: `0px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
                     }}
                     footer={
+                        !tariff &&
                         <Button type='primary' data-test-id='tariff-submit' onClick={payTariff} disabled={isDisabledPay} style={{ width: '100%' }}>
                             Выбрать и оплатить
                         </Button>
@@ -240,8 +248,16 @@ export const SettingsPage: React.FC = () => {
                     }}
                 >
                     <div className='description-tariffs'>
+                        {
+                            tariff ?
+                                <p className='tariff-pro-title'>
+                                    Ваш PRO tarif активен до {moment(tariff.expired).format('DD.MM')}
+                                </p>
+                            : null
+                        }
                         <Table
                             pagination={false}
+                            style={{paddingTop: 'var(--unit-24)'}}
                             rowKey={() => uuidv4()}
                             dataSource={descriptionTariffs}
                         >
@@ -250,30 +266,33 @@ export const SettingsPage: React.FC = () => {
                             <Column title='PRO' dataIndex='pro' key='pro' />
                         </Table>
                     </div>
-                    <div className='costs-tariff'>
-                        <p className="costs-tariff-title">
-                            Стоимость тарифа
-                        </p>
-                        <Radio.Group onChange={onChangeRadio} value={valueRadio} data-test-id='tariff-cost'>
-                            <Space direction='vertical' style={{ width: '100%' }}>
-                                {tariffList && 
-                                    tariffList[0].periods
-                                        .map((e) => (
-                                            <Radio
-                                                key={e.cost}
-                                                value={e.days}
-                                                className='tariff-radio'
-                                                data-test-id={`tariff-${e.cost}`}
-                                            >
-                                                <span className='tariff-title'>{e.text}</span>
-                                                <span className='tariff-cost'>
-                                                    {String(e.cost).replace('.', ',')} $
-                                                </span>
-                                            </Radio>
-                                        ))}
-                            </Space>
-                        </Radio.Group>
-                    </div>
+                    {
+                        !tariff &&
+                            <div className='costs-tariff'>
+                                <p className="costs-tariff-title">
+                                    Стоимость тарифа
+                                </p>
+                                <Radio.Group onChange={onChangeRadio} value={valueRadio} data-test-id='tariff-cost'>
+                                    <Space direction='vertical' style={{ width: '100%' }}>
+                                        {tariffList && 
+                                            tariffList[0].periods
+                                                .map((e) => (
+                                                    <Radio
+                                                        key={e.cost}
+                                                        value={e.days}
+                                                        className='tariff-radio'
+                                                        data-test-id={`tariff-${e.cost}`}
+                                                    >
+                                                        <span className='tariff-title'>{e.text}</span>
+                                                        <span className='tariff-cost'>
+                                                            {String(e.cost).replace('.', ',')} $
+                                                        </span>
+                                                    </Radio>
+                                                ))}
+                                    </Space>
+                                </Radio.Group>
+                            </div>
+                    }
                 </Drawer>
                 <Modal
                     open={isModalResult}
