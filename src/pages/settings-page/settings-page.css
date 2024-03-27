@@ -85,3 +85,9 @@
 .costs-tariff .ant-space-vertical{
     gap: var(--unit-16) !important;
 }
+.modal-tariff-result .ant-result-success .ant-result-icon > .anticon{
+    color: var(--color-primary);
+}
+.modal-tariff-result .ant-result {
+    padding: 48px var(--unit-8);
+}

@@ -10,11 +10,13 @@ import { Header } from '@components/header/header';
 import { descriptionTariffs } from '@constants/settinds-data';
 import { useResize } from '@hooks/use-resize';
 import { useGetTariffListQuery } from '@services/catalogs';
-import { Button, Card, Col, Drawer, Layout, List, Radio, RadioChangeEvent, Row, Space, Switch, Table, Tooltip } from 'antd';
+import { Button, Card, Col, Drawer, Layout, List, Modal, Radio, RadioChangeEvent, Result, Row, Space, Switch, Table, Tooltip } from 'antd';
 import Column from 'antd/lib/table/Column';
 import { v4 as uuidv4 } from 'uuid';
 
 import './settings-page.css';
+import { userFullSelector } from '@redux/reducers/user-full-slice';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 const { Content } = Layout;
 
@@ -29,6 +31,8 @@ export const SettingsPage: React.FC = () => {
     const [isDisabledPay, setIsDisabledPay] = useState(true);
     const showDrawer = () => setOpenDrawer(true);
     const onCloseDrawer = () => setOpenDrawer(false);
+    const [isModalResult, setIsModalResult] = useState(false);
+    const {email} = useAppSelector(userFullSelector);
 
     console.log(tariffList);
 
@@ -229,6 +233,28 @@ export const SettingsPage: React.FC = () => {
                         </Radio.Group>
                     </div>
                 </Drawer>
+                <Modal
+                    open={isModalResult}
+                    footer={null}
+                    centered={true}
+                    closable={true}
+                    closeIcon={<CloseOutlined data-test-id='tariff-modal-success' />}
+                    maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
+                >
+                    <div className='modal-tariff-result'>
+                        <Result
+                            status='success'
+                            title='Чек для оплаты у вас на почте'
+                            subTitle={
+                                <span>
+                                    Мы отправили инструкцию для оплаты вам на e-mail 
+                                    <span style={{fontWeight: 'var(--font-weight-700)'}}>{email}</span>. 
+                                    После подтверждения оплаты войдите в приложение заново. 
+                                    <p style={{margin: 'var(--unit-24)'}}>Не пришло письмо? Проверьте папку Спам.</p>
+                                </span>}
+                        />
+                    </div>
+                </Modal>
             </Content>
         </React.Fragment>
     );
