@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    CheckCircleOutlined,
     CheckOutlined,
     CloseOutlined,
     ExclamationCircleOutlined,
@@ -102,7 +103,7 @@ export const SettingsPage: React.FC = () => {
     return (
         <React.Fragment>
             <Header />
-            <Content style={{ padding: 24, background: 'var(--color-bg-grey)' }}>
+            <Content style={{ padding: windowSize.windowSize<370 ? '24px 0px' : 24, background: 'var(--color-bg-grey)' }}>
                 <Card className='settings' style={{ height: '100%' }}>
                     <h4 className='settings-title'>Мой тариф</h4>
                     <div className='site-card-wrapper'>
@@ -118,7 +119,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src='./free-tariff.jpg' alt='free-tariff' />
+                                    <img src='./free-tariff.jpg' className='settings-card__img' alt='free-tariff' />
                                     <Button type='text' className='setting-card__btn'>
                                         активен <CheckOutlined />
                                     </Button>
@@ -136,7 +137,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src='./pro-tariff-disable.jpg' alt='free-tariff' />
+                                    <img src={`./pro-tariff${tariff?'':'-disable'}.jpg`} className='settings-card__img' alt='free-tariff' />
                                     <Button
                                         type={`${tariff ? 'text' : 'primary'}`}
                                         className='setting-card__btn'
@@ -220,7 +221,7 @@ export const SettingsPage: React.FC = () => {
                     width={windowSize.windowSize < 630 ? 360 : 408}
                     style={{marginTop: `${windowSize.windowSize<630 ? '85px': '0px'}`}}
                     closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
-                    title='Сравнить тарифы'
+                    title={<span style={{fontSize: 20}}>Сравнить тарифы</span>}
                     data-test-id='tariff-sider'
                     placement='right'
                     onClose={onCloseDrawer}
@@ -234,7 +235,7 @@ export const SettingsPage: React.FC = () => {
                         border: 'none',
                     }}
                     bodyStyle={{
-                        padding: `0px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
+                        padding: `0px var(--unit-${windowSize.windowSize < 630 ? 8 : 32})`,
                     }}
                     footer={
                         !tariff &&
@@ -243,7 +244,6 @@ export const SettingsPage: React.FC = () => {
                         </Button>
                     }
                     footerStyle={{
-                        border: 'none',
                         padding: `12px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
                     }}
                 >
@@ -257,13 +257,13 @@ export const SettingsPage: React.FC = () => {
                         }
                         <Table
                             pagination={false}
-                            style={{paddingTop: 'var(--unit-24)'}}
+                            style={{paddingTop: `${windowSize.windowSize<370? 'var(--unit-16)':'var(--unit-24)'}`}}
                             rowKey={() => uuidv4()}
                             dataSource={descriptionTariffs}
                         >
                             <Column dataIndex='description' key='description' />
                             <Column title='FREE' dataIndex='free' key='free' />
-                            <Column title='PRO' dataIndex='pro' key='pro' />
+                            <Column title={<span>PRO {tariff && <CheckCircleOutlined style={{color: 'var(--color-success)'}}/>}</span>} dataIndex='pro' key='pro' />
                         </Table>
                     </div>
                     {
@@ -311,7 +311,7 @@ export const SettingsPage: React.FC = () => {
                             subTitle={
                                 <span>
                                     Мы отправили инструкцию для оплаты вам на e-mail 
-                                    <span style={{fontWeight: 'var(--font-weight-700)'}}> {email} </span>. 
+                                    <span style={{fontWeight: 'var(--font-weight-700)'}}> {email}</span>. 
                                     После подтверждения оплаты войдите в приложение заново. 
                                     <p style={{margin: 'var(--unit-24)'}}>Не пришло письмо? Проверьте папку Спам.</p>
                                 </span>}

@@ -103,7 +103,7 @@ export const ProfilePage: React.FC = () => {
                         onFinish={onFinish}
                         onValuesChange={onValuesChange}
                     >
-                        <h5>Личная информация</h5>
+                        <h5 className='profile-subtitle'>Личная информация</h5>
                         <div className='info-wrapper'>
                             <CustomUpload modalError={modalError} setDisabledSave={setDisabledSave}/>
                             <div className='info'>
@@ -118,7 +118,7 @@ export const ProfilePage: React.FC = () => {
                                 </Form.Item>
                             </div>
                         </div>
-                        <h5>Приватность и авторизация</h5>
+                        <h5 className='profile-subtitle'>Приватность и авторизация</h5>
                         <Form.Item name='email' rules={rulesEmail}>
                             <Input addonBefore='e-mail' data-test-id='profile-email' />
                         </Form.Item>

@@ -9,6 +9,9 @@
     max-width: 240px;
     text-align: center;
 }
+.settings-card__img{
+    width: 100%;
+}
 .settings .site-card-wrapper .ant-card-body .setting-card__btn{
     margin: 25px 0;
     height: 42px;
@@ -22,6 +25,7 @@
 }
 .settings-item__text{
     margin: 0;
+    font-weight: var(--font-weight-700);
 }
 .settings .ant-list-split .ant-list-item{
     padding: 16px 0 0;
@@ -98,4 +102,46 @@
     background: var(--color-bg-blue);
     font-size: var(--unit-16);
     font-weight: var(--font-weight-500);
+    color: var(--color-primary-dark);
+}
+.site-card-wrapper .ant-card-extra .ant-btn-link{
+    color: var(--color-primary);
+}
+.modal-tariff-result .ant-result-title{
+    font-weight: var(--font-weight-500);
+}
+.settings-card .ant-btn-text{
+    color: var(--color-primary-dark);
+    font-size: var(--unit-16);
+    font-weight: var(--font-weight-500);
+}
+
+@media screen and (max-width: 370px) {
+    .settings-card{
+        max-width: 315px;
+    }
+    .site-card-wrapper .ant-row .ant-col:first-child{
+        margin-bottom: 10px;
+    }
+    .settings-item__text{
+        max-width: 176px;
+    }
+    .site-card-wrapper .ant-card-head-title{
+        text-align: left;
+        padding-left: var(--unit-24);
+    }
+    .description-tariffs .ant-table-cell{
+        padding: 4px 0;
+    }
+    .costs-tariff-title{
+        padding: var(--unit-24) 0 12px 8px;
+    }
+    .modal-tariff-result .ant-result {
+        padding: var(--unit-16) 0;
+    }
+    .modal-tariff-result .ant-result-title{
+        line-height: 31.2px;
+        max-width: 200px;
+        margin: 0 auto;
+    }
 }
