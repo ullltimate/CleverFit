@@ -3,6 +3,7 @@ import { combineReducers,configureStore } from '@reduxjs/toolkit';
 import { authAPI } from '@services/auth';
 import { catalogsAPI } from '@services/catalogs';
 import { feedbackAPI } from '@services/feedbacks';
+import { tariffAPI } from '@services/tariff';
 import { trainingAPI } from '@services/trainings';
 import { userAPI } from '@services/user';
 import { createBrowserHistory } from 'history';
@@ -30,6 +31,7 @@ export const store = configureStore({
         screenSizeReducer,
         [userAPI.reducerPath]: userAPI.reducer,
         userFullReducer,
+        [tariffAPI.reducerPath] : tariffAPI.reducer,
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -39,6 +41,7 @@ export const store = configureStore({
             trainingAPI.middleware,
             catalogsAPI.middleware,
             userAPI.middleware,
+            tariffAPI.middleware,
         ),
 });
 

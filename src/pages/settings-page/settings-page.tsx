@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     CheckOutlined,
     CloseOutlined,
@@ -7,16 +8,21 @@ import {
 import { ButtonsComment } from '@components/content-comments-page/buttons-comment/buttons-comment';
 import { ModalCreateComment } from '@components/content-comments-page/modal-create-comment/modal-create-comment';
 import { Header } from '@components/header/header';
+import { PATHS } from '@constants/paths';
 import { descriptionTariffs } from '@constants/settinds-data';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
+import { saveToken } from '@redux/reducers/token-slice';
+import { resetUser, saveJoinTrainings, userFullSelector } from '@redux/reducers/user-full-slice';
+import { increment } from '@redux/reducers/user-slice';
 import { useGetTariffListQuery } from '@services/catalogs';
+import { useBuyTariffMutation } from '@services/tariff';
+import { useUpdateUserMutation } from '@services/user';
 import { Button, Card, Col, Drawer, Layout, List, Modal, Radio, RadioChangeEvent, Result, Row, Space, Switch, Table, Tooltip } from 'antd';
 import Column from 'antd/lib/table/Column';
 import { v4 as uuidv4 } from 'uuid';
 
 import './settings-page.css';
-import { userFullSelector } from '@redux/reducers/user-full-slice';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 const { Content } = Layout;
 
@@ -32,15 +38,30 @@ export const SettingsPage: React.FC = () => {
     const showDrawer = () => setOpenDrawer(true);
     const onCloseDrawer = () => setOpenDrawer(false);
     const [isModalResult, setIsModalResult] = useState(false);
-    const {email} = useAppSelector(userFullSelector);
+    const {email, readyForJointTraining, sendNotification} = useAppSelector(userFullSelector);
+    const [upgateUser] = useUpdateUserMutation();
+    const dispatch = useAppDispatch();
+    const [buyTariff] = useBuyTariffMutation();
+    const navigate = useNavigate();
 
     console.log(tariffList);
+    console.log(readyForJointTraining, sendNotification);
 
     const onChangeJointTraining = (checked: boolean) => {
         console.log(`switch to ${checked}`);
+        dispatch(saveJoinTrainings(checked));
+        upgateUser({email, readyForJointTraining: checked})
+            .unwrap()
+            .then(() => {})
+            .catch(() => {});
     };
     const onChangesendNotification = (checked: boolean) => {
         console.log(`switch to ${checked}`);
+        dispatch(saveJoinTrainings(checked));
+        upgateUser({email, readyForJointTraining: checked})
+            .unwrap()
+            .then(() => {})
+            .catch(() => {});
     };
     const onChangeTheme = (checked: boolean) => {
         console.log(`switch to ${checked}`);
@@ -50,6 +71,25 @@ export const SettingsPage: React.FC = () => {
         console.log(e.target.value)
         setValueRadio(e.target.value);
         setIsDisabledPay(false)
+    };
+
+    const payTariff = () => {
+        // eslint-disable-next-line no-underscore-dangle
+        if(tariffList) buyTariff({tariffId: tariffList[0]._id, days: valueRadio})
+                            .unwrap()
+                            .then(() => {
+                                setIsModalResult(true);
+                                onCloseDrawer();
+                            })
+                            .catch(() => {});
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('token');
+        dispatch(increment({ email: '', password: '' }));
+        dispatch(saveToken(''));
+        navigate(PATHS.AUTH);
+        dispatch(resetUser());
     };
 
     return (
@@ -120,6 +160,7 @@ export const SettingsPage: React.FC = () => {
                             </p>
                             <Switch
                                 data-test-id='tariff-trainings'
+                                defaultChecked={readyForJointTraining}
                                 onChange={onChangeJointTraining}
                             />
                         </List.Item>
@@ -140,6 +181,7 @@ export const SettingsPage: React.FC = () => {
                             </p>
                             <Switch
                                 data-test-id='tariff-notifications'
+                                defaultChecked={sendNotification}
                                 onChange={onChangesendNotification}
                             />
                         </List.Item>
@@ -188,7 +230,7 @@ export const SettingsPage: React.FC = () => {
                         padding: `0px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
                     }}
                     footer={
-                        <Button type='primary' disabled={isDisabledPay} style={{ width: '100%' }}>
+                        <Button type='primary' data-test-id='tariff-submit' onClick={payTariff} disabled={isDisabledPay} style={{ width: '100%' }}>
                             Выбрать и оплатить
                         </Button>
                     }
@@ -238,7 +280,9 @@ export const SettingsPage: React.FC = () => {
                     footer={null}
                     centered={true}
                     closable={true}
-                    closeIcon={<CloseOutlined data-test-id='tariff-modal-success' />}
+                    onCancel={logOut}
+                    data-test-id='tariff-modal-success'
+                    closeIcon={<CloseOutlined />}
                     maskStyle={{ background: '#799cd480', backdropFilter: 'blur(5px)' }}
                 >
                     <div className='modal-tariff-result'>
@@ -248,7 +292,7 @@ export const SettingsPage: React.FC = () => {
                             subTitle={
                                 <span>
                                     Мы отправили инструкцию для оплаты вам на e-mail 
-                                    <span style={{fontWeight: 'var(--font-weight-700)'}}>{email}</span>. 
+                                    <span style={{fontWeight: 'var(--font-weight-700)'}}> {email} </span>. 
                                     После подтверждения оплаты войдите в приложение заново. 
                                     <p style={{margin: 'var(--unit-24)'}}>Не пришло письмо? Проверьте папку Спам.</p>
                                 </span>}

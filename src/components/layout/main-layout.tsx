@@ -5,7 +5,7 @@ import { SiderBar } from '@components/sider-bar/sider-bar';
 import { PATHS } from '@constants/paths';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { tokenSelector } from '@redux/reducers/token-slice';
-import { saveEmail, saveFirstName, saveImage,saveLastName } from '@redux/reducers/user-full-slice';
+import { saveEmail, saveFirstName, saveImage,saveJoinTrainings,saveLastName, savesendNotification } from '@redux/reducers/user-full-slice';
 import { useLazyGetUserQuery } from '@services/user';
 import { Layout } from 'antd';
 
@@ -30,6 +30,9 @@ export const MainLayout: React.FC = () => {
             dispatch(saveFirstName(data.firstName));
             dispatch(saveLastName(data.lastName));
             dispatch(saveImage(data.imgSrc));
+            dispatch(saveJoinTrainings(data.readyForJointTraining));
+            dispatch(savesendNotification(data.sendNotification));
+            console.log(data.tariff)
         }
     }, [data, dispatch]);
 

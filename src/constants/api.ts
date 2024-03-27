@@ -22,7 +22,8 @@ type EndpointsAPI = {
         me: string,
         user: string
     },
-    upload: string
+    upload: string,
+    tariff: string,
 }
 
 export const endpointsAPI: EndpointsAPI = {
@@ -44,5 +45,6 @@ export const endpointsAPI: EndpointsAPI = {
         me: '/user/me',
         user: '/user'
     },
-    upload: '/upload-image'
+    upload: '/upload-image',
+    tariff: '/tariff'
 }

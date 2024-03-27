@@ -48,11 +48,17 @@ export const userFullSlice = createSlice({
         saveImage: (state, action: PayloadAction<string>) => {
             state.imgSrc = action.payload;
         },
+        saveJoinTrainings: (state, action: PayloadAction<boolean>) => {
+            state.readyForJointTraining = action.payload;
+        },
+        savesendNotification: (state, action: PayloadAction<boolean>) => {
+            state.sendNotification = action.payload;
+        },
         resetUser: () => initialState,
     },
 });
 
-export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage, resetUser } = userFullSlice.actions;
+export const { saveEmail, saveFirstName, saveLastName, saveBirthday, saveImage, saveJoinTrainings, savesendNotification, resetUser } = userFullSlice.actions;
 export const userFullSelector = (state: RootState) => state.userFullReducer
 
 export const userFullReducer = userFullSlice.reducer;
