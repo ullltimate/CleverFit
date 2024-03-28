@@ -7,7 +7,7 @@ type TrainingList = {
     key: string;
 };
 
-type TariffList = {
+export type TariffList = {
     _id: string;
     name: string;
     periods: [

@@ -1,7 +1,7 @@
 import { RootState } from '@redux/configure-store';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
-type Tariff = {
+export type Tariff = {
     tariffId: string;
     expired: string;
 }

@@ -17,11 +17,12 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
     const { token } = useAppSelector(tokenSelector);
     const tokenForHeader = localStorage.getItem('token') || token;
     const { imgSrc } = useAppSelector(userFullSelector);
+    const mobileSize = 370;
     const windowSize = useResize();
     const initialFile = useMemo(
         () => ({
             uid: '1',
-            name: `${windowSize.windowSize < 370 ? '' : 'image.png'}`,
+            name: `${windowSize.windowSize < mobileSize ? '' : 'image.png'}`,
             url: imgSrc,
         }),
         [imgSrc, windowSize.windowSize],
@@ -34,63 +35,60 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
         if (imgSrc) setFileList([initialFile]);
     }, [imgSrc, initialFile]);
 
-    const uploadButton = (
-        <div>
-            <PlusOutlined />
-            <div
-                style={{
-                    marginTop: 8,
-                    maxWidth: 70,
-                    color: 'var(--color-disabled)',
-                }}
-            >
-                Загрузить фото профиля
+    const uploadButton = () => {
+        if (windowSize.windowSize < mobileSize) {
+            return <Button icon={<UploadOutlined />}>Загрузить</Button>;
+        }
+
+        return (
+            <div>
+                <PlusOutlined />
+                <div
+                    style={{
+                        marginTop: 8,
+                        maxWidth: 70,
+                        color: 'var(--color-disabled)',
+                    }}
+                >
+                    Загрузить фото профиля
+                </div>
             </div>
-        </div>
-    );
-    const uploudButtonMobile = <Button icon={<UploadOutlined />}>Загрузить</Button>;
+        );
+    };
 
     const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
         setFileList(newFileList);
         const newFile = newFileList[0];
 
-        if (newFile) {
-            if (newFile.status === 'error') {
-                modalError(false);
-                setDisabledSave(true);
-            }
-            if (newFile.response) {
-                if (newFile.response.url) {
-                    setFileList([
-                        {
-                            ...initialFile,
-                            name: `${windowSize.windowSize < 370 ? '' : newFile.response.name}`,
-                            url: `${urlForImage}${newFile.response.url}`,
-                        },
-                    ]);
-                    setDisabledSave(false);
-                } else {
-                    setFileList([
-                        {
-                            ...initialFile,
-                            url: '',
-                            name: `${windowSize.windowSize < 370 ? '' : newFile.name}`,
-                            status: 'error',
-                        },
-                    ]);
-                }
-            }
+        if (newFile && newFile.status === 'error') {
+            setFileList([
+                {
+                    ...initialFile,
+                    url: '',
+                    name: `${windowSize.windowSize < mobileSize ? '' : newFile.name}`,
+                    status: 'error',
+                },
+            ]);
+            modalError(false);
+            setDisabledSave(true);
+        } else if (newFile?.response?.url) {
+            setFileList([
+                {
+                    ...initialFile,
+                    name: `${windowSize.windowSize < mobileSize ? '' : newFile.response.name}`,
+                    url: `${urlForImage}${newFile.response.url}`,
+                },
+            ]);
+            setDisabledSave(false);
         }
     };
     const onRemove = (file: UploadFile) => {
-        const files: UploadFile[] = [];
-
-        if (file) setFileList(files);
+        if (file) setFileList([]);
     };
 
     return (
         <Form.Item>
-            {windowSize.windowSize < 370 && fileList.length < 1 && (
+            {windowSize.windowSize < mobileSize && fileList.length < 1 && (
                 <p className='profile-avatar__subtitle'>Загрузить фото профиля:</p>
             )}
             <Form.Item data-test-id='profile-avatar' name='imgSrc'>
@@ -98,15 +96,14 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
                     action={`${urlAPI}${endpointsAPI.upload}`}
                     headers={{ Authorization: `Bearer ${tokenForHeader}` }}
                     maxCount={1}
-                    listType={`${windowSize.windowSize < 370 ? 'picture' : 'picture-card'}`}
+                    listType={`${windowSize.windowSize < mobileSize ? 'picture' : 'picture-card'}`}
                     fileList={fileList}
                     onPreview={() => {}}
                     onChange={handleChange}
                     onRemove={onRemove}
                     progress={{ strokeWidth: 2, showInfo: false, strokeColor: '#108ee9' }}
                 >
-                    {fileList.length < 1 &&
-                        (windowSize.windowSize < 370 ? uploudButtonMobile : uploadButton)}
+                    {fileList.length < 1 && uploadButton()}
                 </Upload>
             </Form.Item>
         </Form.Item>

@@ -14,13 +14,11 @@ import { Badge, Button, Calendar, Drawer, Empty, Modal, Select } from 'antd';
 import ru_Ru from 'antd/es/calendar/locale/ru_RU';
 import { Content } from 'antd/lib/layout/layout';
 import type { Moment } from 'moment';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 
 import './calendar-page.css';
 import './modal-training.css';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'moment/locale/ru';
 
 moment.locale('ru');

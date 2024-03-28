@@ -7,6 +7,7 @@ import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { trainingAPI } from '@services/trainings';
 import { CardInfo } from '@tstypes/types';
 import { Button, Card, Layout, Modal, Result, Row } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
 
 import './main-page.css';
 
@@ -48,10 +49,9 @@ export const MainPage: React.FC = () => {
                 <div className='cards-wrapper'>
                     <Row gutter={16} className='wrap'>
                         {contentCards.map(
-                            (e: CardInfo, i: number): React.ReactNode => (
+                            (e: CardInfo): React.ReactNode => (
                                 <ContentCard
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={i}
+                                    key={uuidv4()}
                                     title={e.title}
                                     btnText={e.btnText}
                                     btnIcon={e.btnIcon}

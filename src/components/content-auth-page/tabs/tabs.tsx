@@ -15,28 +15,35 @@ type AuthItemsTab = {
 }
 
 export const CustomTabs: React.FC = () => {
-    const [key, setKey] = useState('1');
+    const [key, setKey] = useState('login');
     const navigate = useNavigate();
     const location = useLocation();
     const itemsTab: AuthItemsTab[] = [
         {
             label: 'Вход',
-            key: '1',
+            key: 'login',
             children: <LogIn />,
         },
         {
             label: 'Регистрация',
-            key: '2',
+            key: 'signup',
             children: <SignUp />,
         },
     ];
 
-    useEffect(() => {
-        if(location.pathname === PATHS.REGISTRATION) {
-            setKey('2')
+    const onChangeHandler = (k: string) => {
+        setKey(k);
+        if(key === 'signup') {
+            navigate(PATHS.AUTH)
         } else {
-            setKey('1')
+            navigate(PATHS.REGISTRATION)
         };
+    }
+
+    useEffect(() => {
+        const keyTab = location.pathname === PATHS.REGISTRATION ? 'signup' : 'login'
+
+        setKey(keyTab);
     }, [location.pathname]);
 
     return (
@@ -47,14 +54,7 @@ export const CustomTabs: React.FC = () => {
                 centered={true}
                 tabBarGutter={0}
                 items={itemsTab}
-                onChange={(k: string) => {
-                    setKey(k);
-                    if(key === '2') {
-                        navigate(PATHS.AUTH)
-                    } else {
-                        navigate(PATHS.REGISTRATION)
-                    };
-                }}
+                onChange={onChangeHandler}
             />
         </React.Fragment>
     );

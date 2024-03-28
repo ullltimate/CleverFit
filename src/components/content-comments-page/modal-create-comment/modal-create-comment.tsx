@@ -39,11 +39,9 @@ export const ModalCreateComment: React.FC<ModalCreateCommentProps> = ({
     };
 
     const changeRate = (value: number): void => {
-        if(value > 0) {
-            setIsSubmitDisabled(false)
-        } else {
-            setIsSubmitDisabled(true)
-        };
+        const submitDisabled = !(value > 0)
+
+        setIsSubmitDisabled(submitDisabled);
     };
 
     return (
