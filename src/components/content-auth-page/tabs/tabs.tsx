@@ -8,7 +8,7 @@ import { SignUp } from '../signup/signup';
 
 import './tabs.css';
 
-type AuthItemsTab = {
+export type AuthItemsTab = {
     label: string,
     key: string,
     children: React.ReactNode,
