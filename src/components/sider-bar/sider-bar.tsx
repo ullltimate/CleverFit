@@ -64,6 +64,13 @@ export const SiderBar: React.FC = () => {
                 break;
             case 'profile':
                 navigate(PATHS.PROFILE)
+                break;
+            case 'training':
+                getTrainings()
+                    .unwrap()
+                    .then(() => navigate(PATHS.TRAINING))
+                    .catch(() => {});
+                break;
         }
     }
 
@@ -125,7 +132,7 @@ export const SiderBar: React.FC = () => {
                             label: collapsed ? '' : 'Календарь',
                         },
                         {
-                            key: '2',
+                            key: 'training',
                             icon:  <HeartFilled style={{ color: '#061178' }} className='menu-item-icon' />,
                             label: collapsed ? '' : 'Тренировки',
                         },

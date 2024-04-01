@@ -8,8 +8,8 @@ export const contentCards: CardInfo[] = [
         title: 'Расписать тренировки',
         btnText: 'Тренировки',
         btnIcon: <HeartFilled />,
-        path: '',
-        dataTest: ''
+        path: PATHS.TRAINING,
+        dataTest: 'menu-button-training'
     },
     {
         title: 'Назначить календарь',

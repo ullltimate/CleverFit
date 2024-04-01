@@ -18,6 +18,9 @@ export const ContentCard: React.FC<CardInfo> = ({ title, btnText, btnIcon, path,
             case 'Профиль':
                 navigate(path)
                 break;
+            case 'Тренировки':
+                await getTrainings().unwrap().then(() => navigate(path)).catch(() => {});
+                break;
         }
     };
 

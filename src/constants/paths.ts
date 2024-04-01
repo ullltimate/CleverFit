@@ -19,6 +19,7 @@ type Paths = {
     CALENDAR: string,
     PROFILE: string,
     SETTINGS: string,
+    TRAINING: string,
 }
 
 export const PATHS: Paths = {
@@ -42,4 +43,5 @@ export const PATHS: Paths = {
     CALENDAR: '/calendar',
     PROFILE: '/profile',
     SETTINGS: '/settings',
+    TRAINING: '/training',
 };

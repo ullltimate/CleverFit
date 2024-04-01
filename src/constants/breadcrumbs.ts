@@ -9,6 +9,7 @@ type BreadCrumbRoutes = {
     main: BreadCrumbRoute[],
     feedbacks: BreadCrumbRoute[],
     calendar: BreadCrumbRoute[],
+    training: BreadCrumbRoute[],
 }
 
 export const routes: BreadCrumbRoutes = {
@@ -33,6 +34,15 @@ export const routes: BreadCrumbRoutes = {
         },
         {
             name: 'Календарь',
+        },
+    ],
+    training: [
+        {
+            path: PATHS.MAIN,
+            name: 'Главная',
+        },
+        {
+            name: 'Тренировки',
         },
     ],
 };

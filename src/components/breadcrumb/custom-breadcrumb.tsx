@@ -20,8 +20,11 @@ export const CustomBreadcrumb: React.FC = () => {
                 setCurrentRoutes(routes.feedbacks);
                 break;
             case PATHS.CALENDAR:
-                setCurrentRoutes(routes.calendar)
-
+                setCurrentRoutes(routes.calendar);
+                break;
+            case PATHS.TRAINING:
+                setCurrentRoutes(routes.training);
+                break;
         }
     }, [location.pathname]);
 
