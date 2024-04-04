@@ -2,7 +2,7 @@ import { endpointsAPI, urlAPI } from '@constants/api';
 import { store } from '@redux/configure-store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-type TrainingList = {
+export type TrainingList = {
     name: string;
     key: string;
 };
@@ -47,4 +47,4 @@ export const catalogsAPI = createApi({
     }),
 });
 
-export const { useGetTrainingListQuery, useGetTariffListQuery } = catalogsAPI;
+export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery } = catalogsAPI;
