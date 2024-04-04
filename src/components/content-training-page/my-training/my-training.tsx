@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { colorTrainings } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -8,6 +8,7 @@ import {
     addExercises,
     Exercise,
     removeExercises,
+    resetExercises,
     resetParameters,
     saveTrainingDate,
     saveTrainingName,
@@ -17,6 +18,7 @@ import {
 import { useGetTrainingListQuery, useLazyGetTrainingListQuery } from '@services/catalogs';
 import { useCreateTrainingMutation, useGetTrainingQuery } from '@services/trainings';
 import {
+    Alert,
     Badge,
     Button,
     Checkbox,
@@ -38,14 +40,16 @@ import './my-training.css';
 
 export const MyTraining: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
-    const [getTrainingList, { data: trainingList, error: errorList }] = useLazyGetTrainingListQuery();
+    const [getTrainingList, { data: trainingList, error: errorList }] =
+        useLazyGetTrainingListQuery();
     const [error, setError] = useState(false);
     const windowSize = useResize();
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [isEditTraining, setIsEditTraining] = useState(false);
     const [valueEditTrain, setValueEditTrain] = useState('Выбор типа тренировки');
     const [withPeriodically, setWithPeriodically] = useState(false);
-    const { date, name, exercises, isImplementation, id, parameters } = useAppSelector(trainingSelector);
+    const { date, name, exercises, isImplementation, id, parameters } =
+        useAppSelector(trainingSelector);
     const dispatch = useAppDispatch();
     const [indexesForDelete, setIndexesForDelete] = useState<number[]>([]);
     const [isDisabledSave, setIsDisabledSave] = useState(true);
@@ -54,9 +58,15 @@ export const MyTraining: React.FC = () => {
     const closeDrawer = () => {
         setIsOpenDrawer(false);
         setValueEditTrain('Выбор типа тренировки');
-
+        dispatch(resetExercises());
     };
-    const openDrawer = () => setIsOpenDrawer(true);
+    const openDrawer = () => {
+        dispatch(resetExercises());
+        dispatch(addExercises());
+        setIsOpenDrawer(true);
+    }
+    const [visible, setVisible] = useState(false);
+    const handleCloseAlert = () => setVisible(false);
     console.log(trainings);
     console.log(trainingList);
     console.log({ date, name, exercises, isImplementation, id, parameters });
@@ -72,8 +82,6 @@ export const MyTraining: React.FC = () => {
     useEffect(() => {
         dispatch(saveTrainingName(valueEditTrain));
     }, [valueEditTrain, dispatch]);
-
-
 
     const modalError = useCallback(
         (isErrorList: boolean) => {
@@ -116,13 +124,13 @@ export const MyTraining: React.FC = () => {
     );
 
     useEffect(() => {
-        getTrainingList()
-    },[getTrainingList])
+        getTrainingList();
+    }, [getTrainingList]);
 
     useEffect(() => {
         setError(false);
-        if(errorList) setError(true)
-    },[errorList])
+        if (errorList) setError(true);
+    }, [errorList]);
 
     useEffect(() => {
         if (error) modalError(true);
@@ -146,24 +154,59 @@ export const MyTraining: React.FC = () => {
     };
 
     const createTrain = async () => {
-        await createTraining({ date, name, exercises: exercises.filter(e => e.name !== ''), parameters })
+        await createTraining({
+            date,
+            name,
+            exercises: exercises.filter((e) => e.name !== ''),
+            parameters,
+        })
             .unwrap()
-            .then(() => {})
+            .then(() => setVisible(true))
             .catch(() => modalError(false));
         closeDrawer();
     };
 
     const handleChangePeriodically = (value: number) => {
-        setPeriodically(value)
-    }
+        setPeriodically(value);
+    };
 
     useEffect(() => {
-        if(withPeriodically){
-            dispatch(setParameters({repeat: withPeriodically, period: periodically}))
+        if (withPeriodically) {
+            dispatch(setParameters({ repeat: withPeriodically, period: periodically }));
         } else {
-            dispatch(resetParameters())
+            dispatch(resetParameters());
         }
-    },[withPeriodically, periodically, dispatch])
+    }, [withPeriodically, periodically, dispatch]);
+
+    const createPeriodString = (day: number | null): string => {
+        let periodString = '';
+
+        switch(day){
+            case 1:
+                periodString = `Через ${day} день`;
+                break
+            case 2:
+            case 3:
+            case 4:
+                periodString = `Через ${day} дня`;
+                break
+            case 5:
+            case 6:
+                periodString = `Через ${day} дней`;
+                break
+            case 7:
+                periodString = '1 раз в неделю';
+                break
+        }
+
+        return periodString;
+    }
+
+    type DataSourceType = {
+        typeTrain: React.ReactElement,
+        sorted: React.ReactElement,
+        editBtn: React.ReactElement,
+    }
 
     return (
         <React.Fragment>
@@ -171,7 +214,7 @@ export const MyTraining: React.FC = () => {
                 <React.Fragment>
                     <Table
                         data-test-id='my-trainings-table'
-                        pagination={{defaultPageSize: 14, hideOnSinglePage: true}}
+                        pagination={{ defaultPageSize: 14, hideOnSinglePage: true }}
                         style={{
                             paddingTop: `${
                                 windowSize.windowSize < 370 ? 'var(--unit-16)' : 'var(--unit-24)'
@@ -186,7 +229,7 @@ export const MyTraining: React.FC = () => {
                                     text={e.name}
                                 />
                             ),
-                            sorted: e.parameters.period,
+                            sorted: <span data-period={`${e.parameters.period ? e.parameters.period : 0 }`}>{createPeriodString(e.parameters.period)}</span>,
                             editBtn: (
                                 <Button type='link'>
                                     <EditOutlined />
@@ -195,7 +238,7 @@ export const MyTraining: React.FC = () => {
                         }))}
                     >
                         <Column title='Тип тренировки' dataIndex='typeTrain' key='typeTrain' />
-                        <Column title='Периодичность' dataIndex='sorted' key='sorted' />
+                        <Column title='Периодичность' dataIndex='sorted' key='sorted' sorter={(a: DataSourceType,b) => Number(b.sorted.props['data-period']) - Number(a.sorted.props['data-period'])}/>
                         <Column dataIndex='editBtn' key='editBtn' />
                     </Table>
                     <Button
@@ -276,14 +319,19 @@ export const MyTraining: React.FC = () => {
                         disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
                         style={{ maxWidth: 156, marginRight: 30 }}
                     />
-                    <Checkbox onChange={onChangeCheckbox} data-test-id='modal-drawer-right-checkbox-period'>С переодичостью</Checkbox>
+                    <Checkbox
+                        onChange={onChangeCheckbox}
+                        data-test-id='modal-drawer-right-checkbox-period'
+                    >
+                        С переодичостью
+                    </Checkbox>
                     {withPeriodically && (
                         <Select
                             data-test-id='modal-drawer-right-select-period'
                             value={periodically}
-                            options={Array.from(Array(6), (_, i) => ({
+                            options={Array.from(Array(7), (_, i) => ({
                                 value: i + 1,
-                                label: `Через ${i + 1} день`,
+                                label: createPeriodString(i+1),
                             }))}
                             onChange={handleChangePeriodically}
                             style={{ marginTop: 8 }}
@@ -330,6 +378,16 @@ export const MyTraining: React.FC = () => {
                     </Button>
                 </div>
             </Drawer>
+            {visible ? (
+                <Alert
+                    message={<span><CheckCircleFilled style={{color: 'var(--color-success)', marginRight: 10}}/>Новая тренировка успешно добавлена</span>}
+                    className='alert'
+                    type='success'
+                    closable={true}
+                    onClose={handleCloseAlert}
+                    data-test-id='create-training-success-alert'
+                />
+            ) : null}
         </React.Fragment>
     );
 };
