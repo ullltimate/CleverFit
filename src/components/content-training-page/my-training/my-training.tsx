@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { CheckCircleFilled, CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+    CheckCircleFilled,
+    CloseOutlined,
+    DownOutlined,
+    EditOutlined,
+    MinusOutlined,
+    PlusOutlined,
+} from '@ant-design/icons';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { colorTrainings } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -11,12 +18,19 @@ import {
     resetExercises,
     resetParameters,
     saveTrainingDate,
+    saveTrainingId,
     saveTrainingName,
+    setExercises,
     setParameters,
     trainingSelector,
 } from '@redux/reducers/training-slice';
-import { useGetTrainingListQuery, useLazyGetTrainingListQuery } from '@services/catalogs';
-import { useCreateTrainingMutation, useGetTrainingQuery } from '@services/trainings';
+import { useLazyGetTrainingListQuery } from '@services/catalogs';
+import {
+    Training,
+    useCreateTrainingMutation,
+    useGetTrainingQuery,
+    useUpdateTrainingMutation,
+} from '@services/trainings';
 import {
     Alert,
     Badge,
@@ -54,17 +68,23 @@ export const MyTraining: React.FC = () => {
     const [indexesForDelete, setIndexesForDelete] = useState<number[]>([]);
     const [isDisabledSave, setIsDisabledSave] = useState(true);
     const [createTraining] = useCreateTrainingMutation();
+    const [updateTraining] = useUpdateTrainingMutation();
     const [periodically, setPeriodically] = useState(1);
     const closeDrawer = () => {
         setIsOpenDrawer(false);
         setValueEditTrain('Выбор типа тренировки');
         dispatch(resetExercises());
+        dispatch(saveTrainingDate(''));
+        dispatch(resetParameters());
+        setWithPeriodically(false);
+        setPeriodically(1);
+        dispatch(saveTrainingId(''));
     };
     const openDrawer = () => {
         dispatch(resetExercises());
         dispatch(addExercises());
         setIsOpenDrawer(true);
-    }
+    };
     const [visible, setVisible] = useState(false);
     const handleCloseAlert = () => setVisible(false);
     console.log(trainings);
@@ -163,6 +183,20 @@ export const MyTraining: React.FC = () => {
             .unwrap()
             .then(() => setVisible(true))
             .catch(() => modalError(false));
+    };
+
+    const updateTrain = async () => {
+        await updateTraining({ date, name, exercises, isImplementation, id })
+            .unwrap()
+            .then(() => setVisible(true))
+            .catch(() => modalError(false));
+    };
+    const save = () => {
+        if (id) {
+            updateTrain();
+        } else {
+            createTrain();
+        }
         closeDrawer();
     };
 
@@ -181,32 +215,51 @@ export const MyTraining: React.FC = () => {
     const createPeriodString = (day: number | null): string => {
         let periodString = '';
 
-        switch(day){
+        switch (day) {
             case 1:
                 periodString = `Через ${day} день`;
-                break
+                break;
             case 2:
             case 3:
             case 4:
                 periodString = `Через ${day} дня`;
-                break
+                break;
             case 5:
             case 6:
                 periodString = `Через ${day} дней`;
-                break
+                break;
             case 7:
                 periodString = '1 раз в неделю';
-                break
+                break;
         }
 
         return periodString;
-    }
+    };
 
     type DataSourceType = {
-        typeTrain: React.ReactElement,
-        sorted: React.ReactElement,
-        editBtn: React.ReactElement,
-    }
+        typeTrain: React.ReactElement;
+        sorted: React.ReactElement;
+        period: number;
+        editBtn: React.ReactElement;
+    };
+
+    const addTraining = () => {
+        setIsEditTraining(false);
+        openDrawer();
+    };
+
+    const editTraining = (e: Training) => {
+        setIsEditTraining(true);
+        openDrawer();
+        dispatch(saveTrainingName(e.name));
+        dispatch(saveTrainingDate(e.date));
+        setValueEditTrain(e.name);
+        dispatch(setExercises(e.exercises));
+        dispatch(setParameters(e.parameters));
+        setWithPeriodically(e.parameters.repeat);
+        if (e.parameters.period) setPeriodically(e.parameters.period);
+        dispatch(saveTrainingId(e._id));
+    };
 
     return (
         <React.Fragment>
@@ -214,7 +267,13 @@ export const MyTraining: React.FC = () => {
                 <React.Fragment>
                     <Table
                         data-test-id='my-trainings-table'
-                        pagination={{ defaultPageSize: 14, hideOnSinglePage: true }}
+                        pagination={{
+                            defaultPageSize: windowSize.windowSize < 370 ? 8 : 10,
+                            hideOnSinglePage: true,
+                            showSizeChanger: false,
+                            position: ['bottomLeft'],
+                            size: 'small'
+                        }}
                         style={{
                             paddingTop: `${
                                 windowSize.windowSize < 370 ? 'var(--unit-16)' : 'var(--unit-24)'
@@ -222,36 +281,52 @@ export const MyTraining: React.FC = () => {
                             maxWidth: 560,
                         }}
                         rowKey={() => uuidv4()}
-                        dataSource={trainings.map((e) => ({
+                        dataSource={trainings.map((e, i) => ({
                             typeTrain: (
-                                <Badge
-                                    color={colorTrainings.find((el) => el.name === e.name)?.color}
-                                    text={e.name}
-                                />
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <Badge
+                                        color={
+                                            colorTrainings.find((el) => el.name === e.name)?.color
+                                        }
+                                        text={e.name}
+                                    />
+                                    <DownOutlined style={{maxWidth: 10}}/>
+                                </div>
                             ),
-                            sorted: <span data-period={`${e.parameters.period ? e.parameters.period : 0 }`}>{createPeriodString(e.parameters.period)}</span>,
+                            sorted: createPeriodString(e.parameters.period),
+                            period: e.parameters.period || 8,
                             editBtn: (
-                                <Button type='link'>
+                                <Button
+                                    type='link'
+                                    onClick={() => editTraining(e)}
+                                    data-test-id={`update-my-training-table-icon${i}`}
+                                >
                                     <EditOutlined />
                                 </Button>
                             ),
                         }))}
                     >
                         <Column title='Тип тренировки' dataIndex='typeTrain' key='typeTrain' />
-                        <Column title='Периодичность' dataIndex='sorted' key='sorted' sorter={(a: DataSourceType,b) => Number(b.sorted.props['data-period']) - Number(a.sorted.props['data-period'])}/>
+                        <Column
+                            title='Периодичность'
+                            dataIndex='sorted'
+                            key='sorted'
+                            sorter={(a: DataSourceType, b) => a.period - b.period}
+                            sortDirections={['descend', 'ascend']}
+                        />
                         <Column dataIndex='editBtn' key='editBtn' />
                     </Table>
                     <Button
                         className='my-traning-empty__btn'
                         data-test-id='create-new-training-button'
                         type='primary'
-                        onClick={openDrawer}
+                        onClick={addTraining}
                     >
                         <PlusOutlined /> Новая тренировка
                     </Button>
                 </React.Fragment>
             ) : (
-                <EmptyTraining openDrawer={openDrawer} />
+                <EmptyTraining openDrawer={addTraining} />
             )}
             <Drawer
                 width={windowSize.windowSize < 630 ? 360 : 408}
@@ -294,7 +369,7 @@ export const MyTraining: React.FC = () => {
                         type='primary'
                         disabled={isDisabledSave}
                         style={{ width: '100%' }}
-                        onClick={createTrain}
+                        onClick={save}
                     >
                         Сохранить
                     </Button>
@@ -306,6 +381,7 @@ export const MyTraining: React.FC = () => {
                 <div className='drawer-trainings'>
                     <Select
                         value={valueEditTrain}
+                        disabled={isEditTraining}
                         className='drawer-select'
                         data-test-id='modal-create-exercise-select'
                         style={{ width: '100%', margin: '24px 0px' }}
@@ -316,12 +392,14 @@ export const MyTraining: React.FC = () => {
                         data-test-id='modal-drawer-right-date-picker'
                         onChange={onChangeDatePicker}
                         format='DD.MM.YYYY'
+                        value={date ? moment(date) : undefined}
                         disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
                         style={{ maxWidth: 156, marginRight: 30 }}
                     />
                     <Checkbox
                         onChange={onChangeCheckbox}
                         data-test-id='modal-drawer-right-checkbox-period'
+                        checked={withPeriodically}
                     >
                         С переодичостью
                     </Checkbox>
@@ -331,7 +409,7 @@ export const MyTraining: React.FC = () => {
                             value={periodically}
                             options={Array.from(Array(7), (_, i) => ({
                                 value: i + 1,
-                                label: createPeriodString(i+1),
+                                label: createPeriodString(i + 1),
                             }))}
                             onChange={handleChangePeriodically}
                             style={{ marginTop: 8 }}
@@ -340,7 +418,7 @@ export const MyTraining: React.FC = () => {
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
+                        // eslint-disable-next-line react/no-array-index-key
                         key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}
@@ -380,7 +458,16 @@ export const MyTraining: React.FC = () => {
             </Drawer>
             {visible ? (
                 <Alert
-                    message={<span><CheckCircleFilled style={{color: 'var(--color-success)', marginRight: 10}}/>Новая тренировка успешно добавлена</span>}
+                    message={
+                        <span>
+                            <CheckCircleFilled
+                                style={{ color: 'var(--color-success)', marginRight: 10 }}
+                            />
+                            {isEditTraining
+                                ? 'Тренировка успешно обновлена'
+                                : 'Новая тренировка успешно добавлена'}
+                        </span>
+                    }
                     className='alert'
                     type='success'
                     closable={true}
