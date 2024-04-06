@@ -48,6 +48,7 @@ import Column from 'antd/lib/table/Column';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
+import { MyTrainingCard } from './my-training-card/my-training-card';
 import { EmptyTraining } from './my-training-empty/training-empty';
 
 import './my-training.css';
@@ -70,6 +71,8 @@ export const MyTraining: React.FC = () => {
     const [createTraining] = useCreateTrainingMutation();
     const [updateTraining] = useUpdateTrainingMutation();
     const [periodically, setPeriodically] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [clickedTrain, setClickedTrain] = useState<Training | null>(null);
     const closeDrawer = () => {
         setIsOpenDrawer(false);
         setValueEditTrain('Выбор типа тренировки');
@@ -261,6 +264,16 @@ export const MyTraining: React.FC = () => {
         dispatch(saveTrainingId(e._id));
     };
 
+    const openCard = (e: Training) => {
+        console.log(e)
+        setClickedTrain(e);
+        setIsModalOpen(true);
+    }
+    const closeCard = () => {
+        setClickedTrain(null);
+        setIsModalOpen(false)
+    }
+
     return (
         <React.Fragment>
             {trainings?.length ? (
@@ -290,7 +303,8 @@ export const MyTraining: React.FC = () => {
                                         }
                                         text={e.name}
                                     />
-                                    <DownOutlined style={{maxWidth: 10}}/>
+                                    <DownOutlined style={{maxWidth: 10}} onClick={()=>openCard(e)}/>
+                                    {clickedTrain && <MyTrainingCard id={e._id} train={clickedTrain} isModalOpen={isModalOpen} closeCard={closeCard} editTraining={editTraining}/>}
                                 </div>
                             ),
                             sorted: createPeriodString(e.parameters.period),
