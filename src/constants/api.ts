@@ -17,6 +17,8 @@ type EndpointsAPI = {
     catalogs: {
         training: string,
         tariff: string,
+        trainingPals: string,
+        userJoinTrainList: string
     }, 
     user: {
         me: string,
@@ -40,6 +42,8 @@ export const endpointsAPI: EndpointsAPI = {
     catalogs: {
         training: '/catalogs/training-list',
         tariff: '/catalogs/tariff-list',
+        trainingPals: '/catalogs/training-pals',
+        userJoinTrainList: '/catalogs/user-joint-training-list'
     },
     user: {
         me: '/user/me',

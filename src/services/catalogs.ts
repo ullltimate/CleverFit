@@ -19,6 +19,16 @@ export type TariffList = {
     ];
 };
 
+export type TrainingPals = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: null;
+    avgWeightInWeek: number;
+    inviteId: string;
+    status: string;
+};
+
 export const catalogsAPI = createApi({
     reducerPath: 'catalogsAPI',
     baseQuery: fetchBaseQuery({
@@ -44,7 +54,19 @@ export const catalogsAPI = createApi({
                 url: endpointsAPI.catalogs.tariff,
             }),
         }),
+        getTrainingPartners: build.query<TrainingPals[], void>({
+            query: () => ({
+                url: endpointsAPI.catalogs.trainingPals,
+            }),
+        }),
+        getUserJoinTrainList: build.query<TrainingPals[], void | string>({
+            query: (type?) => ({
+                url: endpointsAPI.catalogs.userJoinTrainList,
+                params: {trainingType: type} || {},
+            }),
+        }),
     }),
 });
 
-export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery } = catalogsAPI;
+export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery, useGetTrainingPartnersQuery, useLazyGetUserJoinTrainListQuery } =
+    catalogsAPI;

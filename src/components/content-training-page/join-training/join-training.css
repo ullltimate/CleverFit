@@ -1,0 +1,25 @@
+.my-trainings .join-training-card,
+.my-trainings .ant-card-actions{
+    background: var(--color-bg-grey-light);
+}
+.my-trainings .join-training-card{
+    margin-top: 20px;
+}
+.join-training-card{
+    text-align: center;
+}
+.join-training-card__title{
+    color: var(--color-primary-dark);
+    font-size: var(--unit-24);
+    margin-bottom: 32px;
+}
+.join-training-card__text,
+.join-trainings-eampty__text{
+    color: var(--color-disabled);
+}
+.join-training-card .ant-btn-link{
+    color: var(--color-primary);
+}
+.join-trainings{
+    margin-top: 40px;
+}
