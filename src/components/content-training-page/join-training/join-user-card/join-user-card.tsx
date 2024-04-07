@@ -4,13 +4,14 @@ import { TrainingPals } from '@services/catalogs';
 import { Avatar, Button, Card, List } from 'antd';
 
 import './join-user-card.css';
+import { useResize } from '@hooks/use-resize';
 
 type JoinUserCardProps = {
     partner: TrainingPals;
 };
 
 export const JoinUserCard: React.FC<JoinUserCardProps> = ({ partner }) => {
-    console.log(partner);
+    const windowSize = useResize()
 
     return (
         <List.Item className='join-users-item'>

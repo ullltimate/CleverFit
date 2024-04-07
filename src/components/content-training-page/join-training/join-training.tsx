@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { useGetTrainingPartnersQuery, useLazyGetUserJoinTrainListQuery } from '@services/catalogs';
+import React, { useEffect, useState } from 'react';
+import { useGetTrainingListQuery, useGetTrainingPartnersQuery, useLazyGetUserJoinTrainListQuery } from '@services/catalogs';
+import { useGetTrainingQuery } from '@services/trainings';
+import { choiceFavoriteTrainType } from '@utils/join-trainings-healper';
 import { Button, Card } from 'antd';
 
 import { JoinUsers } from './join-users/join-users';
@@ -8,12 +10,24 @@ import './join-training.css';
 
 export const JoinTraining: React.FC = () => {
     const { data: trainingsPartner } = useGetTrainingPartnersQuery();
+    const { data: trainings } = useGetTrainingQuery();
+    const { data: trainingList} = useGetTrainingListQuery();
     const [getUserJoinTrainList, {data: userJoinTrainList}] = useLazyGetUserJoinTrainListQuery();
     const [isChoiceJoinUser, setIsChoiceJoinUser] = useState(false);
+    const [favoriteTrainType, setFavoriteTrainType] = useState<string>();
 
-    const randomChoice = () => {
+    useEffect(() => {
+        if(trainings && trainingList) setFavoriteTrainType(choiceFavoriteTrainType(trainings, trainingList))
+    },[trainings, trainingList])
+
+    const randomChoiceUsers = () => {
         setIsChoiceJoinUser(true);
         getUserJoinTrainList();
+    }
+
+    const choiceUsersForFavoriteType = () => {
+        setIsChoiceJoinUser(true);
+        getUserJoinTrainList(favoriteTrainType)
     }
 
     return isChoiceJoinUser ? (
@@ -23,8 +37,8 @@ export const JoinTraining: React.FC = () => {
             <Card
                 className='join-training-card'
                 actions={[
-                    <Button type='link' onClick={randomChoice}>Случайный выбор</Button>,
-                    <Button type='text'>Выбор друга по моим видам тренировок </Button>,
+                    <Button type='link' onClick={randomChoiceUsers}>Случайный выбор</Button>,
+                    <Button type='text' onClick={choiceUsersForFavoriteType}>Выбор друга по моим видам тренировок </Button>,
                 ]}
             >
                 <h3 className='join-training-card__title'>

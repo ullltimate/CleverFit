@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { TrainingPals } from '@services/catalogs';
+import { sortAndFilterUserList } from '@utils/join-trainings-healper';
 import { Button, Input, List } from 'antd';
 
-import './join-users.css';
 import { JoinUserCard } from '../join-user-card/join-user-card';
+
+import './join-users.css';
 
 const { Search } = Input;
 
@@ -14,8 +16,14 @@ type JoinUsersProps = {
 };
 
 export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, usersList }) => {
-    const onSearch = (value: string) => console.log(value);
-    console.log(usersList);
+    const [searchValue, setSearchValue] = useState('');
+    const onSearch = (value: string) => setSearchValue(value);
+    const [filteredUsersList, setFilteredUsersList] = useState<TrainingPals[]>();
+
+    useEffect(() => {
+        if(usersList) setFilteredUsersList(sortAndFilterUserList(usersList, searchValue))
+    },[usersList, searchValue])
+
 
     return (
         <React.Fragment>
@@ -30,15 +38,13 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     style={{ width: 200 }}
                 />
             </div>
-            {usersList && (
-                <List
-                    pagination={{ pageSize: 12, size: 'small'}}
-                    grid={{ gutter: 16, column: 4 }}
-                    dataSource={usersList}
-                    renderItem={(item) => <JoinUserCard key={item.id} partner={item} />}
-                    className='join-users'
-                />
-            )}
+            <List
+                pagination={{ pageSize: 12, size: 'small'}}
+                grid={{ gutter: 16, column: 4 }}
+                dataSource={filteredUsersList}
+                renderItem={(item) => <JoinUserCard key={item.id} partner={item} />}
+                className='join-users'
+            />
         </React.Fragment>
     );
 };
