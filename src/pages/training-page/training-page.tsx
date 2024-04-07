@@ -5,15 +5,17 @@ import { JoinTraining } from '@components/content-training-page/join-training/jo
 import { MyTraining } from '@components/content-training-page/my-training/my-training';
 import { Header } from '@components/header/header';
 import { useResize } from '@hooks/use-resize';
-import { Card, Layout, Tabs } from 'antd';
+import { Badge, Card, Layout, Tabs } from 'antd';
 
 import './training-page.css';
+import { useGetInviteQuery } from '@services/invite';
 
 const { Content } = Layout;
 
 export const TrainingPage: React.FC = () => {
     const windowSize = useResize();
     const [key, setKey] = useState('my-tranings');
+    const {data} = useGetInviteQuery();
     const itemsTab: AuthItemsTab[] = [
         {
             label: 'Мои тренировки',
@@ -21,7 +23,7 @@ export const TrainingPage: React.FC = () => {
             children: <MyTraining />,
         },
         {
-            label: 'Совместные тренировки',
+            label: <Badge count={data?.length}>Совместные тренировки</Badge>,
             key: 'join-trainings',
             children: <JoinTraining />,
         },

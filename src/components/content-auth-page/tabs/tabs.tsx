@@ -9,7 +9,7 @@ import { SignUp } from '../signup/signup';
 import './tabs.css';
 
 export type AuthItemsTab = {
-    label: string,
+    label: string | React.ReactNode,
     key: string,
     children: React.ReactNode,
 }

@@ -1,8 +1,10 @@
-.my-trainings .ant-tabs-tab{
+.my-trainings .ant-tabs-tab,
+.my-trainings .ant-tabs-tab .ant-badge{
     font-size: var(--unit-24);
     font-weight: var(--font-weight-500);
 }
-.my-trainings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+.my-trainings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.my-trainings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .ant-badge {
     color: var(--color-primary);
 }
 .my-trainings .ant-tabs-ink-bar {

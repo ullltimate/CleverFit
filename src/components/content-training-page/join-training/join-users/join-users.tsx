@@ -33,7 +33,8 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     Назад
                 </Button>
                 <Search
-                    placeholder='input search text'
+                    placeholder='Поиск по имени'
+                    data-test-id='search-input'
                     onSearch={onSearch}
                     style={{ width: 200 }}
                 />

@@ -14,8 +14,9 @@ import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { saveToken } from '@redux/reducers/token-slice';
 import { resetUser } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
+import { useGetInviteQuery } from '@services/invite';
 import { useLazyGetTrainingQuery } from '@services/trainings';
-import { Layout, Menu } from 'antd';
+import { Badge, Layout, Menu } from 'antd';
 
 import './sider-bar.css';
 
@@ -28,6 +29,7 @@ export const SiderBar: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [getTrainings] = useLazyGetTrainingQuery();
+    const {data} = useGetInviteQuery();
 
     const changeBreakpoint = (broken: boolean): void => {
         if (broken) {
@@ -133,7 +135,7 @@ export const SiderBar: React.FC = () => {
                         },
                         {
                             key: 'training',
-                            icon:  <HeartFilled style={{ color: '#061178' }} className='menu-item-icon' />,
+                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={data?.length}><HeartFilled style={{ color: '#061178' }} className='menu-item-icon' /></Badge>,
                             label: collapsed ? '' : 'Тренировки',
                         },
                         {
