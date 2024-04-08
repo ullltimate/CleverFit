@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
-import { useGetTrainingListQuery, useGetTrainingPartnersQuery, useLazyGetUserJoinTrainListQuery } from '@services/catalogs';
+import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import {
+    useGetTrainingListQuery,
+    useGetTrainingPartnersQuery,
+    useLazyGetUserJoinTrainListQuery,
+} from '@services/catalogs';
+import { useGetInviteQuery } from '@services/invite';
 import { useGetTrainingQuery } from '@services/trainings';
 import { choiceFavoriteTrainType } from '@utils/join-trainings-healper';
 import { Button, Card, Modal } from 'antd';
 
+import { JoinMessage } from './join-message/join-message';
 import { JoinUsers } from './join-users/join-users';
 
 import './join-training.css';
@@ -12,10 +18,22 @@ import './join-training.css';
 export const JoinTraining: React.FC = () => {
     const { data: trainingsPartner } = useGetTrainingPartnersQuery();
     const { data: trainings } = useGetTrainingQuery();
-    const { data: trainingList} = useGetTrainingListQuery();
-    const [getUserJoinTrainList, {data: userJoinTrainList, isError}] = useLazyGetUserJoinTrainListQuery();
+    const { data: trainingList } = useGetTrainingListQuery();
+    const { data: invitesList } = useGetInviteQuery();
+    const [getUserJoinTrainList, { data: userJoinTrainList, isError }] =
+        useLazyGetUserJoinTrainListQuery();
     const [isChoiceJoinUser, setIsChoiceJoinUser] = useState(false);
     const [favoriteTrainType, setFavoriteTrainType] = useState<string>();
+    const [countMessage, setCountMessage] = useState(1);
+    const [showAllMessage, setShowAllMessage] = useState(false);
+
+    useEffect(() => {
+        if (showAllMessage && invitesList?.length) {
+            setCountMessage(invitesList?.length);
+        } else {
+            setCountMessage(1);
+        }
+    }, [showAllMessage, invitesList]);
 
     const modalError = useCallback(
         (isErrorList: boolean) => {
@@ -58,30 +76,58 @@ export const JoinTraining: React.FC = () => {
     );
 
     useEffect(() => {
-        if(isError) modalError(true)
-    },[isError, modalError])
+        if (isError) modalError(true);
+    }, [isError, modalError]);
 
     useEffect(() => {
-        if(trainings && trainingList) setFavoriteTrainType(choiceFavoriteTrainType(trainings, trainingList))
-    },[trainings, trainingList])
+        if (trainings && trainingList)
+            setFavoriteTrainType(choiceFavoriteTrainType(trainings, trainingList));
+    }, [trainings, trainingList]);
 
     const randomChoiceUsers = async () => {
-        await getUserJoinTrainList().unwrap().then(() => setIsChoiceJoinUser(true)).catch(() => {})
-    }
+        await getUserJoinTrainList()
+            .unwrap()
+            .then(() => setIsChoiceJoinUser(true))
+            .catch(() => {});
+    };
 
-    const choiceUsersForFavoriteType = async() => {
-        await getUserJoinTrainList(favoriteTrainType).unwrap().then(() => setIsChoiceJoinUser(true)).catch(() => {})
-    }
+    const choiceUsersForFavoriteType = async () => {
+        await getUserJoinTrainList(favoriteTrainType)
+            .unwrap()
+            .then(() => setIsChoiceJoinUser(true))
+            .catch(() => {});
+    };
 
     return isChoiceJoinUser ? (
-        <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList}/>
+        <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList} />
     ) : (
         <React.Fragment>
+            {invitesList?.length && (
+                <Card className='join-messages-wrapper'>
+                    <p className='join-messages__text'>Новое сообщение ({invitesList.length})</p>
+                    {invitesList.slice(0, countMessage).map((e) => (
+                        <JoinMessage key={e._id} invite={e} />
+                    ))}
+                    {invitesList.length > 1 && (
+                        <Button type='link' onClick={() => setShowAllMessage(!showAllMessage)}>
+                            {
+                                showAllMessage ?
+                                 <span><UpOutlined /> Скрыть все сообщения</span>
+                                : <span><DownOutlined /> Показать все сообщения</span>
+                            }
+                        </Button>
+                    )}
+                </Card>
+            )}
             <Card
                 className='join-training-card'
                 actions={[
-                    <Button type='link' onClick={randomChoiceUsers}>Случайный выбор</Button>,
-                    <Button type='text' onClick={choiceUsersForFavoriteType}>Выбор друга по моим тренировкам</Button>,
+                    <Button type='link' onClick={randomChoiceUsers}>
+                        Случайный выбор
+                    </Button>,
+                    <Button type='text' onClick={choiceUsersForFavoriteType}>
+                        Выбор друга по моим тренировкам
+                    </Button>,
                 ]}
             >
                 <h3 className='join-training-card__title'>

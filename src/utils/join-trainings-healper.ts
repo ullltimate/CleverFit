@@ -21,3 +21,27 @@ export const sortAndFilterUserList = (list: TrainingPals[], searchStr: string) =
 
    return filtered
 }
+
+export const createTypeTrainString = (str: string) => {
+    let newStr = '';
+
+    switch(str){
+        case 'Силовая':
+            newStr = 'силовых тренировок';
+            break;
+        case 'Грудь':
+            newStr = 'тренировок на грудь';
+            break;
+        case 'Спина':
+            newStr = 'тренировок на спину';
+            break;
+        case 'Ноги':
+            newStr = 'тренировок на ноги';
+            break;
+        case 'Руки':
+            newStr = 'тренировок на руки';
+            break;
+    }
+
+    return newStr
+}

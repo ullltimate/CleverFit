@@ -1,5 +1,6 @@
 .my-trainings .join-training-card,
-.my-trainings .ant-card-actions{
+.my-trainings .ant-card-actions,
+.my-trainings .join-messages-wrapper{
     background: var(--color-bg-grey-light);
 }
 .my-trainings .join-training-card{
@@ -14,7 +15,8 @@
     margin-bottom: 32px;
 }
 .join-training-card__text,
-.join-trainings-eampty__text{
+.join-trainings-eampty__text,
+.join-messages__text{
     color: var(--color-disabled);
 }
 .join-training-card .ant-btn-link{

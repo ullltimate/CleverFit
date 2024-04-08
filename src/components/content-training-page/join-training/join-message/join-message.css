@@ -1,0 +1,68 @@
+.join-message {
+    margin-bottom: 20px;
+}
+
+.join-message .ant-comment-inner {
+    justify-content: space-evenly;
+    padding: var(--unit-16);
+}
+
+.join-message .ant-comment-avatar {
+    width: 175px;
+    text-align: center;
+}
+
+.message-autor {
+    max-width: 85px;
+    padding-top: 12px;
+    margin: 0 auto;
+}
+
+.join-message .ant-comment-content {
+    max-width: 1110px;
+}
+
+.join-message .comment-text {
+    color: var(--color-primary-dark);
+    font-size: var(--unit-16);
+    font-weight: var(--font-weight-700);
+}
+
+.join-message .ant-comment-content-author {
+    margin-bottom: 12px;
+}
+
+.join-message .ant-comment-avatar img{
+    width: 42px;
+    height: 42px;
+}
+
+.join-message .ant-comment-content-detail{
+    display: flex;
+}
+
+@media screen and (max-width: 900px) {
+    
+    .join-message .ant-comment-inner {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .message-autor {
+        display: inline-block;
+        padding: 0 0 0 var(--unit-16);
+    }
+
+    .join-message .ant-avatar {
+        vertical-align: bottom;
+    }
+
+    .join-message .ant-comment-avatar {
+        text-align: left;
+        margin-bottom: 12px;
+    }
+
+    .join-message .ant-comment-content-detail{
+        flex-wrap: wrap;
+    }
+}
