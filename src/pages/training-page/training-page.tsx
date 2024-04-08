@@ -5,10 +5,10 @@ import { JoinTraining } from '@components/content-training-page/join-training/jo
 import { MyTraining } from '@components/content-training-page/my-training/my-training';
 import { Header } from '@components/header/header';
 import { useResize } from '@hooks/use-resize';
+import { useGetInviteQuery } from '@services/invite';
 import { Badge, Card, Layout, Tabs } from 'antd';
 
 import './training-page.css';
-import { useGetInviteQuery } from '@services/invite';
 
 const { Content } = Layout;
 
@@ -43,7 +43,7 @@ export const TrainingPage: React.FC = () => {
                     <Tabs
                         activeKey={key}
                         centered={true}
-                        tabBarGutter={205}
+                        tabBarGutter={windowSize.windowSize<1300? 65: 205}
                         tabBarStyle={{fontSize: 'var(--unit-24)'}}
                         items={itemsTab}
                         onChange={(k) => setKey(k)}

@@ -54,11 +54,6 @@ export const catalogsAPI = createApi({
                 url: endpointsAPI.catalogs.tariff,
             }),
         }),
-        getTrainingPartners: build.query<TrainingPals[], void>({
-            query: () => ({
-                url: endpointsAPI.catalogs.trainingPals,
-            }),
-        }),
         getUserJoinTrainList: build.query<TrainingPals[], void | string>({
             query: (type?) => ({
                 url: endpointsAPI.catalogs.userJoinTrainList,
@@ -68,5 +63,5 @@ export const catalogsAPI = createApi({
     }),
 });
 
-export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery, useGetTrainingPartnersQuery, useLazyGetUserJoinTrainListQuery } =
+export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery, useLazyGetUserJoinTrainListQuery} =
     catalogsAPI;

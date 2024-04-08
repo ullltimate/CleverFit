@@ -10,9 +10,10 @@ import './join-message.css';
 
 type JoinMessageProps = {
     invite: Invite;
+    modallError: (isErrorList: boolean) => void;
 };
 
-export const JoinMessage: React.FC<JoinMessageProps> = ({ invite }) => {
+export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError }) => {
     const [replyInvate] = useReplyInviteMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openCard = () => setIsModalOpen(true)
@@ -21,7 +22,7 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite }) => {
         await replyInvate({
             id: invite._id,
             status: 'accepted'
-        }).unwrap()
+        }).unwrap().then(() => {}).catch(() => modallError(false))
     }
     const rejectInvite = async() => {
         await replyInvate({
@@ -43,7 +44,7 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite }) => {
                             icon={<UserOutlined />}
                             style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
                         />{' '}
-                        <p className='message-autor'>{invite.from.firstName || 'Пользователь'}</p>
+                        <p className='message-autor'>{invite.from.firstName} {invite.from.lastName}</p>
                     </React.Fragment>
                 }
                 content={

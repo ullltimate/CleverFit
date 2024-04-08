@@ -2,6 +2,8 @@ import { endpointsAPI, urlAPI } from '@constants/api';
 import { store } from '@redux/configure-store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { TrainingPals } from './catalogs';
+
 export type Invite = {
     _id: string;
     from: {
@@ -59,6 +61,12 @@ export const inviteAPI = createApi({
             }),
             providesTags: () => ['Invite'],
         }),
+        getTrainingPartners: build.query<TrainingPals[], void>({
+            query: () => ({
+                url: endpointsAPI.catalogs.trainingPals,
+            }),
+            providesTags: ['Invite'],
+        }),
         sendInvite: build.mutation({
             query: (body) => ({
                 url: endpointsAPI.invite,
@@ -74,7 +82,14 @@ export const inviteAPI = createApi({
             }),
             invalidatesTags: ['Invite'],
         }),
+        cancelInvite: build.mutation({
+            query: (id) => ({
+                url: `${endpointsAPI.invite}/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Invite'],
+        }),
     }),
 });
 
-export const { useGetInviteQuery, useSendInviteMutation, useReplyInviteMutation } = inviteAPI;
+export const { useGetInviteQuery, useSendInviteMutation, useReplyInviteMutation, useCancelInviteMutation, useGetTrainingPartnersQuery } = inviteAPI;

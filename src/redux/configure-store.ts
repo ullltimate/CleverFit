@@ -9,6 +9,7 @@ import { trainingAPI } from '@services/trainings';
 import { userAPI } from '@services/user';
 import { createBrowserHistory } from 'history';
 
+import { partnersReducer } from './reducers/partners-slice';
 import { screenSizeReducer } from './reducers/resize-slice';
 import {tokenReducer} from './reducers/token-slice';
 import {trainingReducer}from './reducers/training-slice';
@@ -34,6 +35,7 @@ export const store = configureStore({
         userFullReducer,
         [tariffAPI.reducerPath]: tariffAPI.reducer,
         [inviteAPI.reducerPath]: inviteAPI.reducer,
+        partnersReducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

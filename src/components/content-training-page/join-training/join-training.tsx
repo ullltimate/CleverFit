@@ -1,17 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { partnersSelector, setPartners } from '@redux/reducers/partners-slice';
 import {
     useGetTrainingListQuery,
-    useGetTrainingPartnersQuery,
     useLazyGetUserJoinTrainListQuery,
 } from '@services/catalogs';
-import { useGetInviteQuery } from '@services/invite';
+import { useGetInviteQuery, useGetTrainingPartnersQuery } from '@services/invite';
 import { useGetTrainingQuery } from '@services/trainings';
 import { choiceFavoriteTrainType } from '@utils/join-trainings-healper';
-import { Button, Card, Modal } from 'antd';
+import { Button, Card, List, Modal } from 'antd';
 
 import { JoinMessage } from './join-message/join-message';
 import { JoinUsers } from './join-users/join-users';
+import { MyJoinUserCard } from './my-join-user-card/my-join-user-card';
 
 import './join-training.css';
 
@@ -26,6 +28,8 @@ export const JoinTraining: React.FC = () => {
     const [favoriteTrainType, setFavoriteTrainType] = useState<string>();
     const [countMessage, setCountMessage] = useState(1);
     const [showAllMessage, setShowAllMessage] = useState(false);
+    const { partners } = useAppSelector(partnersSelector);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (showAllMessage && invitesList?.length) {
@@ -34,6 +38,10 @@ export const JoinTraining: React.FC = () => {
             setCountMessage(1);
         }
     }, [showAllMessage, invitesList]);
+
+    useEffect(() => {
+        if(trainingsPartner) dispatch(setPartners(trainingsPartner))
+    },[dispatch, trainingsPartner])
 
     const modalError = useCallback(
         (isErrorList: boolean) => {
@@ -102,23 +110,31 @@ export const JoinTraining: React.FC = () => {
         <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList} />
     ) : (
         <React.Fragment>
-            {invitesList?.length && (
+            {invitesList?.length ? (
                 <Card className='join-messages-wrapper'>
                     <p className='join-messages__text'>Новое сообщение ({invitesList.length})</p>
                     {invitesList.slice(0, countMessage).map((e) => (
-                        <JoinMessage key={e._id} invite={e} />
+                        <JoinMessage
+                            key={e._id}
+                            invite={e}
+                            modallError={modalError}
+                        />
                     ))}
                     {invitesList.length > 1 && (
                         <Button type='link' onClick={() => setShowAllMessage(!showAllMessage)}>
-                            {
-                                showAllMessage ?
-                                 <span><UpOutlined /> Скрыть все сообщения</span>
-                                : <span><DownOutlined /> Показать все сообщения</span>
-                            }
+                            {showAllMessage ? (
+                                <span>
+                                    <UpOutlined /> Скрыть все сообщения
+                                </span>
+                            ) : (
+                                <span>
+                                    <DownOutlined /> Показать все сообщения
+                                </span>
+                            )}
                         </Button>
                     )}
                 </Card>
-            )}
+            ) : null}
             <Card
                 className='join-training-card'
                 actions={[
@@ -142,7 +158,21 @@ export const JoinTraining: React.FC = () => {
             </Card>
             <div className='join-trainings'>
                 <h4 className='join-trainings__title'>Мои партнёры по тренировкам</h4>
-                {!trainingsPartner?.length && (
+                {partners.length ? (
+                    <List
+                        grid={{ gutter: 16, column: 4 }}
+                        dataSource={partners}
+                        renderItem={(item, index) => (
+                            <MyJoinUserCard
+                                key={item.id}
+                                partner={item}
+                                index={index}
+                                modallError={modalError}
+                            />
+                        )}
+                        className='join-users'
+                    />
+                ) : (
                     <p className='join-trainings-eampty__text'>
                         У вас пока нет партнёров для совместных тренировок
                     </p>

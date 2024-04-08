@@ -9,20 +9,30 @@ type JoinUserCardProps = {
     partner: TrainingPals;
     openDrawer: (trainName: string, userName: string, userImg: string | null, id: string) => void;
     index: number;
-    isAccessSend:boolean;
+    isAccessSend: boolean;
     userIdForTrain: string | undefined;
 };
 
-export const JoinUserCard: React.FC<JoinUserCardProps> = ({ partner, openDrawer, index, isAccessSend, userIdForTrain }) => {
+export const JoinUserCard: React.FC<JoinUserCardProps> = ({
+    partner,
+    openDrawer,
+    index,
+    isAccessSend,
+    userIdForTrain,
+}) => {
     const [awaitConfirm, setAwaitConfirm] = useState(false);
+    const [rejectedConfirm, setRejectedConfirm] = useState(false);
+    const [acceptedConfirm, setAcceptedConfirm] = useState(false);
 
     useEffect(() => {
-        if(partner.status === 'pending') setAwaitConfirm(true);
-    }, [partner])
+        if (partner.status === 'pending') setAwaitConfirm(true);
+        if (partner.status === 'rejected') setRejectedConfirm(true);
+        if (partner.status === 'accepted') setAcceptedConfirm(true);
+    }, [partner]);
 
     useEffect(() => {
-        if(isAccessSend && partner.id === userIdForTrain) setAwaitConfirm(true);
-    },[partner, isAccessSend, userIdForTrain])
+        if (isAccessSend && partner.id === userIdForTrain) setAwaitConfirm(true);
+    }, [partner, isAccessSend, userIdForTrain]);
 
     return (
         <List.Item className='join-users-item'>
@@ -39,8 +49,27 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({ partner, openDrawer,
                 </div>
                 <p>Тип тренировки: {partner.trainingType}</p>
                 <p>Средняя нагрузка: {partner.avgWeightInWeek}</p>
-                <Button type='primary' disabled={awaitConfirm} onClick={() => openDrawer(partner.trainingType, partner.name, partner.imageSrc, partner.id)}>Создать тренировку</Button>
+                {acceptedConfirm ? (
+                    <Button type='text'>Отменить тренировку</Button>
+                ) : (
+                    <Button
+                        type='primary'
+                        disabled={awaitConfirm || rejectedConfirm}
+                        onClick={() =>
+                            openDrawer(
+                                partner.trainingType,
+                                partner.name,
+                                partner.imageSrc,
+                                partner.id,
+                            )
+                        }
+                    >
+                        Создать тренировку
+                    </Button>
+                )}
                 {awaitConfirm && <p>ожидает подтверждения</p>}
+                {rejectedConfirm && <p>тренировка отклонена</p>}
+                {acceptedConfirm && <p>тренировка одобрена</p>}
             </Card>
         </List.Item>
     );
