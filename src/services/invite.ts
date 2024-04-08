@@ -65,9 +65,16 @@ export const inviteAPI = createApi({
                 method: 'POST',
                 body,
             }),
+        }),
+        replyInvite: build.mutation({
+            query: (body) => ({
+                url: endpointsAPI.invite,
+                method: 'PUT',
+                body,
+            }),
             invalidatesTags: ['Invite'],
         }),
     }),
 });
 
-export const { useGetInviteQuery, useSendInviteMutation } = inviteAPI;
+export const { useGetInviteQuery, useSendInviteMutation, useReplyInviteMutation } = inviteAPI;

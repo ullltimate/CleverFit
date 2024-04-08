@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Invite } from '@services/invite';
+import { Invite, useReplyInviteMutation } from '@services/invite';
 import { createTypeTrainString } from '@utils/join-trainings-healper';
 import { Avatar, Button, Comment, Tooltip } from 'antd';
 
@@ -13,10 +13,22 @@ type JoinMessageProps = {
 };
 
 export const JoinMessage: React.FC<JoinMessageProps> = ({ invite }) => {
-    console.log(invite);
+    const [replyInvate] = useReplyInviteMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openCard = () => setIsModalOpen(true)
     const closeCard = () => setIsModalOpen(false)
+    const acceptInvite = async() => {
+        await replyInvate({
+            id: invite._id,
+            status: 'accepted'
+        }).unwrap()
+    }
+    const rejectInvite = async() => {
+        await replyInvate({
+            id: invite._id,
+            status: 'rejected'
+        }).unwrap()
+    }
 
     return (
         <div className='join-message'>
@@ -46,9 +58,9 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite }) => {
                             <DetailTraining training={invite.training} isModalOpen={isModalOpen} closeCard={closeCard}/>
                         </div>
                         <div>
-                            <Button type='primary'>Тренироваться вместе</Button>
+                            <Button type='primary' onClick={acceptInvite}>Тренироваться вместе</Button>
                             <br />
-                            <Button type='text'>Отклонить запрос</Button>
+                            <Button type='text' onClick={rejectInvite}>Отклонить запрос</Button>
                         </div>
                     </React.Fragment>
                 }
