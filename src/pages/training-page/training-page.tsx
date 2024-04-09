@@ -43,7 +43,7 @@ export const TrainingPage: React.FC = () => {
                     <Tabs
                         activeKey={key}
                         centered={true}
-                        tabBarGutter={windowSize.windowSize<1300? 65: 205}
+                        tabBarGutter={windowSize.windowSize<370 ? 5 : windowSize.windowSize<1300 ? 65: 205}
                         tabBarStyle={{fontSize: 'var(--unit-24)'}}
                         items={itemsTab}
                         onChange={(k) => setKey(k)}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { colorTrainings } from '@constants/calendar';
 import { Training } from '@services/trainings';
 import { Button } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,16 +30,23 @@ export const MyTrainingCard: React.FC<MyTrainingCardProps> = ({
     >
         {id === train._id && (
             <React.Fragment>
-                <div className='create-exercise'>
+                <div
+                    className='create-exercise'
+                    style={{
+                        borderBottom: `1px solid ${
+                            colorTrainings.find((el) => el.name === train.name)?.color
+                        }`,
+                    }}
+                >
                     <ArrowLeftOutlined
                         data-test-id='modal-exercise-training-button-close'
-                        style={{ width: 16, marginTop: 12 }}
+                        style={{ width: 16 }}
                         onClick={closeCard}
                     />
-                    {train.name}
+                    <p className='create-exercise__name'>{train.name}</p>
                 </div>
                 <div className='modal-content'>
-                    <ul style={{ padding: '12px 0' }}>
+                    <ul style={{ padding: 12 }}>
                         {train.exercises
                             .filter((e) => e.name !== '')
                             .map((e) => (
@@ -48,13 +56,15 @@ export const MyTrainingCard: React.FC<MyTrainingCardProps> = ({
                             ))}
                     </ul>
                 </div>
-                <Button
-                    type='text'
-                    className='modal-btn btn-text'
-                    onClick={() => editTraining(train)}
-                >
-                    Добавить упражнения
-                </Button>
+                <div className='modal-btn-wrapper'>
+                    <Button
+                        type='text'
+                        className='modal-btn btn-text'
+                        onClick={() => editTraining(train)}
+                    >
+                        Добавить упражнения
+                    </Button>
+                </div>
             </React.Fragment>
         )}
     </div>

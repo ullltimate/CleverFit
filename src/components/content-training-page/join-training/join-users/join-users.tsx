@@ -217,7 +217,6 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                         format='DD.MM.YYYY'
                         value={date ? moment(date) : undefined}
                         disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
-                        style={{ maxWidth: 156, marginRight: 30 }}
                         dateRender={dateRender}
                     />
                     <Checkbox
@@ -229,6 +228,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     </Checkbox>
                     {withPeriodically && (
                         <Select
+                            className='drawer-select-period'
                             data-test-id='modal-drawer-right-select-period'
                             value={periodically}
                             options={Array.from(Array(7), (_, i) => ({

@@ -1,0 +1,24 @@
+.my-trainings .modal-training{
+    position: absolute;
+    left: 10px;
+    padding: 0;
+    width: 240px;
+}
+.my-trainings .modal-training .create-exercise{
+    align-items: center;
+    padding: var(--unit-16) 12px;
+}
+.my-trainings .modal-training .create-exercise__name{
+    margin: 0 12px;
+}
+.my-trainings .modal-training .modal-btn-wrapper{
+    padding: 0 12px 12px;
+    border-top: 1px solid var(--color-bg-grey-light);
+}
+
+@media screen and (max-width: 370px) {
+    .my-trainings .modal-training{
+        width: 310px;
+        left: 0;
+    }
+}
