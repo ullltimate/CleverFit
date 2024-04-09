@@ -251,6 +251,17 @@ export const MyTraining: React.FC = () => {
         setIsModalOpen(false)
     }
 
+    const dateRender = (currDate: moment.Moment) => {
+        const hasTrain = trainings?.some(e => moment(e.date).isSame(currDate, 'day'));
+        const background = hasTrain ? 'var(--color-bg-blue)' : 'transparent';
+
+        return (
+          <div className="ant-picker-cell-inner" style={{background}}>
+            {currDate.date()}
+          </div>
+        );
+    }
+
     return (
         <React.Fragment>
             {trainings?.length ? (
@@ -386,6 +397,7 @@ export const MyTraining: React.FC = () => {
                         value={date ? moment(date) : undefined}
                         disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
                         style={{ maxWidth: 156, marginRight: 30 }}
+                        dateRender={dateRender}
                     />
                     <Checkbox
                         onChange={onChangeCheckbox}

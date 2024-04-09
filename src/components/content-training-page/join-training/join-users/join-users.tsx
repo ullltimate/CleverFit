@@ -7,7 +7,7 @@ import { useResize } from '@hooks/use-resize';
 import { addExercises, Exercise, removeExercises, resetExercises, resetParameters, saveTrainingDate, saveTrainingName, setParameters, trainingSelector } from '@redux/reducers/training-slice';
 import { TrainingPals } from '@services/catalogs';
 import { useSendInviteMutation } from '@services/invite';
-import { useCreateTrainingMutation } from '@services/trainings';
+import { Training, useCreateTrainingMutation } from '@services/trainings';
 import { sortAndFilterUserList } from '@utils/join-trainings-healper';
 import { createPeriodString } from '@utils/my-trainings-healper';
 import { Avatar, Badge, Button, Checkbox, DatePicker, DatePickerProps, Drawer, Input, List, Select } from 'antd';
@@ -23,9 +23,10 @@ const { Search } = Input;
 type JoinUsersProps = {
     setIsChoiceJoinUser: React.Dispatch<React.SetStateAction<boolean>>;
     usersList: TrainingPals[] | undefined;
+    trainings: Training[] | undefined;
 };
 
-export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, usersList }) => {
+export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, usersList, trainings }) => {
     const [searchValue, setSearchValue] = useState('');
     const onSearch = (value: string) => setSearchValue(value);
     const [filteredUsersList, setFilteredUsersList] = useState<TrainingPals[]>();
@@ -115,6 +116,17 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
             setIsDisabledSave(true);
         }
     }, [date, exercises]);
+
+    const dateRender = (currDate: moment.Moment) => {
+        const hasTrain = trainings?.some(e => moment(e.date).isSame(currDate, 'day'));
+        const background = hasTrain ? 'var(--color-bg-blue)' : 'transparent';
+
+        return (
+          <div className="ant-picker-cell-inner" style={{background}}>
+            {currDate.date()}
+          </div>
+        );
+    }
 
     return (
         <React.Fragment>
@@ -206,6 +218,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                         value={date ? moment(date) : undefined}
                         disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
                         style={{ maxWidth: 156, marginRight: 30 }}
+                        dateRender={dateRender}
                     />
                     <Checkbox
                         onChange={onChangeCheckbox}

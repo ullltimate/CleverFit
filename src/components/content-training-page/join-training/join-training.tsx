@@ -108,7 +108,7 @@ export const JoinTraining: React.FC = () => {
     };
 
     return isChoiceJoinUser ? (
-        <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList} />
+        <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList} trainings={trainings}/>
     ) : (
         <React.Fragment>
             {invitesList?.length ? (
