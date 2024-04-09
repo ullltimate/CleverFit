@@ -91,6 +91,7 @@ export const JoinTraining: React.FC = () => {
         if (trainings && trainingList)
             setFavoriteTrainType(choiceFavoriteTrainType(trainings, trainingList));
     }, [trainings, trainingList]);
+    console.log(favoriteTrainType)
 
     const randomChoiceUsers = async () => {
         await getUserJoinTrainList()

@@ -6,7 +6,9 @@ export const choiceFavoriteTrainType = (trains: Training[], trainList: TrainingL
 
     trains.map((e) => 
         e.exercises.forEach((el) => {
-            resultTrain[e.name] = el.replays * el.weight * el.approaches;
+            if(el.replays && el.approaches && el.weight){
+                resultTrain[e.name] = el.replays * el.weight * el.approaches;
+            }
         }));
     const maxValue = Math.max(...Object.keys(resultTrain).map(key => resultTrain[key]));
     const maxName = Object.keys(resultTrain).find(key => resultTrain[key] === maxValue);
@@ -17,7 +19,11 @@ export const choiceFavoriteTrainType = (trains: Training[], trainList: TrainingL
 }
 
 export const sortAndFilterUserList = (list: TrainingPals[], searchStr: string) => {
-    const filtered = [...list].sort((a, b) => a.name.localeCompare(b.name)).filter((e) => e.name.toLowerCase().includes(searchStr.toLowerCase()))
+    const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    const acceptedUsers = sortedList.filter((e) => e.status === 'accepted');
+    const rejectedUsers = sortedList.filter((e) => e.status === 'rejected');
+    const otherUsers = sortedList.filter((e) => e.status !== 'rejected' && e.status !== 'accepted');
+    const filtered = acceptedUsers.concat(otherUsers).concat(rejectedUsers).filter((e) => e.name.toLowerCase().includes(searchStr.toLowerCase()))
 
    return filtered
 }
