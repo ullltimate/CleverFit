@@ -1,3 +1,6 @@
 .join-users-item .ant-card{
     background: var(--color-bg-blue);
 }
+.join-users-item__name span{
+    color: var(--color-error);
+}

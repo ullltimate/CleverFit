@@ -11,6 +11,7 @@ type JoinUserCardProps = {
     index: number;
     isAccessSend: boolean;
     userIdForTrain: string | undefined;
+    searchValue: string,
 };
 
 export const JoinUserCard: React.FC<JoinUserCardProps> = ({
@@ -19,6 +20,7 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
     index,
     isAccessSend,
     userIdForTrain,
+    searchValue
 }) => {
     const [awaitConfirm, setAwaitConfirm] = useState(false);
     const [rejectedConfirm, setRejectedConfirm] = useState(false);
@@ -34,6 +36,13 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
         if (isAccessSend && partner.id === userIdForTrain) setAwaitConfirm(true);
     }, [partner, isAccessSend, userIdForTrain]);
 
+    const highlightSubStr = () => {
+        const reg = new RegExp(searchValue, 'gi');
+
+        return searchValue ? partner.name.replace(reg, (match) => `<span>${match}</span>`) : partner.name
+    }
+    console.log(highlightSubStr())
+
     return (
         <List.Item className='join-users-item'>
             <Card bordered={false} data-test-id={`joint-training-cards${index}`}>
@@ -44,8 +53,7 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
                         src={partner.imageSrc}
                         icon={!partner.imageSrc && <UserOutlined />}
                     />
-
-                    <h6>{partner.name}</h6>
+                    <h6 className='join-users-item__name' dangerouslySetInnerHTML={{__html: highlightSubStr()}}/>
                 </div>
                 <p>Тип тренировки: {partner.trainingType}</p>
                 <p>Средняя нагрузка: {partner.avgWeightInWeek}</p>

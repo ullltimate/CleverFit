@@ -82,7 +82,6 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
     };
 
     const sendInviteToUser = async() => {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         const {_id} = await createTraining({
                                 date,
                                 name,
@@ -135,7 +134,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 pagination={{ pageSize: 12, size: 'small' }}
                 grid={{ gutter: 16, column: 4 }}
                 dataSource={filteredUsersList}
-                renderItem={(item, index) => <JoinUserCard key={item.id} partner={item} openDrawer={openDrawer} index={index} isAccessSend={isAccessSend} userIdForTrain={userIdForTrain}/>}
+                renderItem={(item, index) => <JoinUserCard key={item.id} partner={item} openDrawer={openDrawer} index={index} isAccessSend={isAccessSend} userIdForTrain={userIdForTrain} searchValue={searchValue}/>}
                 className='join-users'
             />
             <Drawer
