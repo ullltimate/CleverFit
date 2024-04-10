@@ -1,6 +1,6 @@
 .my-trainings .join-training-card,
 .my-trainings .ant-card-actions,
-.my-trainings .join-messages-wrapper{
+.my-trainings .bg-grey{
     background: var(--color-bg-grey-light);
 }
 .my-trainings .join-training-card{
@@ -19,7 +19,8 @@
 .join-messages__text{
     color: var(--color-disabled);
 }
-.join-training-card .ant-btn-link{
+.join-training-card .ant-btn-link,
+.bg-grey .ant-btn-link{
     color: var(--color-primary);
 }
 .join-trainings{
@@ -28,4 +29,32 @@
 .join-messages-wrapper{
     max-height: 300px;
     overflow-y: auto;
+}
+.join-trainings__title{
+    font-size: 20px;
+    font-weight: var(--font-weight-500);
+    line-height: 26px;
+}
+@media screen and (max-width: 835px) {
+    .join-training-card .ant-card-actions{
+        flex-wrap: wrap;
+    }
+    .join-training-card .ant-card-actions li{
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 370px) {
+    .join-training-card .ant-card-body{
+        padding: var(--unit-24) var(--unit-8);
+    }
+    .join-training-card__title{
+        font-size: var(--unit-24);
+        line-height: 31.2px;
+    }
+    .bg-grey .ant-card-body{
+        padding: 12px;
+    }
+    .join-trainings__title{
+        font-size: 18px;
+    }
 }

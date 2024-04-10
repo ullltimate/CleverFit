@@ -2,10 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { partnersSelector, setPartners } from '@redux/reducers/partners-slice';
-import {
-    useGetTrainingListQuery,
-    useLazyGetUserJoinTrainListQuery,
-} from '@services/catalogs';
+import { useGetTrainingListQuery, useLazyGetUserJoinTrainListQuery } from '@services/catalogs';
 import { useGetInviteQuery, useGetTrainingPartnersQuery } from '@services/invite';
 import { useGetTrainingQuery } from '@services/trainings';
 import { choiceFavoriteTrainType } from '@utils/join-trainings-healper';
@@ -40,8 +37,8 @@ export const JoinTraining: React.FC = () => {
     }, [showAllMessage, invitesList]);
 
     useEffect(() => {
-        if(trainingsPartner) dispatch(setPartners(trainingsPartner))
-    },[dispatch, trainingsPartner])
+        if (trainingsPartner) dispatch(setPartners(trainingsPartner));
+    }, [dispatch, trainingsPartner]);
 
     const modalError = useCallback(
         (isErrorList: boolean) => {
@@ -91,7 +88,7 @@ export const JoinTraining: React.FC = () => {
         if (trainings && trainingList)
             setFavoriteTrainType(choiceFavoriteTrainType(trainings, trainingList));
     }, [trainings, trainingList]);
-    console.log(favoriteTrainType)
+    console.log(favoriteTrainType);
 
     const randomChoiceUsers = async () => {
         await getUserJoinTrainList()
@@ -108,60 +105,71 @@ export const JoinTraining: React.FC = () => {
     };
 
     return isChoiceJoinUser ? (
-        <JoinUsers setIsChoiceJoinUser={setIsChoiceJoinUser} usersList={userJoinTrainList} trainings={trainings}/>
+        <JoinUsers
+            setIsChoiceJoinUser={setIsChoiceJoinUser}
+            usersList={userJoinTrainList}
+            trainings={trainings}
+        />
     ) : (
         <React.Fragment>
-            {invitesList?.length ? (
-                <Card className='join-messages-wrapper'>
-                    <p className='join-messages__text'>Новое сообщение ({invitesList.length})</p>
-                    {invitesList.slice(0, countMessage).map((e) => (
-                        <JoinMessage
-                            key={e._id}
-                            invite={e}
-                            modallError={modalError}
-                        />
-                    ))}
-                    {invitesList.length > 1 && (
-                        <Button type='link' onClick={() => setShowAllMessage(!showAllMessage)}>
-                            {showAllMessage ? (
-                                <span>
-                                    <UpOutlined /> Скрыть все сообщения
-                                </span>
-                            ) : (
-                                <span>
-                                    <DownOutlined /> Показать все сообщения
-                                </span>
+            {partners.length < 4 && (
+                <React.Fragment>
+                    {invitesList?.length ? (
+                        <Card
+                            className={`${showAllMessage ? 'join-messages-wrapper' : ''} bg-grey`}
+                        >
+                            <p className='join-messages__text'>
+                                Новое сообщение ({invitesList.length})
+                            </p>
+                            {invitesList.slice(0, countMessage).map((e) => (
+                                <JoinMessage key={e._id} invite={e} modallError={modalError} />
+                            ))}
+                            {invitesList.length > 1 && (
+                                <Button
+                                    type='link'
+                                    onClick={() => setShowAllMessage(!showAllMessage)}
+                                >
+                                    {showAllMessage ? (
+                                        <span>
+                                            <UpOutlined /> Скрыть все сообщения
+                                        </span>
+                                    ) : (
+                                        <span>
+                                            <DownOutlined /> Показать все сообщения
+                                        </span>
+                                    )}
+                                </Button>
                             )}
-                        </Button>
-                    )}
-                </Card>
-            ) : null}
-            <Card
-                className='join-training-card'
-                actions={[
-                    <Button type='link' onClick={randomChoiceUsers}>
-                        Случайный выбор
-                    </Button>,
-                    <Button type='text' onClick={choiceUsersForFavoriteType}>
-                        Выбор друга по моим тренировкам
-                    </Button>,
-                ]}
-            >
-                <h3 className='join-training-card__title'>
-                    Хочешь тренироваться с тем, кто разделяет твои цели и темп?
-                    <br />
-                    Можешь найти друга для совместных тренировок среди других пользователей.
-                </h3>
-                <p className='join-training-card__text'>
-                    Можешь воспользоваться случайным выбором или выбрать друга с похожим на твой
-                    уровень и вид тренировки, и мы найдем тебе идеального спортивного друга.
-                </p>
-            </Card>
+                        </Card>
+                    ) : null}
+                    <Card
+                        className='join-training-card'
+                        actions={[
+                            <Button type='link' onClick={randomChoiceUsers}>
+                                Случайный выбор
+                            </Button>,
+                            <Button type='text' onClick={choiceUsersForFavoriteType}>
+                                Выбор друга по моим тренировкам
+                            </Button>,
+                        ]}
+                    >
+                        <h3 className='join-training-card__title'>
+                            Хочешь тренироваться с тем, кто разделяет твои цели и темп?
+                            <br />
+                            Можешь найти друга для совместных тренировок среди других пользователей.
+                        </h3>
+                        <p className='join-training-card__text'>
+                            Можешь воспользоваться случайным выбором или выбрать друга с похожим на
+                            твой уровень и вид тренировки, и мы найдем тебе идеального спортивного
+                            друга.
+                        </p>
+                    </Card>
+                </React.Fragment>
+            )}
             <div className='join-trainings'>
                 <h4 className='join-trainings__title'>Мои партнёры по тренировкам</h4>
                 {partners.length ? (
                     <List
-                        grid={{ gutter: 16, column: 4 }}
                         dataSource={partners}
                         renderItem={(item, index) => (
                             <MyJoinUserCard

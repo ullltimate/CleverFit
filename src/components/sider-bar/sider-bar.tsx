@@ -10,7 +10,8 @@ import {
 } from '@ant-design/icons';
 import { ExitIcon } from '@components/icons/exit-icon';
 import { PATHS } from '@constants/paths';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { partnersSelector } from '@redux/reducers/partners-slice';
 import { saveToken } from '@redux/reducers/token-slice';
 import { resetUser } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
@@ -30,6 +31,7 @@ export const SiderBar: React.FC = () => {
     const navigate = useNavigate();
     const [getTrainings] = useLazyGetTrainingQuery();
     const {data} = useGetInviteQuery();
+    const { partners } = useAppSelector(partnersSelector);
 
     const changeBreakpoint = (broken: boolean): void => {
         if (broken) {
@@ -135,7 +137,7 @@ export const SiderBar: React.FC = () => {
                         },
                         {
                             key: 'training',
-                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={data?.length}><HeartFilled style={{ color: '#061178' }} className='menu-item-icon' /></Badge>,
+                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={partners.length<4 ? data?.length : 0}><HeartFilled style={{ color: '#061178' }} className='menu-item-icon' /></Badge>,
                             label: collapsed ? '' : 'Тренировки',
                         },
                         {

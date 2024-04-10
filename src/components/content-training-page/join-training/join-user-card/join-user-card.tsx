@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { UserOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, ExclamationCircleOutlined } from '@ant-design/icons';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { removePartner } from '@redux/reducers/partners-slice';
 import { TrainingPals } from '@services/catalogs';
-import { Avatar, Button, Card, List } from 'antd';
+import { useCancelInviteMutation } from '@services/invite';
+import {  Button, Card, List, Tooltip } from 'antd';
+
+import { CustomAvatar } from '../custom-avatar/custom-avatar';
 
 import './join-user-card.css';
+import { UserCardDescript } from '../user-card-descript/user-card-descript';
 
 type JoinUserCardProps = {
     partner: TrainingPals;
@@ -11,7 +17,7 @@ type JoinUserCardProps = {
     index: number;
     isAccessSend: boolean;
     userIdForTrain: string | undefined;
-    searchValue: string,
+    searchValue: string;
 };
 
 export const JoinUserCard: React.FC<JoinUserCardProps> = ({
@@ -20,11 +26,13 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
     index,
     isAccessSend,
     userIdForTrain,
-    searchValue
+    searchValue,
 }) => {
     const [awaitConfirm, setAwaitConfirm] = useState(false);
     const [rejectedConfirm, setRejectedConfirm] = useState(false);
     const [acceptedConfirm, setAcceptedConfirm] = useState(false);
+    const [cancelInvite] = useCancelInviteMutation();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (partner.status === 'pending') setAwaitConfirm(true);
@@ -36,29 +44,27 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
         if (isAccessSend && partner.id === userIdForTrain) setAwaitConfirm(true);
     }, [partner, isAccessSend, userIdForTrain]);
 
-    const highlightSubStr = () => {
-        const reg = new RegExp(searchValue, 'gi');
-
-        return searchValue ? partner.name.replace(reg, (match) => `<span>${match}</span>`) : partner.name
-    }
-    console.log(highlightSubStr())
+    const cancelTraining = async () => {
+        await cancelInvite(partner.inviteId)
+            .unwrap()
+            .then(() => dispatch(removePartner(partner.id)))
+            .catch(() => {});
+    };
 
     return (
         <List.Item className='join-users-item'>
-            <Card bordered={false} data-test-id={`joint-training-cards${index}`}>
-                <div>
-                    <Avatar
-                        size={42}
-                        alt={partner.name}
-                        src={partner.imageSrc}
-                        icon={!partner.imageSrc && <UserOutlined />}
-                    />
-                    <h6 className='join-users-item__name' dangerouslySetInnerHTML={{__html: highlightSubStr()}}/>
-                </div>
-                <p>Тип тренировки: {partner.trainingType}</p>
-                <p>Средняя нагрузка: {partner.avgWeightInWeek}</p>
+            <Card
+                bordered={false}
+                data-test-id={`joint-training-cards${index}`}
+                className='item-user-card'
+                style={{background: rejectedConfirm ? 'var(--color-bg-grey-light)' : ' var(--color-bg-blue)'}}
+            >
+                <CustomAvatar name={partner.name} imageSrc={partner.imageSrc} isUserCard={true} searchValue={searchValue}/>
+                <UserCardDescript trainingType={partner.trainingType} avgWeightInWeek={partner.avgWeightInWeek}/>
                 {acceptedConfirm ? (
-                    <Button type='text'>Отменить тренировку</Button>
+                    <Button type='text' onClick={cancelTraining}>
+                        Отменить тренировку
+                    </Button>
                 ) : (
                     <Button
                         type='primary'
@@ -75,9 +81,21 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
                         Создать тренировку
                     </Button>
                 )}
-                {awaitConfirm && <p>ожидает подтверждения</p>}
-                {rejectedConfirm && <p>тренировка отклонена</p>}
-                {acceptedConfirm && <p>тренировка одобрена</p>}
+                {awaitConfirm && <p className='join-users-item__info'>ожидает подтверждения</p>}
+                {rejectedConfirm && (
+                    <Tooltip
+                        title='повторный запрос будет доступнен через 2 недели'
+                    >
+                        <p className='join-users-item__info'>
+                            тренировка отклонена <ExclamationCircleOutlined style={{color: 'var(--color-disabled)'}}/>
+                        </p>
+                    </Tooltip>
+                )}
+                {acceptedConfirm && (
+                    <p className='join-users-item__info'>
+                        тренировка одобрена <CheckCircleFilled style={{color: 'var(--color-success)'}}/>
+                    </p>
+                )}
             </Card>
         </List.Item>
     );

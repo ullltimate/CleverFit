@@ -55,10 +55,12 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError })
                                 {createTypeTrainString(invite.training.name)}]. Ты хочешь
                                 присоединиться ко мне на следующих тренировках?
                             </p>
-                            <Button type='link' onClick={openCard}>Посмотреть детали тренировки</Button>
-                            <DetailTraining training={invite.training} isModalOpen={isModalOpen} closeCard={closeCard}/>
+                            <div style={{position: 'relative'}}>
+                                <Button type='link' onClick={openCard}>Посмотреть детали тренировки</Button>
+                                <DetailTraining training={invite.training} isModalOpen={isModalOpen} closeCard={closeCard}/>
+                            </div>
                         </div>
-                        <div>
+                        <div className='message-btns-wrapper'>
                             <Button type='primary' onClick={acceptInvite}>Тренироваться вместе</Button>
                             <br />
                             <Button type='text' onClick={rejectInvite}>Отклонить запрос</Button>

@@ -4,7 +4,9 @@ import { AuthItemsTab } from '@components/content-auth-page/tabs/tabs';
 import { JoinTraining } from '@components/content-training-page/join-training/join-training';
 import { MyTraining } from '@components/content-training-page/my-training/my-training';
 import { Header } from '@components/header/header';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
+import { partnersSelector } from '@redux/reducers/partners-slice';
 import { useGetInviteQuery } from '@services/invite';
 import { Badge, Card, Layout, Tabs } from 'antd';
 
@@ -16,6 +18,7 @@ export const TrainingPage: React.FC = () => {
     const windowSize = useResize();
     const [key, setKey] = useState('my-tranings');
     const {data} = useGetInviteQuery();
+    const { partners } = useAppSelector(partnersSelector);
     const itemsTab: AuthItemsTab[] = [
         {
             label: 'Мои тренировки',
@@ -23,7 +26,7 @@ export const TrainingPage: React.FC = () => {
             children: <MyTraining />,
         },
         {
-            label: <Badge count={data?.length}>Совместные тренировки</Badge>,
+            label: <span>Совместные тренировки <Badge count={partners.length<4 ? data?.length : 0}/></span>,
             key: 'join-trainings',
             children: <JoinTraining />,
         },

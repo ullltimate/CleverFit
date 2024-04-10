@@ -29,20 +29,22 @@ export const DetailTraining: React.FC<DetailTrainingProps> = ({
         <div className='create-exercise'>
             <Badge color={colorTrainings.find((el) => el.name === training.name)?.color} text={training.name} />
             <CloseOutlined 
-                style={{ width: 16, marginTop: 12 }}
+                style={{ width: 16 }}
                 onClick={closeCard}
             />
         </div>
         <div className='modal-content'>
-            <p>{createPeriodString(training.parameters.period)}</p>
-            <p>{new Date(training.date).toLocaleDateString('ru')}</p>
-            <ul style={{ padding: '12px 0' }}>
+            <div className='period-wrapper'>
+                <p>{createPeriodString(training.parameters.period)}</p>
+                <p>{new Date(training.date).toLocaleDateString('ru')}</p>
+            </div>
+            <ul style={{ padding: '12px 0', margin: 0 }}>
                 {training.exercises
                     .filter((e) => e.name !== '')
                     .map((e) => (
                         <li key={uuidv4()} className='list-item'>
                             <p style={{ color: 'var(--color-disabled)' }}>{e.name}</p>
-                            <p>{e.replays}х{e.weight}</p>
+                            <p className='parametrs-exer'>{e.replays}х({e.weight}кг)</p>
                         </li>
                     ))}
             </ul>

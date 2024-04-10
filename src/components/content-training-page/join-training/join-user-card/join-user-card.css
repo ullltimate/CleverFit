@@ -1,6 +1,26 @@
 .join-users-item .ant-card{
-    background: var(--color-bg-blue);
+    width: 235px;
+    margin-right: var(--unit-16);
+    height:200px;
 }
-.join-users-item__name span{
-    color: var(--color-error);
+.join-users-item .ant-btn-text {
+    background: var(--color-bg-card);
+}
+.join-users-item .ant-btn-text,
+.join-users-item .ant-btn-primary{
+    height: 28px !important;
+    width: 100%;
+    line-height: 0px;
+    margin-top: 12px;
+}
+.join-users-item__info{
+    margin: var(--unit-8) 0;
+    text-align: center;
+}
+
+@media screen and (max-width: 370px) {
+    .join-users-item .ant-card{
+        width: 315px;
+        margin-right: var(--unit-16);
+    }
 }

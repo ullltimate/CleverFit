@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeftOutlined, CloseOutlined, MinusOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { colorTrainings } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -10,10 +10,11 @@ import { useSendInviteMutation } from '@services/invite';
 import { Training, useCreateTrainingMutation } from '@services/trainings';
 import { sortAndFilterUserList } from '@utils/join-trainings-healper';
 import { createPeriodString } from '@utils/my-trainings-healper';
-import { Avatar, Badge, Button, Checkbox, DatePicker, DatePickerProps, Drawer, Input, List, Select } from 'antd';
+import { Badge, Button, Checkbox, DatePicker, DatePickerProps, Drawer, Input, List, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import moment from 'moment';
 
+import { CustomAvatar } from '../custom-avatar/custom-avatar';
 import { JoinUserCard } from '../join-user-card/join-user-card';
 
 import './join-users.css';
@@ -35,8 +36,8 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
     const [withPeriodically, setWithPeriodically] = useState(false);
     const [periodically, setPeriodically] = useState(1);
     const [indexesForDelete, setIndexesForDelete] = useState<number[]>([]);
-    const [userNameForTrain, setUserNameForTrain] = useState<string>();
-    const [userImgForTrain, setUserImgForTrain] = useState<string | null>();
+    const [userNameForTrain, setUserNameForTrain] = useState<string>('');
+    const [userImgForTrain, setUserImgForTrain] = useState<string | null>(null);
     const [userIdForTrain, setUserIdForTrain] = useState<string>();
     const [isDisabledSave, setIsDisabledSave] = useState(true);
     const [createTraining] = useCreateTrainingMutation();
@@ -139,12 +140,10 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     placeholder='Поиск по имени'
                     data-test-id='search-input'
                     onSearch={onSearch}
-                    style={{ width: 200 }}
                 />
             </div>
             <List
-                pagination={{ pageSize: 12, size: 'small' }}
-                grid={{ gutter: 16, column: 4 }}
+                pagination={{ pageSize: 12, size: 'small', showSizeChanger: false }}
                 dataSource={filteredUsersList}
                 renderItem={(item, index) => <JoinUserCard key={item.id} partner={item} openDrawer={openDrawer} index={index} isAccessSend={isAccessSend} userIdForTrain={userIdForTrain} searchValue={searchValue}/>}
                 className='join-users'
@@ -196,14 +195,8 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 }}
             >
                 <div className='drawer-trainings'>
-                    <div>
-                        <Avatar
-                            size={42}
-                            alt={userNameForTrain}
-                            src={userImgForTrain}
-                            icon={!userImgForTrain && <UserOutlined />}
-                        />
-                        <h6>{userNameForTrain}</h6>
+                    <div className='drawer-users-info-wrap'>
+                    <CustomAvatar name={userNameForTrain} imageSrc={userImgForTrain} isUserCard={false}/>
                         <Badge
                             color={
                                 colorTrainings.find((el) => el.name === name)?.color

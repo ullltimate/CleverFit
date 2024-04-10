@@ -69,4 +69,7 @@
     .my-trainings .my-traning-empty__btn{
         width: 100%;
     }
+    .my-trainings .ant-table-thead > tr > th:nth-child(2){
+        max-width: 115px;
+    }
 }
