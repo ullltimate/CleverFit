@@ -64,24 +64,16 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
         dispatch(addExercises());
         setIsAccessSend(false)
     };
-    console.log({date, name, exercises, parameters})
-    console.log(usersList)
 
-    const onChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date?.toJSON(), dateString);
+    const onChangeDatePicker: DatePickerProps['onChange'] = (date) => {
         if (date) {
             dispatch(saveTrainingDate(date.toJSON()));
         } else {
             dispatch(saveTrainingDate(''));
         }
     };
-    const onChangeCheckbox = (e: CheckboxChangeEvent) => {
-        console.log(`checked = ${e.target.checked}`);
-        setWithPeriodically(e.target.checked);
-    };
-    const handleChangePeriodically = (value: number) => {
-        setPeriodically(value);
-    };
+    const onChangeCheckbox = (e: CheckboxChangeEvent) => setWithPeriodically(e.target.checked);
+    const handleChangePeriodically = (value: number) => setPeriodically(value);
 
     const sendInviteToUser = async() => {
         const {_id} = await createTraining({

@@ -7,9 +7,9 @@ import { useCancelInviteMutation } from '@services/invite';
 import {  Button, Card, List, Tooltip } from 'antd';
 
 import { CustomAvatar } from '../custom-avatar/custom-avatar';
+import { UserCardDescript } from '../user-card-descript/user-card-descript';
 
 import './join-user-card.css';
-import { UserCardDescript } from '../user-card-descript/user-card-descript';
 
 type JoinUserCardProps = {
     partner: TrainingPals;

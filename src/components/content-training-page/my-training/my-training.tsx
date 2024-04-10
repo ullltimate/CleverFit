@@ -91,9 +91,6 @@ export const MyTraining: React.FC = () => {
     };
     const [visible, setVisible] = useState(false);
     const handleCloseAlert = () => setVisible(false);
-    console.log(trainings);
-    console.log(trainingList);
-    console.log({ date, name, exercises, isImplementation, id, parameters });
 
     useEffect(() => {
         if (date && valueEditTrain !== 'Выбор типа тренировки' && exercises.some((e) => e.name)) {
@@ -164,18 +161,15 @@ export const MyTraining: React.FC = () => {
         if (trainingList)
             setValueEditTrain(trainingList.filter((train) => train.key === value)[0].name);
     };
-    const onChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date?.toJSON(), dateString);
+    const onChangeDatePicker: DatePickerProps['onChange'] = (date) => {
         if (date) {
             dispatch(saveTrainingDate(date.toJSON()));
         } else {
             dispatch(saveTrainingDate(''));
         }
     };
-    const onChangeCheckbox = (e: CheckboxChangeEvent) => {
-        console.log(`checked = ${e.target.checked}`);
-        setWithPeriodically(e.target.checked);
-    };
+    const onChangeCheckbox = (e: CheckboxChangeEvent) => setWithPeriodically(e.target.checked);
+
 
     const createTrain = async () => {
         await createTraining({
@@ -204,9 +198,7 @@ export const MyTraining: React.FC = () => {
         closeDrawer();
     };
 
-    const handleChangePeriodically = (value: number) => {
-        setPeriodically(value);
-    };
+    const handleChangePeriodically = (value: number) => setPeriodically(value);
 
     useEffect(() => {
         if (withPeriodically) {
@@ -242,7 +234,6 @@ export const MyTraining: React.FC = () => {
     };
 
     const openCard = (e: Training) => {
-        console.log(e)
         setClickedTrain(e);
         setIsModalOpen(true);
     }

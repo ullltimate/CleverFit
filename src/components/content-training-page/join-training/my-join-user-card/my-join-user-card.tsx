@@ -24,12 +24,9 @@ export const MyJoinUserCard: React.FC<MyJoinUserCardProps> = ({ partner, index, 
     const dispatch = useAppDispatch();
     const { windowSize } = useResize();
 
-    const showModal = () => {
-        setOpen(true);
-    };
-    const handleCancel = () => {
-        setOpen(false);
-    };
+    const showModal = () => setOpen(true);
+    const handleCancel = () => setOpen(false);
+    
     const cancelTraining = async () => {
         await cancelInvite(partner.inviteId)
             .unwrap()

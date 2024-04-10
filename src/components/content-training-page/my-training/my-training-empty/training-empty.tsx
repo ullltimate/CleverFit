@@ -7,9 +7,7 @@ type EmptyTrainingProps = {
     openDrawer: () => void
 }
 export const EmptyTraining: React.FC<EmptyTrainingProps> = ({openDrawer}) => {
-    const onClick = () => {
-        openDrawer();
-    }
+    const onClick = () => openDrawer();
 
     return (
         <div className='my-traning-empty'>
