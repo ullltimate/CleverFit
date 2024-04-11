@@ -17,8 +17,8 @@ type JoinUserCardProps = {
     openDrawer: (trainName: string, userName: string, userImg: string | null, id: string) => void;
     index: number;
     isAccessSend: boolean;
-    userIdForTrain: string | undefined;
     searchValue: string;
+    userIdForTrain?: string;
 };
 
 export const JoinUserCard: React.FC<JoinUserCardProps> = ({
