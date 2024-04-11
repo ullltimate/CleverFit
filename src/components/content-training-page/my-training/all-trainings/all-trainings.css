@@ -1,0 +1,7 @@
+.table-type-train-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.type-train-arrow-down{
+    max-width: 10px;
+}

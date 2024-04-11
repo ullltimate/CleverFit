@@ -53,6 +53,12 @@
 .join-message .message-btns-wrapper{
     margin-top: -30px;
 }
+.join-message .ant-comment{
+    background: var(--color-bg-card);
+}
+.join-message .wrapper-btn-detail-message{
+    position: relative;
+}
 
 @media screen and (max-width: 900px) {
     

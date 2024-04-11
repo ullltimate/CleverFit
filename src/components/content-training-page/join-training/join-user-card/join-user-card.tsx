@@ -6,6 +6,7 @@ import { removePartner } from '@redux/reducers/partners-slice';
 import { TrainingPals } from '@services/catalogs';
 import { useCancelInviteMutation } from '@services/invite';
 import {  Button, Card, List, Tooltip } from 'antd';
+import classNames from 'classnames';
 
 import { CustomAvatar } from '../custom-avatar/custom-avatar';
 import { UserCardDescript } from '../user-card-descript/user-card-descript';
@@ -57,8 +58,7 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
             <Card
                 bordered={false}
                 data-test-id={`joint-training-cards${index}`}
-                className='item-user-card'
-                style={{background: rejectedConfirm ? 'var(--color-bg-grey-light)' : ' var(--color-bg-blue)'}}
+                className={classNames('item-user-card', {'item-user-card__bg-grey': rejectedConfirm, 'item-user-card__bg-blue': !rejectedConfirm})}
             >
                 <CustomAvatar name={partner.name} imageSrc={partner.imageSrc} isUserCard={true} searchValue={searchValue}/>
                 <UserCardDescript trainingType={partner.trainingType} avgWeightInWeek={partner.avgWeightInWeek}/>
@@ -88,13 +88,13 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
                         title='повторный запрос будет доступнен через 2 недели'
                     >
                         <p className='join-users-item__info'>
-                            тренировка отклонена <ExclamationCircleOutlined style={{color: 'var(--color-disabled)'}}/>
+                            тренировка отклонена <ExclamationCircleOutlined />
                         </p>
                     </Tooltip>
                 )}
                 {acceptedConfirm && (
                     <p className='join-users-item__info'>
-                        тренировка одобрена <CheckCircleFilled style={{color: 'var(--color-success)'}}/>
+                        тренировка одобрена <CheckCircleFilled className='icon-alert-success'/>
                     </p>
                 )}
             </Card>

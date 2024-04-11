@@ -38,7 +38,7 @@ export const MyJoinUserCard: React.FC<MyJoinUserCardProps> = ({ partner, index, 
     return (
         <React.Fragment>
             <List.Item className='my-join-users-item' onClick={showModal}>
-                <Card bordered={true} data-test-id={`joint-training-cards${index}`} style={{width: windowSize<370 ? 315 : 235, marginRight: windowSize<370 ? 0 : 16}}>
+                <Card bordered={true} data-test-id={`joint-training-cards${index}`} className='my-join-users-item__card'>
                     <CustomAvatar
                         name={partner.name}
                         imageSrc={partner.imageSrc}
@@ -73,7 +73,7 @@ export const MyJoinUserCard: React.FC<MyJoinUserCardProps> = ({ partner, index, 
                 <div className='partner-modal-wrap'>
                     <p className='join-users-item__info'>
                         тренировка одобрена{' '}
-                        <CheckCircleFilled style={{ color: 'var(--color-success)' }} />
+                        <CheckCircleFilled className='icon-alert-success' />
                     </p>
                     <Button type='text' onClick={cancelTraining}>
                         Отменить тренировку

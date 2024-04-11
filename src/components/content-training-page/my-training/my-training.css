@@ -44,6 +44,10 @@
 .my-trainings .ant-table-tbody > tr > td{
     padding: var(--unit-8) 0px;
 }
+.icon-alert-success svg{
+    color: var(--color-success);
+    margin-right: 10px;
+}
 
 @media screen and (max-width: 630px) {
     .drawer-trainings .ant-picker{

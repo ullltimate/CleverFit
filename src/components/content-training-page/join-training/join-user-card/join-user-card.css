@@ -17,6 +17,15 @@
     margin: var(--unit-8) 0;
     text-align: center;
 }
+.join-users-item .item-user-card__bg-grey{
+    background: var(--color-bg-grey-light);
+}
+.join-users-item .item-user-card__bg-blue{
+    background: var(--color-bg-blue);
+}
+.join-users-item__info svg{
+    color: var(--color-disabled)
+}
 
 @media screen and (max-width: 370px) {
     .join-users-item .ant-card{

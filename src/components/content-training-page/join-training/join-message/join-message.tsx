@@ -35,7 +35,6 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError })
     return (
         <div className='join-message'>
             <Comment
-                style={{ background: 'var(--color-bg-card)' }}
                 avatar={
                     <React.Fragment>
                         <Avatar
@@ -56,7 +55,7 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError })
                                 {createTypeTrainString(invite.training.name)}]. Ты хочешь
                                 присоединиться ко мне на следующих тренировках?
                             </p>
-                            <div style={{position: 'relative'}}>
+                            <div className='wrapper-btn-detail-message'>
                                 <Button type='link' onClick={openCard}>Посмотреть детали тренировки</Button>
                                 <DetailTraining training={invite.training} isModalOpen={isModalOpen} closeCard={closeCard}/>
                             </div>

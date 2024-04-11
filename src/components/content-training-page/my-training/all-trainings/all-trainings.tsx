@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { MyTrainingCard } from '../my-training-card/my-training-card';
 
+import './all-trainings.css';
 
 type AllTrainingsProps = {
     editTraining: (e: Training) => void,
@@ -57,12 +58,12 @@ export const AllTrainings: React.FC<AllTrainingsProps> = ({editTraining, addTrai
                 rowKey={() => uuidv4()}
                 dataSource={trainings?.map((e, i) => ({
                     typeTrain: (
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div className='table-type-train-wrap'>
                             <Badge
                                 color={colorTrainings.find((el) => el.name === e.name)?.color}
                                 text={e.name}
                             />
-                            <DownOutlined style={{ maxWidth: 10 }} onClick={() => openCard(e)} />
+                            <DownOutlined className='type-train-arrow-down' onClick={() => openCard(e)} />
                             {clickedTrain && (
                                 <MyTrainingCard
                                     id={e._id}

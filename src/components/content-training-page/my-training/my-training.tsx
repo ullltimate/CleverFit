@@ -142,9 +142,7 @@ export const MyTraining: React.FC = () => {
                 <Alert
                     message={
                         <span>
-                            <CheckCircleFilled
-                                style={{ color: 'var(--color-success)', marginRight: 10 }}
-                            />
+                            <CheckCircleFilled className='icon-alert-success'/>
                             {isEditTraining
                                 ? 'Тренировка успешно обновлена'
                                 : 'Новая тренировка успешно добавлена'}

@@ -40,18 +40,18 @@ export const MyTrainingCard: React.FC<MyTrainingCardProps> = ({
                 >
                     <ArrowLeftOutlined
                         data-test-id='modal-exercise-training-button-close'
-                        style={{ width: 16 }}
+                        className='modal-arrow'
                         onClick={closeCard}
                     />
                     <p className='create-exercise__name'>{train.name}</p>
                 </div>
                 <div className='modal-content'>
-                    <ul style={{ padding: 12 }}>
+                    <ul>
                         {train.exercises
                             .filter((e) => e.name !== '')
                             .map((e) => (
                                 <li key={uuidv4()} className='list-item'>
-                                    <p style={{ color: 'var(--color-disabled)' }}>{e.name}</p>
+                                    <p className='text-disabled'>{e.name}</p>
                                 </li>
                             ))}
                     </ul>
