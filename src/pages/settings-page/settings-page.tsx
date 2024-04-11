@@ -73,7 +73,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src='/free-tariff.png' className='settings-card__img' alt='free-tariff' />
+                                    <div className='settings-card__img free-tariff' />
                                     <Button type='text' className='setting-card__btn'>
                                         активен <CheckOutlined />
                                     </Button>
@@ -91,7 +91,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src={`/pro-tariff${tariff?'':'-disable'}.png`} className='settings-card__img' alt='free-tariff' />
+                                    <div className={`settings-card__img pro-tariff${tariff?'':'-disable'}`} />
                                     <Button
                                         type={`${tariff ? 'text' : 'primary'}`}
                                         className='setting-card__btn'

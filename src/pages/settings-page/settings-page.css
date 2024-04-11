@@ -10,7 +10,17 @@
     text-align: center;
 }
 .settings-card__img{
-    width: 100%;
+    width: 240px;
+    height: 150px;
+}
+.free-tariff{
+    background: center / contain no-repeat url(/free-tariff.png);
+}
+.pro-tariff{
+    background: center / contain no-repeat url(/pro-tariff.png);
+}
+.pro-tariff-disable{
+    background: center / contain no-repeat url(/pro-tariff-disable.png);
 }
 .settings .site-card-wrapper .ant-card-body .setting-card__btn{
     margin: 25px 0;
@@ -143,5 +153,9 @@
         line-height: 31.2px;
         max-width: 200px;
         margin: 0 auto;
+    }
+    .settings-card__img{
+        width: 290px;
+        height: 195px;
     }
 }
