@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeftOutlined, CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
+import { TrainingsDataPicker } from '@components/content-training-page/training-datapicker/training-datapicker';
 import { colorTrainings } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
@@ -10,9 +11,8 @@ import { useSendInviteMutation } from '@services/invite';
 import { Training, useCreateTrainingMutation } from '@services/trainings';
 import { sortAndFilterUserList } from '@utils/join-trainings-healper';
 import { createPeriodString } from '@utils/my-trainings-healper';
-import { Badge, Button, Checkbox, DatePicker, DatePickerProps, Drawer, Input, List, Select } from 'antd';
+import { Badge, Button, Checkbox, Drawer, Input, List, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import moment from 'moment';
 
 import { CustomAvatar } from '../custom-avatar/custom-avatar';
 import { JoinUserCard } from '../join-user-card/join-user-card';
@@ -65,13 +65,6 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
         setIsAccessSend(false)
     };
 
-    const onChangeDatePicker: DatePickerProps['onChange'] = (date) => {
-        if (date) {
-            dispatch(saveTrainingDate(date.toJSON()));
-        } else {
-            dispatch(saveTrainingDate(''));
-        }
-    };
     const onChangeCheckbox = (e: CheckboxChangeEvent) => setWithPeriodically(e.target.checked);
     const handleChangePeriodically = (value: number) => setPeriodically(value);
 
@@ -109,17 +102,6 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
             setIsDisabledSave(true);
         }
     }, [date, exercises]);
-
-    const dateRender = (currDate: moment.Moment) => {
-        const hasTrain = trainings?.some(e => moment(e.date).isSame(currDate, 'day'));
-        const background = hasTrain ? 'var(--color-bg-blue)' : 'transparent';
-
-        return (
-          <div className="ant-picker-cell-inner" style={{background}}>
-            {currDate.date()}
-          </div>
-        );
-    }
 
     return (
         <React.Fragment>
@@ -196,14 +178,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                             text={name}
                         />
                     </div>
-                    <DatePicker
-                        data-test-id='modal-drawer-right-date-picker'
-                        onChange={onChangeDatePicker}
-                        format='DD.MM.YYYY'
-                        value={date ? moment(date) : undefined}
-                        disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
-                        dateRender={dateRender}
-                    />
+                    <TrainingsDataPicker trainings={trainings} dateTrain={date} />
                     <Checkbox
                         onChange={onChangeCheckbox}
                         data-test-id='modal-drawer-right-checkbox-period'
@@ -227,7 +202,6 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        // eslint-disable-next-line react/no-array-index-key
                         key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}

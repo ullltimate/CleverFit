@@ -2,13 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
     CheckCircleFilled,
     CloseOutlined,
-    DownOutlined,
     EditOutlined,
     MinusOutlined,
     PlusOutlined,
 } from '@ant-design/icons';
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
-import { colorTrainings } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
 import {
@@ -34,22 +32,17 @@ import {
 import { createPeriodString } from '@utils/my-trainings-healper';
 import {
     Alert,
-    Badge,
     Button,
     Checkbox,
-    DatePicker,
-    DatePickerProps,
     Drawer,
     Modal,
     Select,
-    Table,
 } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import Column from 'antd/lib/table/Column';
-import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
 
-import { MyTrainingCard } from './my-training-card/my-training-card';
+import { TrainingsDataPicker } from '../training-datapicker/training-datapicker';
+
+import { AllTrainings } from './all-trainings/all-trainings';
 import { EmptyTraining } from './my-training-empty/training-empty';
 
 import './my-training.css';
@@ -72,8 +65,6 @@ export const MyTraining: React.FC = () => {
     const [createTraining] = useCreateTrainingMutation();
     const [updateTraining] = useUpdateTrainingMutation();
     const [periodically, setPeriodically] = useState(1);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [clickedTrain, setClickedTrain] = useState<Training | null>(null);
     const closeDrawer = () => {
         setIsOpenDrawer(false);
         setValueEditTrain('Выбор типа тренировки');
@@ -161,13 +152,7 @@ export const MyTraining: React.FC = () => {
         if (trainingList)
             setValueEditTrain(trainingList.filter((train) => train.key === value)[0].name);
     };
-    const onChangeDatePicker: DatePickerProps['onChange'] = (date) => {
-        if (date) {
-            dispatch(saveTrainingDate(date.toJSON()));
-        } else {
-            dispatch(saveTrainingDate(''));
-        }
-    };
+    
     const onChangeCheckbox = (e: CheckboxChangeEvent) => setWithPeriodically(e.target.checked);
 
 
@@ -208,13 +193,6 @@ export const MyTraining: React.FC = () => {
         }
     }, [withPeriodically, periodically, dispatch]);
 
-    type DataSourceType = {
-        typeTrain: React.ReactElement;
-        sorted: React.ReactElement;
-        period: number;
-        editBtn: React.ReactElement;
-    };
-
     const addTraining = () => {
         setIsEditTraining(false);
         openDrawer();
@@ -233,86 +211,10 @@ export const MyTraining: React.FC = () => {
         dispatch(saveTrainingId(e._id));
     };
 
-    const openCard = (e: Training) => {
-        setClickedTrain(e);
-        setIsModalOpen(true);
-    }
-    const closeCard = () => {
-        setClickedTrain(null);
-        setIsModalOpen(false)
-    }
-
-    const dateRender = (currDate: moment.Moment) => {
-        const hasTrain = trainings?.some(e => moment(e.date).isSame(currDate, 'day'));
-        const background = hasTrain ? 'var(--color-bg-blue)' : 'transparent';
-
-        return (
-          <div className="ant-picker-cell-inner" style={{background}}>
-            {currDate.date()}
-          </div>
-        );
-    }
-
     return (
         <React.Fragment>
             {trainings?.length ? (
-                <React.Fragment>
-                    <Table
-                        data-test-id='my-trainings-table'
-                        pagination={{
-                            defaultPageSize: windowSize.windowSize < 370 ? 8 : 10,
-                            hideOnSinglePage: true,
-                            showSizeChanger: false,
-                            position: ['bottomLeft'],
-                            size: 'small'
-                        }}
-                        rowKey={() => uuidv4()}
-                        dataSource={trainings.map((e, i) => ({
-                            typeTrain: (
-                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <Badge
-                                        color={
-                                            colorTrainings.find((el) => el.name === e.name)?.color
-                                        }
-                                        text={e.name}
-                                    />
-                                    <DownOutlined style={{maxWidth: 10}} onClick={()=>openCard(e)}/>
-                                    {clickedTrain && <MyTrainingCard id={e._id} train={clickedTrain} isModalOpen={isModalOpen} closeCard={closeCard} editTraining={editTraining}/>}
-                                </div>
-                            ),
-                            sorted: createPeriodString(e.parameters.period),
-                            period: e.parameters.period || 8,
-                            editBtn: (
-                                <Button
-                                    type='link'
-                                    onClick={() => editTraining(e)}
-                                    disabled={e.isImplementation}
-                                    data-test-id={`update-my-training-table-icon${i}`}
-                                >
-                                    <EditOutlined />
-                                </Button>
-                            ),
-                        }))}
-                    >
-                        <Column title='Тип тренировки' dataIndex='typeTrain' key='typeTrain' />
-                        <Column
-                            title='Периодичность'
-                            dataIndex='sorted'
-                            key='sorted'
-                            sorter={(a: DataSourceType, b) => a.period - b.period}
-                            sortDirections={['descend', 'ascend']}
-                        />
-                        <Column dataIndex='editBtn' key='editBtn' />
-                    </Table>
-                    <Button
-                        className='my-traning-empty__btn'
-                        data-test-id='create-new-training-button'
-                        type='primary'
-                        onClick={addTraining}
-                    >
-                        <PlusOutlined /> Новая тренировка
-                    </Button>
-                </React.Fragment>
+                <AllTrainings editTraining={editTraining} trainings={trainings} addTraining={addTraining} />
             ) : (
                 <EmptyTraining openDrawer={addTraining} />
             )}
@@ -376,14 +278,7 @@ export const MyTraining: React.FC = () => {
                         onChange={handleChangeSelect}
                         options={trainingList?.map((e) => ({ value: e.key, label: e.name }))}
                     />
-                    <DatePicker
-                        data-test-id='modal-drawer-right-date-picker'
-                        onChange={onChangeDatePicker}
-                        format='DD.MM.YYYY'
-                        value={date ? moment(date) : undefined}
-                        disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
-                        dateRender={dateRender}
-                    />
+                    <TrainingsDataPicker trainings={trainings} dateTrain={date} />
                     <Checkbox
                         onChange={onChangeCheckbox}
                         data-test-id='modal-drawer-right-checkbox-period'
@@ -407,7 +302,6 @@ export const MyTraining: React.FC = () => {
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        // eslint-disable-next-line react/no-array-index-key
                         key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}

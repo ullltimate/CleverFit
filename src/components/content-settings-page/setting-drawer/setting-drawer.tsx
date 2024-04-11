@@ -28,7 +28,6 @@ export const SettingDrawer: React.FC<SettingDrawerProps> = ({openDrawer, tariff,
         setIsDisabledPay(false)
     };
     const payTariff = () => {
-        // eslint-disable-next-line no-underscore-dangle
         if(tariffList) buyTariff({tariffId: tariffList[0]._id, days: valueRadio})
                             .unwrap()
                             .then(() => {

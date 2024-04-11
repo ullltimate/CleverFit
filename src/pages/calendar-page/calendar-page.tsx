@@ -162,7 +162,6 @@ export const CalendarPage: React.FC = () => {
             screenSize > 630 ?
                 <ul className='events' style={{ listStyleType: 'none' }}>
                     {listData.map((item: ListData, i: number) => (
-                        // eslint-disable-next-line react/no-array-index-key
                         <li key={i}>
                             <Badge color={item.color} text={item.content} />
                         </li>
@@ -264,7 +263,6 @@ export const CalendarPage: React.FC = () => {
         const training = trainingsForDay.find((e) => e.name === valueEditTrain);
 
         if (training) {
-            // eslint-disable-next-line no-underscore-dangle
             dispatch(saveTrainingId(training._id));
             dispatch(resetExercises());
             dispatch(setExercises(training.exercises));
@@ -379,7 +377,6 @@ export const CalendarPage: React.FC = () => {
                                     {exercisesForDay
                                         .filter((e) => e.name !== '')
                                         .map((e, i) => (
-                                            // eslint-disable-next-line react/no-array-index-key
                                             <li key={i} className='list-item'>
                                                 <p style={{color: 'var(--color-disabled)'}}>{e.name}</p>
                                                 <Button type='link' 
@@ -461,7 +458,6 @@ export const CalendarPage: React.FC = () => {
                                 // eslint-disable-next-line no-negated-condition
                                 trainingsForDay.length !== 0 ? (
                                     trainingsForDay.map((e, i) => (
-                                        // eslint-disable-next-line no-underscore-dangle
                                         <li key={e._id} className='list-item'>
                                             <Badge
                                                 color={
@@ -543,7 +539,6 @@ export const CalendarPage: React.FC = () => {
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
                         key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}
