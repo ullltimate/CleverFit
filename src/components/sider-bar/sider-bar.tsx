@@ -18,6 +18,7 @@ import { increment } from '@redux/reducers/user-slice';
 import { useGetInviteQuery } from '@services/invite';
 import { useLazyGetTrainingQuery } from '@services/trainings';
 import { Badge, Layout, Menu } from 'antd';
+import classNames from 'classnames';
 
 import './sider-bar.css';
 
@@ -81,9 +82,7 @@ export const SiderBar: React.FC = () => {
     return (
         <div className='sider-wrapper'>
             <div
-                className={`trapezoid-wrapper ${
-                    (mobileWidth && !collapsed) ? 'trapezoid-wrapper-collapsed' : ''
-                }`}
+                className={classNames('trapezoid-wrapper', {'trapezoid-wrapper-collapsed': (mobileWidth && !collapsed)})}
             >
                 <div
                     className='trapezoid'
@@ -105,7 +104,7 @@ export const SiderBar: React.FC = () => {
                 breakpoint='sm'
                 onBreakpoint={(broken) => changeBreakpoint(broken)}
             >
-                <div className={`logo-${collapsed ? 'hidden' : 'full'}`}>
+                <div className={classNames({'logo-hidden': collapsed, 'logo-full': !collapsed})}>
                     <Link to={PATHS.MAIN}>
                         <div className='logo-clever' style={{ opacity: `${collapsed ? 0 : 1}` }}/>
                         <div className='logo-fit logo-collapsed'

@@ -7,6 +7,7 @@ import { useGetInviteQuery, useGetTrainingPartnersQuery } from '@services/invite
 import { useGetTrainingQuery } from '@services/trainings';
 import { choiceFavoriteTrainType } from '@utils/join-trainings-healper';
 import { Button, Card, List, Modal } from 'antd';
+import classNames from 'classnames';
 
 import { JoinMessage } from './join-message/join-message';
 import { JoinUsers } from './join-users/join-users';
@@ -117,7 +118,7 @@ export const JoinTraining: React.FC = () => {
                 <React.Fragment>
                     {invitesList?.length ? (
                         <Card
-                            className={`${showAllMessage ? 'join-messages-wrapper' : ''} bg-grey`}
+                            className={classNames({'join-messages-wrapper': showAllMessage}, 'bg-grey')}
                         >
                             <p className='join-messages__text'>
                                 Новое сообщение ({invitesList.length})

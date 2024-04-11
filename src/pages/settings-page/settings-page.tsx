@@ -14,6 +14,7 @@ import { saveJoinTrainings, savesendNotification, userFullSelector } from '@redu
 import { useGetTariffListQuery } from '@services/catalogs';
 import { useUpdateUserMutation } from '@services/user';
 import { Button, Card, Col, Layout, List, Row, Switch, Tooltip } from 'antd';
+import classNames from 'classnames';
 import moment from 'moment';
 
 import './settings-page.css';
@@ -91,7 +92,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <div className={`settings-card__img pro-tariff${tariff?'':'-disable'}`} />
+                                    <div className={classNames('settings-card__img', {'pro-tariff': tariff}, {'pro-tariff-disable': !tariff})} />
                                     <Button
                                         type={`${tariff ? 'text' : 'primary'}`}
                                         className='setting-card__btn'
