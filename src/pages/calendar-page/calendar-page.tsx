@@ -3,7 +3,7 @@ import { ArrowLeftOutlined, CloseOutlined, EditOutlined, MinusOutlined, PlusOutl
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { Header } from '@components/header/header';
 import { Loader } from '@components/loader/loader';
-import { colorTrainings } from '@constants/calendar';
+import { colorTrainings, formatDate, invalideFormatDate } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
 import { saveSceenSize, screenSizeSelector } from '@redux/reducers/resize-slice';
@@ -142,7 +142,7 @@ export const CalendarPage: React.FC = () => {
             // eslint-disable-next-line array-callback-return
             trainings.map((el) => {
                 if (
-                    value.format('DD.MM.YYYY') ===
+                    value.format(formatDate) ===
                     new Date(el.date).toLocaleString('ru').split(',')[0]
                 ) {
                     listData.push({
@@ -167,7 +167,7 @@ export const CalendarPage: React.FC = () => {
                         </li>
                     ))}
                 </ul> 
-                : <div style={{background: `${listData.length && 'var(--color-bg-blue)'}`, border: `${moment(moment().format('YYYY-MM-DD')).isSame(value.format('YYYY-MM-DD')) ? '1px solid var(--color-primary)' : 'none'}`, borderRadius: 2}}>
+                : <div style={{background: `${listData.length && 'var(--color-bg-blue)'}`, border: `${moment(moment().format(invalideFormatDate)).isSame(value.format(invalideFormatDate)) ? '1px solid var(--color-primary)' : 'none'}`, borderRadius: 2}}>
                     {value.format('DD')}
                 </div>
         );
@@ -180,8 +180,8 @@ export const CalendarPage: React.FC = () => {
         setIndexesForDelete([])
         setIsCreateExercise(false);
         if(screenSize > 630) e.stopPropagation();
-        setSelectedDate(date.format('DD.MM.YYYY'));
-        setSelectedDateInvalidFormat(date.format('YYYY-MM-DD'));
+        setSelectedDate(date.format(formatDate));
+        setSelectedDateInvalidFormat(date.format(invalideFormatDate));
         setSelectedWeekDay(date.day());
         const elem = e.target as Element;
 

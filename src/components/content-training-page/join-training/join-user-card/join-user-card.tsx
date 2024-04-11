@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircleFilled, ExclamationCircleOutlined } from '@ant-design/icons';
+import { inviteStatus } from '@constants/invites';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { removePartner } from '@redux/reducers/partners-slice';
 import { TrainingPals } from '@services/catalogs';
@@ -35,9 +36,9 @@ export const JoinUserCard: React.FC<JoinUserCardProps> = ({
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (partner.status === 'pending') setAwaitConfirm(true);
-        if (partner.status === 'rejected') setRejectedConfirm(true);
-        if (partner.status === 'accepted') setAcceptedConfirm(true);
+        if (partner.status === inviteStatus.pending) setAwaitConfirm(true);
+        if (partner.status === inviteStatus.rejected) setRejectedConfirm(true);
+        if (partner.status === inviteStatus.accepted) setAcceptedConfirm(true);
     }, [partner]);
 
     useEffect(() => {

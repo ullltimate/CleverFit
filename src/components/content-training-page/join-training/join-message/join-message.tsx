@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
+import { inviteStatus } from '@constants/invites';
 import { Invite, useReplyInviteMutation } from '@services/invite';
 import { createTypeTrainString } from '@utils/join-trainings-healper';
 import { Avatar, Button, Comment, Tooltip } from 'antd';
@@ -21,13 +22,13 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError })
     const acceptInvite = async() => {
         await replyInvate({
             id: invite._id,
-            status: 'accepted'
+            status: inviteStatus.accepted
         }).unwrap().then(() => {}).catch(() => modallError(false))
     }
     const rejectInvite = async() => {
         await replyInvate({
             id: invite._id,
-            status: 'rejected'
+            status: inviteStatus.rejected
         }).unwrap()
     }
 

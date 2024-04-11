@@ -27,6 +27,8 @@ export const JoinTraining: React.FC = () => {
     const [showAllMessage, setShowAllMessage] = useState(false);
     const { partners } = useAppSelector(partnersSelector);
     const dispatch = useAppDispatch();
+    const maxPartners = 4;
+    const oneMessage = 1;
 
     useEffect(() => {
         if (showAllMessage && invitesList?.length) {
@@ -111,7 +113,7 @@ export const JoinTraining: React.FC = () => {
         />
     ) : (
         <React.Fragment>
-            {partners.length < 4 && (
+            {partners.length < maxPartners && (
                 <React.Fragment>
                     {invitesList?.length ? (
                         <Card
@@ -123,7 +125,7 @@ export const JoinTraining: React.FC = () => {
                             {invitesList.slice(0, countMessage).map((e) => (
                                 <JoinMessage key={e._id} invite={e} modallError={modalError} />
                             ))}
-                            {invitesList.length > 1 && (
+                            {invitesList.length > oneMessage && (
                                 <Button
                                     type='link'
                                     onClick={() => setShowAllMessage(!showAllMessage)}

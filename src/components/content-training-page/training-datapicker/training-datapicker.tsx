@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDate } from '@constants/calendar';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { saveTrainingDate } from '@redux/reducers/training-slice';
 import { Training } from '@services/trainings';
@@ -36,7 +37,7 @@ export const TrainingsDataPicker: React.FC<TrainingsDataPickerProps> = ({ traini
         <DatePicker
             data-test-id='modal-drawer-right-date-picker'
             onChange={onChangeDatePicker}
-            format='DD.MM.YYYY'
+            format={formatDate}
             value={dateTrain ? moment(dateTrain) : undefined}
             disabledDate={(currDate) => currDate.isSameOrBefore(moment(), 'day')}
             dateRender={dateRender}

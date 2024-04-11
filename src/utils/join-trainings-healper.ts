@@ -1,3 +1,4 @@
+import { inviteStatus } from '@constants/invites';
 import { TrainingList, TrainingPals } from '@services/catalogs';
 import { Training } from '@services/trainings';
 
@@ -20,9 +21,9 @@ export const choiceFavoriteTrainType = (trains: Training[], trainList: TrainingL
 
 export const sortAndFilterUserList = (list: TrainingPals[], searchStr: string) => {
     const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    const acceptedUsers = sortedList.filter((e) => e.status === 'accepted');
-    const rejectedUsers = sortedList.filter((e) => e.status === 'rejected');
-    const otherUsers = sortedList.filter((e) => e.status !== 'rejected' && e.status !== 'accepted');
+    const acceptedUsers = sortedList.filter((e) => e.status === inviteStatus.accepted);
+    const rejectedUsers = sortedList.filter((e) => e.status === inviteStatus.rejected);
+    const otherUsers = sortedList.filter((e) => e.status !== inviteStatus.rejected && e.status !== inviteStatus.accepted);
     const filtered = acceptedUsers.concat(otherUsers).concat(rejectedUsers).filter((e) => e.name.toLowerCase().includes(searchStr.toLowerCase()))
 
    return filtered

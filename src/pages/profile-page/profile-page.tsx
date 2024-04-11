@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CustomUpload } from '@components/constent-profile-page/upload/custom-upload';
 import { Header } from '@components/header/header';
 import { urlForImage } from '@constants/api';
+import { formatDate } from '@constants/calendar';
 import { regPassword, rulesEmail, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
@@ -112,7 +113,7 @@ export const ProfilePage: React.FC = () => {
                                     <Input placeholder='Фамилия' data-test-id='profile-surname'/>
                                 </Form.Item>
                                 <Form.Item name='birthday'>
-                                    <DatePicker placeholder='Дата рождения' format='DD.MM.YYYY' style={{width: '100%'}} data-test-id='profile-birthday' allowClear={false}/>
+                                    <DatePicker placeholder='Дата рождения' format={formatDate} style={{width: '100%'}} data-test-id='profile-birthday' allowClear={false}/>
                                 </Form.Item>
                             </div>
                         </div>
