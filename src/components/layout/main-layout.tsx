@@ -33,7 +33,7 @@ export const MainLayout: React.FC = () => {
             dispatch(saveJoinTrainings(data.readyForJointTraining));
             dispatch(savesendNotification(data.sendNotification));
             dispatch(saveTariff(data.tariff));
-            dispatch(saveBirthday(data.birthday));
+            if(data.birthday) dispatch(saveBirthday(data.birthday));
         }
     }, [data, dispatch]);
 

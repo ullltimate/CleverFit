@@ -17,7 +17,7 @@ const { Content } = Layout;
 export const ProfilePage: React.FC = () => {
     const {email, firstName, lastName, birthday, imgSrc} = useAppSelector(userFullSelector);
     const [form] = Form.useForm();
-    const [initialValues, setInitialValues] = useState<UserFull>({imgSrc, firstName, lastName, birthday, email});
+    const [initialValues, setInitialValues] = useState<UserFull>({imgSrc, firstName, lastName, birthday: birthday ? moment(birthday) : '', email});
     const [disabledSave, setDisabledSave] = useState(true);
     const [initFormValues, setInitFormValues] = useState<UserFull>();
     const [upgateUser] = useUpdateUserMutation();
@@ -88,7 +88,6 @@ export const ProfilePage: React.FC = () => {
             setDisabledSave(false)
         }
     }
-    console.log(birthday)
 
     return (
         <React.Fragment>
