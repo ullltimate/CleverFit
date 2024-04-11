@@ -1,3 +1,9 @@
+.training-page-wrapper{
+    padding: var(--unit-24);
+}
+.my-trainings{
+    height: 100%;
+}
 .my-trainings .ant-tabs-tab,
 .my-trainings .ant-tabs-tab .ant-badge {
     font-size: var(--unit-24);
@@ -16,5 +22,10 @@
     .my-trainings .ant-tabs-tab .ant-badge {
         font-size: var(--font-size-14);
         font-weight: 400;
+    }
+}
+@media screen and (max-width: 370px) {
+    .training-page-wrapper{
+        padding: var(--unit-24) 0;
     }
 }

@@ -76,6 +76,9 @@
 .menu .ant-menu-item:last-child .ant-menu-title-content {
     margin-left: 25px;
 }
+.menu .menu-item-icon svg{
+    color: #061178;
+}
 
 .sider-wrapper {
     position: relative;

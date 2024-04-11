@@ -21,7 +21,7 @@ export const CustomComment: React.FC<Feedbacks> = ({
                             alt='Avatar'
                             size={42}
                             icon={<UserOutlined />}
-                            style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
+                            className='comment-avatar'
                         />{' '}
                         <p className='comment-autor'>{fullName || 'Пользователь'}</p>
                     </React.Fragment>

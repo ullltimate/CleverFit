@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
         <React.Fragment>
             {isLoading && <Loader />}
             <footer className='footer'>
-                <Row justify='space-between' wrap={true} style={{ flexWrap: 'wrap-reverse' }}>
+                <Row justify='space-between' wrap={true}>
                     <Col flex='none'>
                         <Button type='link' onClick={showReviews} data-test-id='see-reviews'>
                             Смотреть отзывы

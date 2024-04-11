@@ -5,7 +5,6 @@ import { urlForImage } from '@constants/api';
 import { formatDate } from '@constants/calendar';
 import { regPassword, rulesEmail, rulesRepeatPassword, validateMessage } from '@constants/validation';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useResize } from '@hooks/use-resize';
 import { UserFull, userFullSelector } from '@redux/reducers/user-full-slice';
 import { useUpdateUserMutation } from '@services/user';
 import { Alert, Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
@@ -24,7 +23,6 @@ export const ProfilePage: React.FC = () => {
     const [upgateUser] = useUpdateUserMutation();
     const [visible, setVisible] = useState(false);
     const handleCloseAlert = () => setVisible(false);
-    const windowSize = useResize();
 
     const modalError = (isErrorSave: boolean) => {
         Modal.error({
@@ -93,10 +91,10 @@ export const ProfilePage: React.FC = () => {
     return (
         <React.Fragment>
             <Header />
-            <Content style={{ margin: `${windowSize.windowSize > 480 ? '24px' : '24px 0px'}` }}>
-                <Card className='profile' style={{ height: '100%' }}>
+            <Content className='profile-page-wrapper'>
+                <Card className='profile'>
                     <Form name='profile' 
-                        style={{maxWidth: 480}}
+                        className='profile-form'
                         form={form}
                         initialValues={initialValues}
                         onFinish={onFinish}
@@ -113,7 +111,7 @@ export const ProfilePage: React.FC = () => {
                                     <Input placeholder='Фамилия' data-test-id='profile-surname'/>
                                 </Form.Item>
                                 <Form.Item name='birthday'>
-                                    <DatePicker placeholder='Дата рождения' format={formatDate} style={{width: '100%'}} data-test-id='profile-birthday' allowClear={false}/>
+                                    <DatePicker placeholder='Дата рождения' format={formatDate} className='profile-form__datapicker' data-test-id='profile-birthday' allowClear={false}/>
                                 </Form.Item>
                             </div>
                         </div>

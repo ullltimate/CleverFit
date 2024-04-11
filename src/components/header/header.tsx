@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
 import { PATHS } from '@constants/paths';
 import { Button, Typography } from 'antd';
+import classNames from 'classnames';
 
 import './header.css';
 
@@ -14,8 +15,7 @@ export const Header: React.FC = () => {
 
     return (
         <header
-            className='header'
-            style={{ paddingTop: location.pathname === PATHS.PROFILE ? 'var(--unit-16)' : '' }}
+            className={classNames('header', {'header__padding': location.pathname === PATHS.PROFILE })}
         >
             <div className='header-wrapper'>
                 <Title level={location.pathname === PATHS.PROFILE ? 4 : 1} className='header-title'>
@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
                     )}
                     {location.pathname === PATHS.PROFILE && <span>Профиль</span>}
                     {location.pathname === PATHS.SETTINGS && (
-                        <Button type='text' data-test-id='settings-back' style={{background: 'transparent'}} onClick={() => navigate(location.state)}>
+                        <Button type='text' data-test-id='settings-back' className='settings-back' onClick={() => navigate(location.state)}>
                             <ArrowLeftOutlined /> Настройки
                         </Button>
                     )}

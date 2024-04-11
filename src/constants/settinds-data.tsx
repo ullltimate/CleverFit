@@ -14,7 +14,7 @@ export const descriptionTariffs: DescriptionTariffs[] = [
     },
     {
         description: 'Статистика за всё время',
-        free: <CloseCircleOutlined style={{color: 'var(--color-disabled)'}}/>,
+        free: <CloseCircleOutlined className='icon-disabled'/>,
         pro: <CheckCircleFilled />,
     },
     {
@@ -24,22 +24,22 @@ export const descriptionTariffs: DescriptionTariffs[] = [
     },
     {
         description: 'Участие в марафонах',
-        free: <CloseCircleOutlined style={{color: 'var(--color-disabled)'}}/>,
+        free: <CloseCircleOutlined className='icon-disabled'/>,
         pro: <CheckCircleFilled />,
     },
     {
         description: 'Приложение iOS',
-        free: <CloseCircleOutlined style={{color: 'var(--color-disabled)'}}/>,
+        free: <CloseCircleOutlined className='icon-disabled'/>,
         pro: <CheckCircleFilled />,
     },
     {
         description: 'Приложение Android',
-        free: <CloseCircleOutlined style={{color: 'var(--color-disabled)'}}/>,
+        free: <CloseCircleOutlined className='icon-disabled'/>,
         pro: <CheckCircleFilled />,
     },
     {
         description: 'Индивидуальный Chat GPT',
-        free: <CloseCircleOutlined style={{color: 'var(--color-disabled)'}}/>,
+        free: <CloseCircleOutlined className='icon-disabled'/>,
         pro: <CheckCircleFilled />,
     },
 ];

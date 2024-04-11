@@ -1,3 +1,7 @@
+.comments-page-wrapper{
+    margin: var(--unit-24);
+}
+
 .comments-btns {
     margin-top: 132px;
 }

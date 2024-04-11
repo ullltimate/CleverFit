@@ -1,3 +1,15 @@
+.profile-page-wrapper{
+    margin: var(--unit-24);
+}
+.profile{
+    height: 100%;
+}
+.profile-form{
+    max-width: 480px;
+}
+.profile-form__datapicker{
+    width: 100%;
+}
 .info-wrapper{
     display: flex;
     gap: var(--unit-24);
@@ -13,6 +25,17 @@
 }
 .profile-subtitle{
     margin-bottom: var(--unit-24);
+}
+.upload-block{
+    margin-top: var(--unit-8);
+    max-width: 70px;
+    color: var(--color-disabled);
+}
+
+@media screen and (max-width: 480px) {
+    .profile-page-wrapper{
+        margin: var(--unit-24) 0;
+    }
 }
 
 @media screen and (max-width: 370px) {

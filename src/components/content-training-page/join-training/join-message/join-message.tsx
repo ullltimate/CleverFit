@@ -42,7 +42,7 @@ export const JoinMessage: React.FC<JoinMessageProps> = ({ invite, modallError })
                             alt='Avatar'
                             size={42}
                             icon={<UserOutlined />}
-                            style={{ backgroundColor: '#F5F5F5', color: '#262626' }}
+                            className='comment-avatar'
                         />{' '}
                         <p className='message-autor'>{invite.from.firstName} {invite.from.lastName}</p>
                     </React.Fragment>

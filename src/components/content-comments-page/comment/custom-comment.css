@@ -52,6 +52,12 @@
 .comment .ant-comment{
     background: var(--color-bg-card);
 }
+.comment .comment-avatar,
+.user-card-avatar-wrap .comment-avatar,
+.join-message .comment-avatar{
+    background-color: #F5F5F5;
+    color: #262626;
+}
 
 @media screen and (max-width: 500px) {
     

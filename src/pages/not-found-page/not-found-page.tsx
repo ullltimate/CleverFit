@@ -11,7 +11,7 @@ export const NotFoundPage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-    <Content style={{ margin: 24 }}>
+    <Content className='not-found-page-wrap'>
         <Card className='not-found-card'>
             <Result
                 status='404'

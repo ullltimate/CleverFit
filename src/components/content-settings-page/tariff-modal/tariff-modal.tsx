@@ -8,6 +8,8 @@ import { resetUser } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
 import { Modal, Result } from 'antd';
 
+import './tariff-modal.css'
+
 type TariffModalProps = {
     isModalResult: boolean;
     email: string;
@@ -42,9 +44,9 @@ export const TariffModal: React.FC<TariffModalProps> = ({ isModalResult, email }
                     subTitle={
                         <span>
                             Мы отправили инструкцию для оплаты вам на e-mail
-                            <span style={{ fontWeight: 'var(--font-weight-700)' }}> {email}</span>.
+                            <span className='modal-tariff-email'> {email}</span>.
                             После подтверждения оплаты войдите в приложение заново.
-                            <p style={{ margin: 'var(--unit-24)' }}>
+                            <p className='modal-tariff-spam'>
                                 Не пришло письмо? Проверьте папку Спам.
                             </p>
                         </span>

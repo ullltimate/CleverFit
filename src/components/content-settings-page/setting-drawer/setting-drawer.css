@@ -1,0 +1,14 @@
+.description-tariffs .ant-table-wrapper{
+    padding-top: var(--unit-24);
+}
+.description-tariffs .ant-table-wrapper .icon-alert-success svg{
+    margin: 0;
+}
+.costs-tarrif .costs-tariff-radio-wrap{
+    width: 100%;
+}
+@media screen and (max-width: 370px) {
+    .description-tariffs .ant-table-wrapper{
+        padding-top: var(--unit-16);
+    }
+}

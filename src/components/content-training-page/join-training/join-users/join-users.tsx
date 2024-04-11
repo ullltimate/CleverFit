@@ -31,7 +31,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
     const [searchValue, setSearchValue] = useState('');
     const onSearch = (value: string) => setSearchValue(value);
     const [filteredUsersList, setFilteredUsersList] = useState<TrainingPals[]>();
-    const windowSize = useResize();
+    const {windowSize} = useResize();
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [withPeriodically, setWithPeriodically] = useState(false);
     const [periodically, setPeriodically] = useState(1);
@@ -123,9 +123,9 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 className='join-users'
             />
             <Drawer
-                width={windowSize.windowSize < 630 ? 360 : 408}
+                width={windowSize < 630 ? 360 : 408}
                 style={{
-                    marginTop: `${windowSize.windowSize < 630 ? '85px' : '0px'}`,
+                    marginTop: `${windowSize < 630 ? '85px' : '0px'}`,
                     borderRadius: 15,
                 }}
                 data-test-id='modal-drawer-right'
@@ -150,10 +150,10 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 open={isOpenDrawer}
                 maskStyle={{ background: 'transparent' }}
                 headerStyle={{
-                    padding: `var(--unit-16) var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
+                    padding: `var(--unit-16) var(--unit-${windowSize < 630 ? 16 : 32})`,
                     border: 'none',
                 }}
-                bodyStyle={{ padding: `0px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})` }}
+                bodyStyle={{ padding: `0px var(--unit-${windowSize < 630 ? 16 : 32})` }}
                 footer={
                     <Button
                         type='primary'
@@ -165,7 +165,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     </Button>
                 }
                 footerStyle={{
-                    padding: `12px var(--unit-${windowSize.windowSize < 630 ? 16 : 32})`,
+                    padding: `12px var(--unit-${windowSize < 630 ? 16 : 32})`,
                 }}
             >
                 <div className='drawer-trainings'>
@@ -216,7 +216,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                 <div className='drawer-buttons'>
                     <Button
                         type='link'
-                        style={{ width: `${windowSize.windowSize > 630 ? '170px' : '165px'}` }}
+                        style={{ width: `${windowSize > 630 ? '170px' : '165px'}` }}
                         onClick={() => dispatch(addExercises())}
                     >
                         <PlusOutlined />
@@ -225,7 +225,7 @@ export const JoinUsers: React.FC<JoinUsersProps> = ({ setIsChoiceJoinUser, users
                     <Button
                         type='text'
                         style={{
-                            width: `${windowSize.windowSize > 630 ? '170px' : '150px'}`,
+                            width: `${windowSize > 630 ? '170px' : '150px'}`,
                             display: 'inline',
                         }}
                         disabled={indexesForDelete.length === 0}

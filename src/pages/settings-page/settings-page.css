@@ -1,3 +1,10 @@
+.settings-page-wrapper{
+    padding:  24px; 
+    background: var(--color-bg-grey);
+}
+.settings{
+    height: 100%;
+}
 .settings-title{
     font-size: var(--font-size-20);
 }
@@ -39,6 +46,10 @@
 }
 .settings .ant-list-split .ant-list-item{
     padding: 16px 0 0;
+}
+.settings-item .tariff-trainings-icon svg{
+    margin-left: 5px;
+    color: var(--color-disabled);
 }
 .description-tariffs .ant-table table {
     border-spacing: 10px 0;
@@ -125,8 +136,14 @@
     font-size: var(--unit-16);
     font-weight: var(--font-weight-500);
 }
+.icon-disabled svg{
+    color: var(--color-disabled);
+}
 
 @media screen and (max-width: 370px) {
+    .settings-page-wrapper{
+        padding:  24px 0; 
+    }
     .settings-card{
         max-width: 315px;
     }

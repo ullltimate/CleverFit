@@ -15,7 +15,7 @@ import './training-page.css';
 const { Content } = Layout;
 
 export const TrainingPage: React.FC = () => {
-    const windowSize = useResize();
+    const { windowSize } = useResize();
     const [key, setKey] = useState('my-tranings');
     const {data} = useGetInviteQuery();
     const { partners } = useAppSelector(partnersSelector);
@@ -41,12 +41,12 @@ export const TrainingPage: React.FC = () => {
         <React.Fragment>
             <CustomBreadcrumb />
             <Header />
-            <Content style={{ padding: windowSize.windowSize < 370 ? '24px 0px' : 24 }}>
-                <Card className='my-trainings' style={{ height: '100%' }}>
+            <Content  className='training-page-wrapper'>
+                <Card className='my-trainings'>
                     <Tabs
                         activeKey={key}
                         centered={true}
-                        tabBarGutter={windowSize.windowSize<370 ? 5 : windowSize.windowSize<1300 ? 65: 205}
+                        tabBarGutter={windowSize<370 ? 5 : windowSize<1300 ? 65: 205}
                         tabBarStyle={{fontSize: 'var(--unit-24)'}}
                         items={itemsTab}
                         onChange={(k) => setKey(k)}

@@ -18,14 +18,14 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
     const tokenForHeader = localStorage.getItem('token') || token;
     const { imgSrc } = useAppSelector(userFullSelector);
     const mobileSize = 370;
-    const windowSize = useResize();
+    const {windowSize} = useResize();
     const initialFile = useMemo(
         () => ({
             uid: '1',
-            name: `${windowSize.windowSize < mobileSize ? '' : 'image.png'}`,
+            name: `${windowSize < mobileSize ? '' : 'image.png'}`,
             url: imgSrc,
         }),
-        [imgSrc, windowSize.windowSize],
+        [imgSrc, windowSize],
     );
     const [fileList, setFileList] = useState<UploadFile[]>(
         imgSrc === '' || !imgSrc ? [] : [initialFile],
@@ -36,20 +36,14 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
     }, [imgSrc, initialFile]);
 
     const uploadButton = () => {
-        if (windowSize.windowSize < mobileSize) {
+        if (windowSize < mobileSize) {
             return <Button icon={<UploadOutlined />}>Загрузить</Button>;
         }
 
         return (
             <div>
                 <PlusOutlined />
-                <div
-                    style={{
-                        marginTop: 8,
-                        maxWidth: 70,
-                        color: 'var(--color-disabled)',
-                    }}
-                >
+                <div className='upload-block'>
                     Загрузить фото профиля
                 </div>
             </div>
@@ -65,7 +59,7 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
                 {
                     ...initialFile,
                     url: '',
-                    name: `${windowSize.windowSize < mobileSize ? '' : newFile.name}`,
+                    name: `${windowSize < mobileSize ? '' : newFile.name}`,
                     status: 'error',
                 },
             ]);
@@ -75,7 +69,7 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
             setFileList([
                 {
                     ...initialFile,
-                    name: `${windowSize.windowSize < mobileSize ? '' : newFile.response.name}`,
+                    name: `${windowSize < mobileSize ? '' : newFile.response.name}`,
                     url: `${urlForImage}${newFile.response.url}`,
                 },
             ]);
@@ -88,7 +82,7 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
 
     return (
         <Form.Item>
-            {windowSize.windowSize < mobileSize && fileList.length < 1 && (
+            {windowSize < mobileSize && fileList.length < 1 && (
                 <p className='profile-avatar__subtitle'>Загрузить фото профиля:</p>
             )}
             <Form.Item data-test-id='profile-avatar' name='imgSrc'>
@@ -96,7 +90,7 @@ export const CustomUpload: React.FC<CustomUploadProps> = ({ modalError, setDisab
                     action={`${urlAPI}${endpointsAPI.upload}`}
                     headers={{ Authorization: `Bearer ${tokenForHeader}` }}
                     maxCount={1}
-                    listType={`${windowSize.windowSize < mobileSize ? 'picture' : 'picture-card'}`}
+                    listType={`${windowSize < mobileSize ? 'picture' : 'picture-card'}`}
                     fileList={fileList}
                     onPreview={() => {}}
                     onChange={handleChange}

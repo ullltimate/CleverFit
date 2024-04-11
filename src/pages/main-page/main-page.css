@@ -1,3 +1,7 @@
+.main-page-wrapper{
+    margin: var(--unit-24);
+}
+
 .main-wrapper .ant-layout-has-sider {
     background: center / cover no-repeat url(/main-page_light.png);
     min-height: 100vh;

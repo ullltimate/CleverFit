@@ -127,17 +127,17 @@ export const SiderBar: React.FC = () => {
                         },
                         {
                             key: 'training',
-                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={partners.length<4 ? data?.length : 0}><HeartFilled style={{ color: '#061178' }} className='menu-item-icon' /></Badge>,
+                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={partners.length<4 ? data?.length : 0}><HeartFilled className='menu-item-icon' /></Badge>,
                             label: collapsed ? '' : 'Тренировки',
                         },
                         {
                             key: '3',
-                            icon: <TrophyFilled style={{ color: '#061178' }} className='menu-item-icon' />,
+                            icon: <TrophyFilled className='menu-item-icon' />,
                             label: collapsed ? '' : 'Достижения',
                         },
                         {
                             key: 'profile',
-                            icon:  <IdcardOutlined style={{ color: '#061178' }} className='menu-item-icon' />,
+                            icon:  <IdcardOutlined className='menu-item-icon' />,
                             label: collapsed ? '' : 'Профиль',
                         },
                         {

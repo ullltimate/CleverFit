@@ -25,6 +25,8 @@ import { createPeriodString } from '@utils/my-trainings-healper';
 import { Button, Checkbox, Drawer, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
+import './my-training-drawer.css'
+
 type MyTrainingDrawerProps = {
     isEditTraining: boolean;
     isOpenDrawer: boolean;
@@ -179,7 +181,6 @@ export const MyTrainingDrawer: React.FC<MyTrainingDrawerProps> = ({
                     disabled={isEditTraining}
                     className='drawer-select'
                     data-test-id='modal-create-exercise-select'
-                    style={{ width: '100%', margin: '24px 0px' }}
                     onChange={handleChangeSelect}
                     options={trainingList?.map((e) => ({ value: e.key, label: e.name }))}
                 />
@@ -221,7 +222,6 @@ export const MyTrainingDrawer: React.FC<MyTrainingDrawerProps> = ({
             <div className='drawer-buttons'>
                 <Button
                     type='link'
-                    style={{ width: `${windowSize > 630 ? '170px' : '165px'}` }}
                     onClick={() => dispatch(addExercises())}
                 >
                     <PlusOutlined />

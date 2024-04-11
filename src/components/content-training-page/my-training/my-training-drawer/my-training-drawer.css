@@ -1,0 +1,13 @@
+.drawer-trainings .drawer-select{
+    width: 100%;
+    margin: 24px 0px;
+}
+.drawer-buttons .ant-btn-link{
+    width: 170px;
+}
+
+@media screen and (max-width: 630px) {
+    .drawer-buttons .ant-btn-link{
+        width: 165px;
+    }
+}

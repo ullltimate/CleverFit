@@ -24,7 +24,8 @@ export const CustomAvatar: React.FC<CustomAvatarProps> = ({ name, imageSrc, isUs
                 size={42}
                 alt={name}
                 src={imageSrc}
-                icon={!imageSrc && <UserOutlined style={{ color: 'black' }} />}
+                icon={<UserOutlined/>}
+                className='comment-avatar'
             />
             {isUserCard ? (
                 <p
