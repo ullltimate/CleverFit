@@ -22,7 +22,7 @@ import {
     setParameters,
     trainingSelector,
 } from '@redux/reducers/training-slice';
-import { useLazyGetTrainingListQuery } from '@services/catalogs';
+import { useGetTrainingListQuery } from '@services/catalogs';
 import {
     Training,
     useCreateTrainingMutation,
@@ -49,9 +49,7 @@ import './my-training.css';
 
 export const MyTraining: React.FC = () => {
     const { data: trainings } = useGetTrainingQuery();
-    const [getTrainingList, { data: trainingList, error: errorList }] =
-        useLazyGetTrainingListQuery();
-    const [error, setError] = useState(false);
+    const { data: trainingList, error: errorList } = useGetTrainingListQuery();
     const windowSize = useResize();
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [isEditTraining, setIsEditTraining] = useState(false);
@@ -82,18 +80,6 @@ export const MyTraining: React.FC = () => {
     };
     const [visible, setVisible] = useState(false);
     const handleCloseAlert = () => setVisible(false);
-
-    useEffect(() => {
-        if (date && valueEditTrain !== 'Выбор типа тренировки' && exercises.some((e) => e.name)) {
-            setIsDisabledSave(false);
-        } else {
-            setIsDisabledSave(true);
-        }
-    }, [date, exercises, valueEditTrain]);
-
-    useEffect(() => {
-        dispatch(saveTrainingName(valueEditTrain));
-    }, [valueEditTrain, dispatch]);
 
     const modalError = useCallback(
         (isErrorList: boolean) => {
@@ -128,25 +114,29 @@ export const MyTraining: React.FC = () => {
                     </span>
                 ),
                 onOk() {
-                    getTrainingList();
+                    ' '
                 },
             });
         },
-        [getTrainingList],
+        [],
     );
 
     useEffect(() => {
-        getTrainingList();
-    }, [getTrainingList]);
+        if (errorList) modalError(true);
+    }, [errorList, modalError]);
+
 
     useEffect(() => {
-        setError(false);
-        if (errorList) setError(true);
-    }, [errorList]);
+        if (date && valueEditTrain !== 'Выбор типа тренировки' && exercises.some((e) => e.name)) {
+            setIsDisabledSave(false);
+        } else {
+            setIsDisabledSave(true);
+        }
+    }, [date, exercises, valueEditTrain]);
 
     useEffect(() => {
-        if (error) modalError(true);
-    }, [error, modalError]);
+        dispatch(saveTrainingName(valueEditTrain));
+    }, [valueEditTrain, dispatch]);
 
     const handleChangeSelect = (value: string) => {
         if (trainingList)
