@@ -61,7 +61,7 @@ export const resultData: ResultData = {
         dataAtribute: 'check-retry-button',
     },
     error_check_email: {
-        icon: <img src='/error.svg' alt='error'/>,
+        icon: <img src='/error.png' alt='error'/>,
         title: 'Что-то пошло не так',
         text: 'Произошла ошибка, попробуйте отправить форму ещё раз.',
         btnText: 'Назад',

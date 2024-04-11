@@ -108,13 +108,13 @@ export const SiderBar: React.FC = () => {
                 <div className={`logo-${collapsed ? 'hidden' : 'full'}`}>
                     <Link to={PATHS.MAIN}>
                         <img
-                            src='/Clever.svg'
+                            src='/Clever.png'
                             alt='logo'
                             className='logo-clever'
                             style={{ opacity: `${collapsed ? 0 : 1}` }}
                         />
                         <img
-                            src='/fit.svg'
+                            src='/fit.png'
                             alt='logo'
                             className='logo-fit logo-collapsed'
                             style={

@@ -8,6 +8,7 @@ import { useResize } from '@hooks/use-resize';
 import { UserFull, userFullSelector } from '@redux/reducers/user-full-slice';
 import { useUpdateUserMutation } from '@services/user';
 import { Alert, Button, Card, DatePicker, Form, Input, Layout, Modal } from 'antd';
+import moment from 'moment';
 
 import './profile-page.css';
 
@@ -59,7 +60,7 @@ export const ProfilePage: React.FC = () => {
     },[initialValues, form])
 
     useEffect(() => {
-        setInitialValues({imgSrc, firstName, lastName, birthday: birthday ? new Date(birthday) : '', email})
+        setInitialValues({imgSrc, firstName, lastName, birthday: birthday ? moment(birthday) : '', email})
     },[email, firstName, lastName, birthday, imgSrc])
 
     const onFinish = (values: UserFull) => {
@@ -87,6 +88,7 @@ export const ProfilePage: React.FC = () => {
             setDisabledSave(false)
         }
     }
+    console.log(birthday)
 
     return (
         <React.Fragment>

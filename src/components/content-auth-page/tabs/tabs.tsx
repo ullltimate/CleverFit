@@ -48,7 +48,7 @@ export const CustomTabs: React.FC = () => {
 
     return (
         <React.Fragment>
-            <img src='/logo.svg' className='logo' alt='logo' />
+            <img src='/logo.png' className='logo' alt='logo' />
             <Tabs
                 activeKey={key}
                 centered={true}
