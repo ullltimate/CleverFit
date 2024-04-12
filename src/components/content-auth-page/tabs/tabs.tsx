@@ -8,8 +8,8 @@ import { SignUp } from '../signup/signup';
 
 import './tabs.css';
 
-type AuthItemsTab = {
-    label: string,
+export type AuthItemsTab = {
+    label: string | React.ReactNode,
     key: string,
     children: React.ReactNode,
 }
@@ -48,7 +48,7 @@ export const CustomTabs: React.FC = () => {
 
     return (
         <React.Fragment>
-            <img src='/logo.svg' className='logo' alt='logo' />
+            <div className='logo' />
             <Tabs
                 activeKey={key}
                 centered={true}

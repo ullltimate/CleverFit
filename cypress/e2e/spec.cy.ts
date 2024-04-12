@@ -995,7 +995,7 @@ describe('Sprint 6', () => {
             cy.contains('Совместные тренировки').click();
             cy.contains('Шунто').should('exist');
             cy.contains('Посмотреть детали тренировки').click();
-            takeScreenshots('take-joint-training-2', resolutionTablet);
+            takeScreenshots('take-joint-training-2', resolutionLaptop);
             cy.get(`[data-test-id=${DATA_TEST_ID.jointTrainingReviewCard}]`)
                 .should('exist')
                 .within(() => {

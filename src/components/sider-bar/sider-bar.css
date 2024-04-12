@@ -44,6 +44,19 @@
 .logo-hidden {
     margin: 25px 18px 60px 18px;
 }
+.logo-clever{
+    display: inline-block;
+    width: 75px;
+    height: 18px;
+    background: center / contain no-repeat url(/Clever.png);
+}
+.logo-collapsed{
+    display: inline-block;
+    width: 26px;
+    height: 20px;
+    margin-left: -5px;
+    background: center / contain no-repeat url(/fit.png);
+}
 
 .logo-clever,
 .logo-fit {
@@ -62,6 +75,9 @@
 }
 .menu .ant-menu-item:last-child .ant-menu-title-content {
     margin-left: 25px;
+}
+.menu .menu-item-icon svg{
+    color: #061178;
 }
 
 .sider-wrapper {
@@ -95,10 +111,12 @@
         transform: translate(106px, 0);
     }
     .logo-clever {
-        width: 52px;
+        width: 40px;
+        height: 10px;
     }
     .logo-collapsed {
-        width: 18px;
+        width: 14px;
+        height: 12px;
     }
     .logo-full {
         margin: var(--unit-16);

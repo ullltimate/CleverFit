@@ -37,7 +37,7 @@ export const CommentsPage: React.FC = () => {
 
     return (
         <React.Fragment>
-            <Content style={{ margin: 24 }}>
+            <Content className='comments-page-wrapper'>
                 {(isFetching) && <Loader />}
                 {reviews &&
                     (reviews.length === 0 ? (

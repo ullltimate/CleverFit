@@ -1,3 +1,6 @@
+.not-found-page-wrap{
+    margin: var(--unit-24);
+}
 .not-found-card{
     height: 100%; 
     display: flex;

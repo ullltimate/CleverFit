@@ -3,11 +3,13 @@ import { combineReducers,configureStore } from '@reduxjs/toolkit';
 import { authAPI } from '@services/auth';
 import { catalogsAPI } from '@services/catalogs';
 import { feedbackAPI } from '@services/feedbacks';
+import { inviteAPI } from '@services/invite';
 import { tariffAPI } from '@services/tariff';
 import { trainingAPI } from '@services/trainings';
 import { userAPI } from '@services/user';
 import { createBrowserHistory } from 'history';
 
+import { partnersReducer } from './reducers/partners-slice';
 import { screenSizeReducer } from './reducers/resize-slice';
 import {tokenReducer} from './reducers/token-slice';
 import {trainingReducer}from './reducers/training-slice';
@@ -31,7 +33,9 @@ export const store = configureStore({
         screenSizeReducer,
         [userAPI.reducerPath]: userAPI.reducer,
         userFullReducer,
-        [tariffAPI.reducerPath] : tariffAPI.reducer,
+        [tariffAPI.reducerPath]: tariffAPI.reducer,
+        [inviteAPI.reducerPath]: inviteAPI.reducer,
+        partnersReducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -42,6 +46,7 @@ export const store = configureStore({
             catalogsAPI.middleware,
             userAPI.middleware,
             tariffAPI.middleware,
+            inviteAPI.middleware,
         ),
 });
 

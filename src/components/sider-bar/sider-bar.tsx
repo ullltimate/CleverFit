@@ -10,12 +10,15 @@ import {
 } from '@ant-design/icons';
 import { ExitIcon } from '@components/icons/exit-icon';
 import { PATHS } from '@constants/paths';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { partnersSelector } from '@redux/reducers/partners-slice';
 import { saveToken } from '@redux/reducers/token-slice';
 import { resetUser } from '@redux/reducers/user-full-slice';
 import { increment } from '@redux/reducers/user-slice';
+import { useGetInviteQuery } from '@services/invite';
 import { useLazyGetTrainingQuery } from '@services/trainings';
-import { Layout, Menu } from 'antd';
+import { Badge, Layout, Menu } from 'antd';
+import classNames from 'classnames';
 
 import './sider-bar.css';
 
@@ -28,6 +31,8 @@ export const SiderBar: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [getTrainings] = useLazyGetTrainingQuery();
+    const {data} = useGetInviteQuery();
+    const { partners } = useAppSelector(partnersSelector);
 
     const changeBreakpoint = (broken: boolean): void => {
         if (broken) {
@@ -64,15 +69,20 @@ export const SiderBar: React.FC = () => {
                 break;
             case 'profile':
                 navigate(PATHS.PROFILE)
+                break;
+            case 'training':
+                getTrainings()
+                    .unwrap()
+                    .then(() => navigate(PATHS.TRAINING))
+                    .catch(() => {});
+                break;
         }
     }
 
     return (
         <div className='sider-wrapper'>
             <div
-                className={`trapezoid-wrapper ${
-                    (mobileWidth && !collapsed) ? 'trapezoid-wrapper-collapsed' : ''
-                }`}
+                className={classNames('trapezoid-wrapper', {'trapezoid-wrapper-collapsed': (mobileWidth && !collapsed)})}
             >
                 <div
                     className='trapezoid'
@@ -94,22 +104,13 @@ export const SiderBar: React.FC = () => {
                 breakpoint='sm'
                 onBreakpoint={(broken) => changeBreakpoint(broken)}
             >
-                <div className={`logo-${collapsed ? 'hidden' : 'full'}`}>
+                <div className={classNames({'logo-hidden': collapsed, 'logo-full': !collapsed})}>
                     <Link to={PATHS.MAIN}>
-                        <img
-                            src='/Clever.svg'
-                            alt='logo'
-                            className='logo-clever'
-                            style={{ opacity: `${collapsed ? 0 : 1}` }}
-                        />
-                        <img
-                            src='/fit.svg'
-                            alt='logo'
-                            className='logo-fit logo-collapsed'
+                        <div className='logo-clever' style={{ opacity: `${collapsed ? 0 : 1}` }}/>
+                        <div className='logo-fit logo-collapsed'
                             style={
                                 { opacity: `${(collapsed && mobileWidth) ? 0 : 1}` } 
-                            }
-                        />
+                            }/>
                     </Link>
                 </div>
                 <Menu
@@ -125,18 +126,18 @@ export const SiderBar: React.FC = () => {
                             label: collapsed ? '' : 'Календарь',
                         },
                         {
-                            key: '2',
-                            icon:  <HeartFilled style={{ color: '#061178' }} className='menu-item-icon' />,
+                            key: 'training',
+                            icon:  <Badge data-test-id='notification-about-joint-training' size='small' count={partners.length<4 ? data?.length : 0}><HeartFilled className='menu-item-icon' /></Badge>,
                             label: collapsed ? '' : 'Тренировки',
                         },
                         {
                             key: '3',
-                            icon: <TrophyFilled style={{ color: '#061178' }} className='menu-item-icon' />,
+                            icon: <TrophyFilled className='menu-item-icon' />,
                             label: collapsed ? '' : 'Достижения',
                         },
                         {
                             key: 'profile',
-                            icon:  <IdcardOutlined style={{ color: '#061178' }} className='menu-item-icon' />,
+                            icon:  <IdcardOutlined className='menu-item-icon' />,
                             label: collapsed ? '' : 'Профиль',
                         },
                         {

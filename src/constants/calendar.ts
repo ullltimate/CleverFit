@@ -25,3 +25,6 @@ export const colorTrainings = [
         color: '#52C41A'
     },
 ];
+
+export const formatDate = 'DD.MM.YYYY';
+export const invalideFormatDate = 'YYYY-MM-DD';

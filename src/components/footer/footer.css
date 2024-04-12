@@ -12,6 +12,7 @@
 
 .footer .ant-row {
     align-items: end;
+    flex-wrap: wrap-reverse;
 }
 
 .footer .ant-btn-link {

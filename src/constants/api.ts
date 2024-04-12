@@ -17,6 +17,8 @@ type EndpointsAPI = {
     catalogs: {
         training: string,
         tariff: string,
+        trainingPals: string,
+        userJoinTrainList: string
     }, 
     user: {
         me: string,
@@ -24,6 +26,7 @@ type EndpointsAPI = {
     },
     upload: string,
     tariff: string,
+    invite: string
 }
 
 export const endpointsAPI: EndpointsAPI = {
@@ -40,11 +43,14 @@ export const endpointsAPI: EndpointsAPI = {
     catalogs: {
         training: '/catalogs/training-list',
         tariff: '/catalogs/tariff-list',
+        trainingPals: '/catalogs/training-pals',
+        userJoinTrainList: '/catalogs/user-joint-training-list'
     },
     user: {
         me: '/user/me',
         user: '/user'
     },
     upload: '/upload-image',
-    tariff: '/tariff'
+    tariff: '/tariff',
+    invite: '/invite'
 }

@@ -1,6 +1,9 @@
 .logo {
     display: block;
+    width: 245px;
+    height: 55px;
     margin: 0px auto 48px;
+    background: center / contain no-repeat url(/logo.png);
 }
 
 .auth-wrapper .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -26,7 +29,8 @@
 
 @media screen and (max-width: 570px) {
     .logo {
-        max-width: 203px;
+        width: 160px;
+        height: 35px;
         margin: 0px auto var(--unit-32);
     }
     .auth-wrapper .ant-tabs-tab {

@@ -2,7 +2,7 @@ import { endpointsAPI, urlAPI } from '@constants/api';
 import { store } from '@redux/configure-store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-type TrainingList = {
+export type TrainingList = {
     name: string;
     key: string;
 };
@@ -17,6 +17,16 @@ export type TariffList = {
             days: number;
         },
     ];
+};
+
+export type TrainingPals = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: null;
+    avgWeightInWeek: number;
+    inviteId: string;
+    status: string;
 };
 
 export const catalogsAPI = createApi({
@@ -44,7 +54,14 @@ export const catalogsAPI = createApi({
                 url: endpointsAPI.catalogs.tariff,
             }),
         }),
+        getUserJoinTrainList: build.query<TrainingPals[], void | string>({
+            query: (type?) => ({
+                url: endpointsAPI.catalogs.userJoinTrainList,
+                params: {trainingType: type} || {},
+            }),
+        }),
     }),
 });
 
-export const { useGetTrainingListQuery, useGetTariffListQuery } = catalogsAPI;
+export const { useGetTrainingListQuery, useGetTariffListQuery, useLazyGetTrainingListQuery, useLazyGetUserJoinTrainListQuery} =
+    catalogsAPI;

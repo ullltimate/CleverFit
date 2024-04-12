@@ -3,7 +3,7 @@ import { ArrowLeftOutlined, CloseOutlined, EditOutlined, MinusOutlined, PlusOutl
 import { DrawerForm } from '@components/content-calendar-page/drawer-form/drawer-form';
 import { Header } from '@components/header/header';
 import { Loader } from '@components/loader/loader';
-import { colorTrainings } from '@constants/calendar';
+import { colorTrainings, formatDate, invalideFormatDate } from '@constants/calendar';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useResize } from '@hooks/use-resize';
 import { saveSceenSize, screenSizeSelector } from '@redux/reducers/resize-slice';
@@ -142,7 +142,7 @@ export const CalendarPage: React.FC = () => {
             // eslint-disable-next-line array-callback-return
             trainings.map((el) => {
                 if (
-                    value.format('DD.MM.YYYY') ===
+                    value.format(formatDate) ===
                     new Date(el.date).toLocaleString('ru').split(',')[0]
                 ) {
                     listData.push({
@@ -162,13 +162,12 @@ export const CalendarPage: React.FC = () => {
             screenSize > 630 ?
                 <ul className='events' style={{ listStyleType: 'none' }}>
                     {listData.map((item: ListData, i: number) => (
-                        // eslint-disable-next-line react/no-array-index-key
                         <li key={i}>
                             <Badge color={item.color} text={item.content} />
                         </li>
                     ))}
                 </ul> 
-                : <div style={{background: `${listData.length && 'var(--color-bg-blue)'}`, border: `${moment(moment().format('YYYY-MM-DD')).isSame(value.format('YYYY-MM-DD')) ? '1px solid var(--color-primary)' : 'none'}`, borderRadius: 2}}>
+                : <div style={{background: `${listData.length && 'var(--color-bg-blue)'}`, border: `${moment(moment().format(invalideFormatDate)).isSame(value.format(invalideFormatDate)) ? '1px solid var(--color-primary)' : 'none'}`, borderRadius: 2}}>
                     {value.format('DD')}
                 </div>
         );
@@ -181,8 +180,8 @@ export const CalendarPage: React.FC = () => {
         setIndexesForDelete([])
         setIsCreateExercise(false);
         if(screenSize > 630) e.stopPropagation();
-        setSelectedDate(date.format('DD.MM.YYYY'));
-        setSelectedDateInvalidFormat(date.format('YYYY-MM-DD'));
+        setSelectedDate(date.format(formatDate));
+        setSelectedDateInvalidFormat(date.format(invalideFormatDate));
         setSelectedWeekDay(date.day());
         const elem = e.target as Element;
 
@@ -264,7 +263,6 @@ export const CalendarPage: React.FC = () => {
         const training = trainingsForDay.find((e) => e.name === valueEditTrain);
 
         if (training) {
-            // eslint-disable-next-line no-underscore-dangle
             dispatch(saveTrainingId(training._id));
             dispatch(resetExercises());
             dispatch(setExercises(training.exercises));
@@ -379,7 +377,6 @@ export const CalendarPage: React.FC = () => {
                                     {exercisesForDay
                                         .filter((e) => e.name !== '')
                                         .map((e, i) => (
-                                            // eslint-disable-next-line react/no-array-index-key
                                             <li key={i} className='list-item'>
                                                 <p style={{color: 'var(--color-disabled)'}}>{e.name}</p>
                                                 <Button type='link' 
@@ -461,7 +458,6 @@ export const CalendarPage: React.FC = () => {
                                 // eslint-disable-next-line no-negated-condition
                                 trainingsForDay.length !== 0 ? (
                                     trainingsForDay.map((e, i) => (
-                                        // eslint-disable-next-line no-underscore-dangle
                                         <li key={e._id} className='list-item'>
                                             <Badge
                                                 color={
@@ -543,7 +539,6 @@ export const CalendarPage: React.FC = () => {
                 </div>
                 {exercises.map((e: Exercise, i: number) => (
                     <DrawerForm
-                        // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
                         key={`${e._id}${i}`}
                         name={e.name}
                         approaches={e.approaches}

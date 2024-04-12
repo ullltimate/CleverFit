@@ -25,7 +25,7 @@ export const MainPage: React.FC = () => {
     return (
         <React.Fragment>
             <Header />
-            <Content style={{ margin: 24 }}>
+            <Content className='main-page-wrapper'>
                 <Card bordered={false} className='content-discription'>
                     <p className='content-text'>
                         С CleverFit ты сможешь: <br />

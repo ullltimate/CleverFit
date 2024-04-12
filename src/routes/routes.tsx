@@ -14,6 +14,7 @@ import { MainPage } from '@pages/main-page';
 import { NotFoundPage } from '@pages/not-found-page';
 import { ProfilePage } from '@pages/profile-page';
 import { SettingsPage } from '@pages/settings-page';
+import { TrainingPage } from '@pages/training-page';
 
 export const routes = (
     <Routes>
@@ -176,6 +177,7 @@ export const routes = (
                 <Route path={PATHS.CALENDAR} element={<CalendarPage />} />
                 <Route path={PATHS.PROFILE} element={<ProfilePage />} />
                 <Route path={PATHS.SETTINGS} element={<SettingsPage/>} />
+                <Route path={PATHS.TRAINING} element={<TrainingPage/>} />
                 <Route path='*' element={<NotFoundPage/>} />
             </Route>
         </Route>

@@ -1,0 +1,13 @@
+.join-users-item__name span{
+    color: var(--color-error);
+}
+.user-card-avatar-wrap{
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.join-users-item__name{
+    max-width: 80px;
+    margin: 0 var(--unit-8);
+    line-height: 18.2px;
+}

@@ -9,11 +9,11 @@ import { SettingDrawer } from '@components/content-settings-page/setting-drawer/
 import { TariffModal } from '@components/content-settings-page/tariff-modal/tariff-modal'
 import { Header } from '@components/header/header';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useResize } from '@hooks/use-resize';
 import { saveJoinTrainings, savesendNotification, userFullSelector } from '@redux/reducers/user-full-slice';
 import { useGetTariffListQuery } from '@services/catalogs';
 import { useUpdateUserMutation } from '@services/user';
 import { Button, Card, Col, Layout, List, Row, Switch, Tooltip } from 'antd';
+import classNames from 'classnames';
 import moment from 'moment';
 
 import './settings-page.css';
@@ -26,7 +26,6 @@ export const SettingsPage: React.FC = () => {
     const showModalReview = (): void => setIsModalReview(true);
     const handleCancel = (): void => setIsModalReview(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const windowSize = useResize();
     const showDrawer = () => setOpenDrawer(true);
     const onCloseDrawer = () => setOpenDrawer(false);
     const [isModalResult, setIsModalResult] = useState(false);
@@ -57,8 +56,8 @@ export const SettingsPage: React.FC = () => {
     return (
         <React.Fragment>
             <Header />
-            <Content style={{ padding: windowSize.windowSize<370 ? '24px 0px' : 24, background: 'var(--color-bg-grey)' }}>
-                <Card className='settings' style={{ height: '100%' }}>
+            <Content className='settings-page-wrapper'>
+                <Card className='settings'>
                     <h4 className='settings-title'>Мой тариф</h4>
                     <div className='site-card-wrapper'>
                         <Row gutter={16}>
@@ -73,7 +72,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src='./free-tariff.jpg' className='settings-card__img' alt='free-tariff' />
+                                    <div className='settings-card__img free-tariff' />
                                     <Button type='text' className='setting-card__btn'>
                                         активен <CheckOutlined />
                                     </Button>
@@ -91,7 +90,7 @@ export const SettingsPage: React.FC = () => {
                                     }
                                     bordered={true}
                                 >
-                                    <img src={`./pro-tariff${tariff?'':'-disable'}.jpg`} className='settings-card__img' alt='free-tariff' />
+                                    <div className={classNames('settings-card__img', {'pro-tariff': tariff}, {'pro-tariff-disable': !tariff})} />
                                     <Button
                                         type={`${tariff ? 'text' : 'primary'}`}
                                         className='setting-card__btn'
@@ -117,7 +116,7 @@ export const SettingsPage: React.FC = () => {
                                         </span>
                                     }
                                 >
-                                    <ExclamationCircleOutlined data-test-id='tariff-trainings-icon' style={{marginLeft: 5, color: 'var(--color-disabled)'}}/>
+                                    <ExclamationCircleOutlined data-test-id='tariff-trainings-icon' className='tariff-trainings-icon'/>
                                 </Tooltip>
                             </p>
                             <Switch
@@ -138,7 +137,7 @@ export const SettingsPage: React.FC = () => {
                                         </span>
                                     }
                                 >
-                                    <ExclamationCircleOutlined data-test-id='tariff-notifications-icon' style={{marginLeft: 5, color: 'var(--color-disabled)'}}/>
+                                    <ExclamationCircleOutlined data-test-id='tariff-notifications-icon' className='tariff-trainings-icon'/>
                                 </Tooltip>
                             </p>
                             <Switch
@@ -154,7 +153,7 @@ export const SettingsPage: React.FC = () => {
                                     placement='bottomLeft'
                                     title={<span>темная тема доступна для PRO tariff</span>}
                                 >
-                                    <ExclamationCircleOutlined data-test-id='tariff-theme-icon' style={{marginLeft: 5, color: 'var(--color-disabled)'}}/>
+                                    <ExclamationCircleOutlined data-test-id='tariff-theme-icon' className='tariff-trainings-icon'/>
                                 </Tooltip>
                             </p>
                             <Switch

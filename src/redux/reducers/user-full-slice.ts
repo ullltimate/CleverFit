@@ -1,5 +1,6 @@
 import { RootState } from '@redux/configure-store';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
+import { Moment } from 'moment';
 
 export type Tariff = {
     tariffId: string;
@@ -10,7 +11,7 @@ export type UserFull = {
     email: string;
     firstName?: string;
     lastName?: string;
-    birthday?: string | Date;
+    birthday?: string | Moment;
     imgSrc?: string;
     readyForJointTraining?: boolean;
     sendNotification?: boolean;

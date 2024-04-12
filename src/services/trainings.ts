@@ -10,9 +10,9 @@ export type Training = {
     userId: string;
     parameters: {
         repeat: boolean;
-        period: null;
+        period: number | null;
         jointTraining: boolean;
-        participants: [];
+        participants: string[];
     };
     exercises: [
         {
