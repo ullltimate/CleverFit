@@ -76,6 +76,12 @@ export const SiderBar: React.FC = () => {
                     .then(() => navigate(PATHS.TRAINING))
                     .catch(() => {});
                 break;
+            case 'achievements':
+                getTrainings()
+                    .unwrap()
+                    .then(() => navigate(PATHS.ACHIEVEMENTS))
+                    .catch(() => {});
+                break;
         }
     }
 
@@ -131,8 +137,8 @@ export const SiderBar: React.FC = () => {
                             label: collapsed ? '' : 'Тренировки',
                         },
                         {
-                            key: '3',
-                            icon: <TrophyFilled className='menu-item-icon' />,
+                            key: 'achievements',
+                            icon: <TrophyFilled className='menu-item-icon' data-test-id='sidebar-achievements'/>,
                             label: collapsed ? '' : 'Достижения',
                         },
                         {

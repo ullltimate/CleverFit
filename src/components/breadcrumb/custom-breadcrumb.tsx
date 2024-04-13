@@ -25,6 +25,9 @@ export const CustomBreadcrumb: React.FC = () => {
             case PATHS.TRAINING:
                 setCurrentRoutes(routes.training);
                 break;
+            case PATHS.ACHIEVEMENTS:
+                setCurrentRoutes(routes.achievements);
+                break;
         }
     }, [location.pathname]);
 

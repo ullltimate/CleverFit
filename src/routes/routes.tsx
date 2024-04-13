@@ -7,6 +7,7 @@ import { MainLayout } from '@components/layout/main-layout';
 import { Result } from '@components/result/result';
 import { PATHS } from '@constants/paths';
 import { resultData } from '@constants/result-data';
+import { AchievementsPage } from '@pages/achievements-page';
 import { AuthPage } from '@pages/auth-page';
 import { CalendarPage } from '@pages/calendar-page';
 import { CommentsPage } from '@pages/comments-page';
@@ -178,6 +179,7 @@ export const routes = (
                 <Route path={PATHS.PROFILE} element={<ProfilePage />} />
                 <Route path={PATHS.SETTINGS} element={<SettingsPage/>} />
                 <Route path={PATHS.TRAINING} element={<TrainingPage/>} />
+                <Route path={PATHS.ACHIEVEMENTS} element={<AchievementsPage/>} />
                 <Route path='*' element={<NotFoundPage/>} />
             </Route>
         </Route>
