@@ -22,7 +22,8 @@
 
 @media screen and (max-width: 1300px) {
     .my-trainings .ant-tabs-tab,
-    .my-trainings .ant-tabs-tab .ant-badge {
+    .my-trainings .ant-tabs-tab .ant-badge,
+    .achievements .ant-tabs-tab {
         font-size: var(--font-size-14);
         font-weight: 400;
     }

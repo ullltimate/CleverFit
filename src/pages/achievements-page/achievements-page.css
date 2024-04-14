@@ -1,0 +1,9 @@
+.achievements-page-wrapper .achievements{
+    margin: var(--unit-24);
+}
+
+@media screen and (max-width: 370px) {
+    .achievements-page-wrapper .achievements{
+        margin: var(--unit-24) 0;
+    }
+}

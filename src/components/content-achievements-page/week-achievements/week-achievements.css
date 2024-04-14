@@ -1,0 +1,11 @@
+.achievements .ant-tag-blue{
+    color: var(--color-primary);
+    background: var(--color-bg-blue);
+    border-color: #ADC6FF;
+}
+.achievements .ant-tag-default{
+    background: var(--color-bg-card);
+}
+.achiev-filter-title{
+    margin-right: var(--unit-24);
+}

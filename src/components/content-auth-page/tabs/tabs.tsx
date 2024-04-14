@@ -12,6 +12,7 @@ export type AuthItemsTab = {
     label: string | React.ReactNode,
     key: string,
     children: React.ReactNode,
+    disabled?: boolean,
 }
 
 export const CustomTabs: React.FC = () => {
