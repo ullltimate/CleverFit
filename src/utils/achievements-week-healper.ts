@@ -25,6 +25,20 @@ export const filteredTrainings = (trainings: Training[], filter: string) => {
 export const filteredTrainingsForDay = (day: string, trainings: Training[]) =>
     trainings.filter((e) => moment(e.date).format(invalideFormatDate) === day);
 
+export const generalLoadForPeriod = (trainings: Training[]) => {
+    const allExercicesForDay = trainings.map((e) => e.exercises).flat();
+    let totalLoad = 0;
+
+    if (trainings.length) {
+        totalLoad = allExercicesForDay.reduce(
+            (acc, curr) => acc + (curr.approaches || 0) * (curr.weight || 0) * (curr.replays || 0),
+            0,
+        );
+    }
+
+    return totalLoad
+}
+
 export const averageLoad = (trainings: Training[]) => {
     const allExercicesForDay = trainings.map((e) => e.exercises).flat();
     let totalLoad = 0;
@@ -91,4 +105,48 @@ export const createDataForList = (data: DataForPlot[]) => {
     const sortedDataForDayOfWeek = [...dataForDayOfWeek].sort((a,b) => daysOfWeek.indexOf(a.date) - daysOfWeek.indexOf(b.date));
 
     return sortedDataForDayOfWeek;
+}
+
+export const getTotalReplays = (trainings: Training[]) => {
+    const allExercicesForPeriod = trainings.map((e) => e.exercises).flat();
+    let totalReplays = 0;
+
+    if (trainings.length) {
+        totalReplays = allExercicesForPeriod.reduce(
+            (acc, curr) => acc + (curr.replays || 0),
+            0,
+        );
+    }
+
+    return totalReplays
+
+}
+
+export const getTotalApproaches = (trainings: Training[]) => {
+    const allExercicesForPeriod = trainings.map((e) => e.exercises).flat();
+    let totalReplays = 0;
+
+    if (trainings.length) {
+        totalReplays = allExercicesForPeriod.reduce(
+            (acc, curr) => acc + (curr.approaches || 0),
+            0,
+        );
+    }
+
+    return totalReplays
+
+}
+
+export const getMostReapetedTrain = (trainings: Training[]) => {
+    const namesTrain = trainings.map(e => e.name);
+    const names: Record<string, number> = {};
+
+    namesTrain.forEach((item) => {
+      names[item] = (names[item] || 0) + 1;
+    });
+
+    const maxValue = Math.max(...Object.keys(names).map(key => names[key]));
+    const maxName = Object.keys(names).find(key => names[key] === maxValue);
+
+    return maxName;
 }

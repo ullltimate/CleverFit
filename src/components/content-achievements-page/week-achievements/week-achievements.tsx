@@ -8,9 +8,13 @@ import {
     createDataForPlot,
     DataForPlot,
     filteredTrainings,
+    generalLoadForPeriod,
+    getMostReapetedTrain,
+    getTotalApproaches,
+    getTotalReplays,
     getTrainingForPeriod,
 } from '@utils/achievements-week-healper';
-import { Badge, List, Tag } from 'antd';
+import { Badge, Card, List, Tag } from 'antd';
 import classNames from 'classnames';
 import moment from 'moment';
 
@@ -29,6 +33,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     const [filteredTrainForWeek, setFilteredTrainForWeek] = useState<Training[]>([]);
     const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
     const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
+    const daysInWeek = 7;
 
     useEffect(() => {
         if (trainingList)
@@ -57,7 +62,9 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         setDataForList(createDataForList(dataForPlot));
     }, [dataForPlot]);
 
-    console.log(dataForList);
+    // console.log(dataForList);
+    console.log(filteredTrainForWeek);
+    console.log(getMostReapetedTrain(filteredTrainForWeek));
 
     const data = dataForPlot.map((e) => ({
         date: moment(e.date).format(formatDateDDMM),
@@ -130,7 +137,41 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                             />
                         </div>
                     </div>
-                    <div>cards</div>
+                    <div style={{display: 'flex'}}>
+                        <Card>
+                            <p>{generalLoadForPeriod(filteredTrainForWeek)}</p>
+                            <p>Общая нагрузка, кг</p>
+                        </Card>
+                        <Card>
+                            <p>{(generalLoadForPeriod(filteredTrainForWeek) / daysInWeek).toFixed(1)}
+                            </p>
+                            <p>Нагрузка в день, кг</p>
+                        </Card>
+                        <Card>
+                            <p>{getTotalReplays(filteredTrainForWeek)}</p>
+                            <p>Количество повторений, раз</p>
+                        </Card>
+                        <Card>
+                            <p>{getTotalApproaches(filteredTrainForWeek)}</p>
+                            <p>Подходы, раз</p>
+                        </Card>
+                    </div>
+                    <div>
+                        {filterValue === 'Все' && (
+                            <div>
+                                <span>Самая частая тренировка </span>
+                                <span>
+                                    {getMostReapetedTrain(filteredTrainForWeek)?.toLocaleLowerCase()}
+                                </span>
+                            </div>
+                        )}
+                        <div>
+                            <span>Самое частое упражнение </span>
+                            <span>
+                                {}
+                            </span>
+                        </div>
+                    </div>
                 </React.Fragment>
             ) : (
                 <NotFoundTrain />
