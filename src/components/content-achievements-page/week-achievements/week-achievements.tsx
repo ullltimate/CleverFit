@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Column } from '@ant-design/plots';
+import { Column , Pie } from '@ant-design/plots';
 import { formatDateDDMM } from '@constants/calendar';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
@@ -98,6 +98,46 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         height: 375,
     };
 
+    const configPie = {
+        data: [
+          { type: '分类一', value: 1 },
+          { type: '分类二', value: 25 },
+          { type: '分类三', value: 18 },
+          { type: '分类四', value: 15 },
+          { type: '分类五', value: 3 },
+          { type: '其他', value: 5 },
+        ],
+        angleField: 'value',
+        colorField: 'type',
+        paddingRight: 80,
+        innerRadius: 0.8,
+        label: {
+          text: 'type',
+          position: 'outside',
+          connector: false,
+          style: {
+            fontWeight: 'bold',
+          },
+        },
+        scale: { color: { palette: 'rainbow' } },
+        legend: false,
+        annotations: [
+          {
+            type: 'text',
+            style: {
+              text: '',
+              x: '50%',
+              y: '50%',
+              textAlign: 'center',
+              fontSize: 40,
+              fontStyle: 'bold',
+            },
+          },
+        ],
+        width: 300,
+        height: 335,
+      };
+
     return (
         <React.Fragment>
             <div>
@@ -170,6 +210,9 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                             <span>
                                 {}
                             </span>
+                        </div>
+                        <div>
+                            <Pie {...configPie} />
                         </div>
                     </div>
                 </React.Fragment>
