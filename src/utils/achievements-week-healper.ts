@@ -4,7 +4,13 @@ import moment, { Moment } from 'moment';
 
 export type DataForPlot = {
 	date: string,
-	load: number
+	load?: number
+}
+
+export type DataForPieDiagram = {
+    date: string,
+    type?: string,
+    count?: number,
 }
 
 export const getTrainingForPeriod = (trainings: Training[], startDate: Moment, endDate: Moment) =>
@@ -99,12 +105,18 @@ export const changeNameDayOfWeek = (name: string) => {
     return nameDay
 }
 
-export const createDataForList = (data: DataForPlot[]) => {
+export const createDataForList = (dataLoad?: DataForPlot[], dataExerc?: DataForPieDiagram[]) => {
     const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-    const dataForDayOfWeek = data.map(e => ({date: changeNameDayOfWeek(moment(e.date).format(formatDayOfWeek)), load: e.load}));
-    const sortedDataForDayOfWeek = [...dataForDayOfWeek].sort((a,b) => daysOfWeek.indexOf(a.date) - daysOfWeek.indexOf(b.date));
+    const data = dataLoad || dataExerc;
 
-    return sortedDataForDayOfWeek;
+    if(data){
+        const dataForDayOfWeek = data.map(e => ({...e, date: changeNameDayOfWeek(moment(e.date).format(formatDayOfWeek))}));
+        const sortedDataForDayOfWeek = [...dataForDayOfWeek].sort((a,b) => daysOfWeek.indexOf(a.date) - daysOfWeek.indexOf(b.date));
+    
+        return sortedDataForDayOfWeek;   
+    }
+
+    return []
 }
 
 export const getTotalReplays = (trainings: Training[]) => {
@@ -150,3 +162,35 @@ export const getMostReapetedTrain = (trainings: Training[]) => {
 
     return maxName;
 }
+
+export const getMostRepitedExercise = (trainings: Training[]) => {
+    const allExercicesForDay = trainings.map(e => e.exercises).flat().map(e => e.name).flat();
+    const names: Record<string, number> = {};
+    let maxName = '';
+    let maxValue = 0
+
+    if(allExercicesForDay.length){
+        allExercicesForDay.forEach((item) => {
+          names[item] = (names[item] || 0) + 1;
+        });
+        maxValue = Math.max(...Object.keys(names).map(key => names[key]));
+        maxName = Object.keys(names).find(key => names[key] === maxValue) || '';
+    }
+    
+    return {type: maxName, count: maxValue}
+}
+
+export const createDataForPieDiagram = (startDate: Moment, endDate: Moment, trainings: Training[]) => {
+    const data = [];
+    
+    while (startDate.isSameOrBefore(endDate, 'day')) {
+        const date = startDate.format(invalideFormatDate);
+        const mostRepietedExercise = getMostRepitedExercise(filteredTrainingsForDay(date, trainings))
+
+        data.push({ date, type: mostRepietedExercise.type, count: mostRepietedExercise.count });
+
+        startDate.add(1, 'day');
+    }
+
+    return data;
+};

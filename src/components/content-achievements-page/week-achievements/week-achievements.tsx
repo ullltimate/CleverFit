@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Column , Pie } from '@ant-design/plots';
+import { Column } from '@ant-design/plots';
 import { formatDateDDMM } from '@constants/calendar';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
 import {
     createDataForList,
+    createDataForPieDiagram,
     createDataForPlot,
+    DataForPieDiagram,
     DataForPlot,
     filteredTrainings,
     generalLoadForPeriod,
@@ -19,6 +21,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 import { NotFoundTrain } from './not-found-train-in-week/not-found-train';
+import { PieDiagram } from './pie-diagram/pie-diagram';
 
 import './week-achievements.css';
 
@@ -34,6 +37,8 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
     const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
     const daysInWeek = 7;
+    const [dataForPieDiagram, setDataForPieDiagram] = useState<DataForPieDiagram[]>([]);
+    const [dataForListExerc, setDataForListExerc] = useState<DataForPieDiagram[]>([]);
 
     useEffect(() => {
         if (trainingList)
@@ -54,17 +59,26 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
 
                 setFilteredTrainForWeek(filteredTrain);
                 setDataForPlot(createDataForPlot(startDate, endDate, filteredTrain));
+               
             }
         }
     }, [trainings, filterValue]);
 
     useEffect(() => {
+        const startDate = moment().subtract(6, 'days');
+        const endDate = moment();
+
+        setDataForPieDiagram(createDataForPieDiagram(startDate, endDate, filteredTrainForWeek));
+    },[filteredTrainForWeek])
+
+    useEffect(() => {
         setDataForList(createDataForList(dataForPlot));
     }, [dataForPlot]);
 
-    // console.log(dataForList);
-    console.log(filteredTrainForWeek);
-    console.log(getMostReapetedTrain(filteredTrainForWeek));
+    useEffect(() => {
+        setDataForListExerc(createDataForList(dataForPieDiagram))
+    },[dataForPieDiagram])
+
 
     const data = dataForPlot.map((e) => ({
         date: moment(e.date).format(formatDateDDMM),
@@ -97,46 +111,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         width: 520,
         height: 375,
     };
-
-    const configPie = {
-        data: [
-          { type: '分类一', value: 1 },
-          { type: '分类二', value: 25 },
-          { type: '分类三', value: 18 },
-          { type: '分类四', value: 15 },
-          { type: '分类五', value: 3 },
-          { type: '其他', value: 5 },
-        ],
-        angleField: 'value',
-        colorField: 'type',
-        paddingRight: 80,
-        innerRadius: 0.8,
-        label: {
-          text: 'type',
-          position: 'outside',
-          connector: false,
-          style: {
-            fontWeight: 'bold',
-          },
-        },
-        scale: { color: { palette: 'rainbow' } },
-        legend: false,
-        annotations: [
-          {
-            type: 'text',
-            style: {
-              text: '',
-              x: '50%',
-              y: '50%',
-              textAlign: 'center',
-              fontSize: 40,
-              fontStyle: 'bold',
-            },
-          },
-        ],
-        width: 300,
-        height: 335,
-      };
+    
 
     return (
         <React.Fragment>
@@ -211,8 +186,26 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                                 {}
                             </span>
                         </div>
-                        <div>
-                            <Pie {...configPie} />
+                        <div style={{display: 'flex'}}>
+                            <PieDiagram dataForPieDiagram={dataForPieDiagram}/>
+                            <div className='graphic-list-wrapper'>
+                                <p className='graphic-list__title'>Средняя нагрузка по дням недели</p>
+                                <List
+                                    dataSource={dataForListExerc}
+                                    renderItem={(item, index) => (
+                                        <List.Item className='graphic-list-item'>
+                                            <Badge
+                                                count={index + 1}
+                                                className={classNames({
+                                                    'hasnt-type': !item.type,
+                                                })}
+                                            />
+                                            <span className=''>{item.date}</span>
+                                            <span>{item.type}</span>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                         </div>
                     </div>
                 </React.Fragment>

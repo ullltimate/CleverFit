@@ -24,6 +24,10 @@
     color: var(--color-primary);
     margin-right: var(--unit-16);
 }
+.hasnt-type .ant-badge-count{
+    background-color: #ffd9d9;
+    color: var(--color-error);
+}
 .graphic-list__title{
     line-height: 18.2px;
 }
