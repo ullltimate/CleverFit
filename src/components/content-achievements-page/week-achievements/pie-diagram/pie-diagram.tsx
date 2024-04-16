@@ -29,11 +29,7 @@ export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => 
         },
         scale: { color: { palette: 'rainbow' } },
         legend: false,
-        width: 520,
-        height: 335,
     };
 
-    return (
-            <Pie {...config} />
-    );
+    return <Pie {...config} />
 };

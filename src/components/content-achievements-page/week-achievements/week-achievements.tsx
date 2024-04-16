@@ -12,6 +12,7 @@ import {
     filteredTrainings,
     generalLoadForPeriod,
     getMostReapetedTrain,
+    getMostRepitedExercise,
     getTotalApproaches,
     getTotalReplays,
     getTrainingForPeriod,
@@ -112,6 +113,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         height: 375,
     };
     
+    console.log(dataForPieDiagram)
 
     return (
         <React.Fragment>
@@ -183,13 +185,13 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                         <div>
                             <span>Самое частое упражнение </span>
                             <span>
-                                {}
+                                {getMostRepitedExercise(filteredTrainForWeek).type}
                             </span>
                         </div>
                         <div style={{display: 'flex'}}>
                             <PieDiagram dataForPieDiagram={dataForPieDiagram}/>
                             <div className='graphic-list-wrapper'>
-                                <p className='graphic-list__title'>Средняя нагрузка по дням недели</p>
+                                <p className='graphic-list__title'>Самые частые  упражнения по дням недели</p>
                                 <List
                                     dataSource={dataForListExerc}
                                     renderItem={(item, index) => (
