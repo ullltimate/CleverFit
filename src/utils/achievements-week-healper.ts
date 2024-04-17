@@ -13,6 +13,11 @@ export type DataForPieDiagram = {
     count?: number,
 }
 
+export type NewForPieDiagram = {
+    type?: string;
+    count?: number;
+}
+
 export const getTrainingForPeriod = (trainings: Training[], startDate: Moment, endDate: Moment) =>
     trainings?.filter(
         (e) =>
@@ -194,3 +199,21 @@ export const createDataForPieDiagram = (startDate: Moment, endDate: Moment, trai
 
     return data;
 };
+
+export const filterDataForPieDiagram = (dataForPieDiagram: DataForPieDiagram[]) => {
+    const data: NewForPieDiagram[] = dataForPieDiagram.filter(e => e.count).map(e => ({type: e.type, count: e.count}));
+    const newData = data.reduce((acc: NewForPieDiagram[], current) => {
+        const {type} = current;
+        const same = acc.find( element => element.type === type);
+    
+        if (same?.count && current.count) {
+            same.count += current.count;
+        } else {
+            acc.push(current);
+        }
+    
+        return acc;
+      }, [])
+
+    return newData
+}

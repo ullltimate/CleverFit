@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pie } from '@ant-design/plots';
-import { DataForPieDiagram } from '@utils/achievements-week-healper';
+import { DataForPieDiagram, filterDataForPieDiagram } from '@utils/achievements-week-healper';
 
 
 type PieDiagramProps = {
@@ -10,7 +10,7 @@ type PieDiagramProps = {
 
 export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => {
 
-    const data = dataForPieDiagram.filter(e => e.count).map(e => ({type: e.type, count: e.count}));
+    const data = filterDataForPieDiagram(dataForPieDiagram);
 
     const config = {
         data,
@@ -27,6 +27,7 @@ export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => 
             fontWeight: 'bold',
           },
         },
+        interaction: { tooltip: false },
         scale: { color: { palette: 'rainbow' } },
         legend: false,
     };

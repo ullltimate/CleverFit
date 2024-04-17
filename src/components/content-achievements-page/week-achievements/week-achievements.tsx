@@ -10,18 +10,16 @@ import {
     DataForPieDiagram,
     DataForPlot,
     filteredTrainings,
-    generalLoadForPeriod,
-    getMostReapetedTrain,
-    getMostRepitedExercise,
-    getTotalApproaches,
-    getTotalReplays,
     getTrainingForPeriod,
 } from '@utils/achievements-week-healper';
-import { Badge, Card, List } from 'antd';
+import { Badge, List } from 'antd';
 import classNames from 'classnames';
 import moment from 'moment';
 
+import { CardsAchievements } from '../cards-achievements/cards-achievements';
+import { ExerciseListAchievements } from '../exercise-list-achievements/exercise-list-achievements';
 import { FilterPanelAchievements } from '../filters-panel-achievements/filters-panel-achievements';
+import { MostReapetedBlock } from '../most-reapeted-block/most-reapeted-block';
 
 import { NotFoundTrain } from './not-found-train-in-week/not-found-train';
 import { PieDiagram } from './pie-diagram/pie-diagram';
@@ -38,7 +36,6 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     const [filteredTrainForWeek, setFilteredTrainForWeek] = useState<Training[]>([]);
     const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
     const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
-    const daysInWeek = 7;
     const [dataForPieDiagram, setDataForPieDiagram] = useState<DataForPieDiagram[]>([]);
     const [dataForListExerc, setDataForListExerc] = useState<DataForPieDiagram[]>([]);
 
@@ -134,60 +131,12 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                             />
                         </div>
                     </div>
-                    <div style={{display: 'flex'}}>
-                        <Card>
-                            <p>{generalLoadForPeriod(filteredTrainForWeek)}</p>
-                            <p>Общая нагрузка, кг</p>
-                        </Card>
-                        <Card>
-                            <p>{(generalLoadForPeriod(filteredTrainForWeek) / daysInWeek).toFixed(1)}
-                            </p>
-                            <p>Нагрузка в день, кг</p>
-                        </Card>
-                        <Card>
-                            <p>{getTotalReplays(filteredTrainForWeek)}</p>
-                            <p>Количество повторений, раз</p>
-                        </Card>
-                        <Card>
-                            <p>{getTotalApproaches(filteredTrainForWeek)}</p>
-                            <p>Подходы, раз</p>
-                        </Card>
-                    </div>
+                    <CardsAchievements filteredTrain={filteredTrainForWeek} />
                     <div>
-                        {filterValue === 'Все' && (
-                            <div>
-                                <span>Самая частая тренировка </span>
-                                <span>
-                                    {getMostReapetedTrain(filteredTrainForWeek)?.toLocaleLowerCase()}
-                                </span>
-                            </div>
-                        )}
-                        <div>
-                            <span>Самое частое упражнение </span>
-                            <span>
-                                {getMostRepitedExercise(filteredTrainForWeek).type}
-                            </span>
-                        </div>
+                        <MostReapetedBlock filteredTrain={filteredTrainForWeek} filterValue={filterValue} />
                         <div style={{display: 'flex'}}>
                             <PieDiagram dataForPieDiagram={dataForPieDiagram}/>
-                            <div className='graphic-list-wrapper'>
-                                <p className='graphic-list__title'>Самые частые  упражнения по дням недели</p>
-                                <List
-                                    dataSource={dataForListExerc}
-                                    renderItem={(item, index) => (
-                                        <List.Item className='graphic-list-item'>
-                                            <Badge
-                                                count={index + 1}
-                                                className={classNames({
-                                                    'hasnt-type': !item.type,
-                                                })}
-                                            />
-                                            <span className=''>{item.date}</span>
-                                            <span>{item.type}</span>
-                                        </List.Item>
-                                    )}
-                                />
-                            </div>
+                            <ExerciseListAchievements dataForListExerc={dataForListExerc} />
                         </div>
                     </div>
                 </React.Fragment>
