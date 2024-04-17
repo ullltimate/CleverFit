@@ -17,9 +17,11 @@ import {
     getTotalReplays,
     getTrainingForPeriod,
 } from '@utils/achievements-week-healper';
-import { Badge, Card, List, Tag } from 'antd';
+import { Badge, Card, List } from 'antd';
 import classNames from 'classnames';
 import moment from 'moment';
+
+import { FilterPanelAchievements } from '../filters-panel-achievements/filters-panel-achievements';
 
 import { NotFoundTrain } from './not-found-train-in-week/not-found-train';
 import { PieDiagram } from './pie-diagram/pie-diagram';
@@ -33,20 +35,12 @@ type WeekAchievementsProps = {
 
 export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, trainingList }) => {
     const [filterValue, setFilterValue] = useState('Все');
-    const [filterOptions, setFilterOptions] = useState([filterValue]);
     const [filteredTrainForWeek, setFilteredTrainForWeek] = useState<Training[]>([]);
     const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
     const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
     const daysInWeek = 7;
     const [dataForPieDiagram, setDataForPieDiagram] = useState<DataForPieDiagram[]>([]);
     const [dataForListExerc, setDataForListExerc] = useState<DataForPieDiagram[]>([]);
-
-    useEffect(() => {
-        if (trainingList)
-            setFilterOptions((options) =>
-                options.length > 1 ? [...options] : options.concat(trainingList.map((e) => e.name)),
-            );
-    }, [trainingList]);
 
     useEffect(() => {
         const startDate = moment().subtract(6, 'days');
@@ -112,24 +106,10 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         width: 520,
         height: 375,
     };
-    
-    console.log(dataForPieDiagram)
 
     return (
         <React.Fragment>
-            <div>
-                <span className='achiev-filter-title'>Тип тренировки :</span>
-                {filterOptions &&
-                    filterOptions?.map((e) => (
-                        <Tag
-                            key={e}
-                            color={e === filterValue ? 'blue' : 'default'}
-                            onClick={() => setFilterValue(e)}
-                        >
-                            {e}
-                        </Tag>
-                    ))}
-            </div>
+            <FilterPanelAchievements trainingList={trainingList} filterValue={filterValue} setFilterValue={setFilterValue}/>
             {filteredTrainForWeek?.length ? (
                 <React.Fragment>
                     <div className='graphics-wrapper'>

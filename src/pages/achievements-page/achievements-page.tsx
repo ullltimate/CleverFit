@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CustomBreadcrumb } from '@components/breadcrumb/custom-breadcrumb';
+import { MonthAchievements } from '@components/content-achievements-page/month-achievements/month-achievements';
 import { WeekAchievements } from '@components/content-achievements-page/week-achievements/week-achievements';
 import { AuthItemsTab } from '@components/content-auth-page/tabs/tabs';
 import { Header } from '@components/header/header';
@@ -27,7 +28,7 @@ export const AchievementsPage: React.FC = () => {
         {
             label: 'За месяц',
             key: 'month',
-            children: 'month',
+            children: <MonthAchievements trainings={trainings} trainingList={trainingList}/>,
         },
         {
             label: 'За всё время (PRO)',
@@ -46,6 +47,7 @@ export const AchievementsPage: React.FC = () => {
                     <Tabs
                         activeKey={key}
                         centered={true}
+                        destroyInactiveTabPane={true}
                         tabBarGutter={windowSize<370 ? 10 : windowSize<1300 ? 105: 305}
                         tabBarStyle={{fontSize: 'var(--unit-24)'}}
                         items={itemsTab}
