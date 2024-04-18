@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
+import { axisConfigPlot, styleConfigPlot } from '@constants/achievements';
 import { formatDate, formatDateDDMM } from '@constants/calendar';
 import { useResize } from '@hooks/use-resize';
 import { TrainingList } from '@services/catalogs';
@@ -9,6 +10,7 @@ import {
     splitMonthIntoWeeks,
 } from '@utils/achievements-month-healper';
 import {
+    createData,
     createDataForList,
     createDataForPieDiagram,
     createDataForPlot,
@@ -84,33 +86,14 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
         setDataForListExerc(createDataForListMonthExerc(dataExercForDayOfWeek));
     }, [dataExercForDayOfWeek]);
 
-    const data = dataForPlot.map((e) => ({
-        date: moment(e.date).format(formatDateDDMM),
-        load: e.load,
-    }));
+    const data = createData(dataForPlot);
 
     const config = {
         data,
         xField: 'date',
         yField: 'load',
-        axis: {
-            x: {
-                title: 'Нагрузка, кг',
-                titleSpacing: 16,
-                titlePosition: 'bottom',
-                titleFontSize: 14,
-                tick: false,
-                labelSpacing: 16,
-            },
-            y: {
-                labelFormatter: (value: number) => `${value} кг`,
-                tick: false,
-                labelSpacing: 16,
-            },
-        },
-        style: {
-            fill: '#85A5FFFF',
-        },
+        axis: axisConfigPlot,
+        style: styleConfigPlot,
         sizeField: 25,
         scrollbar: { x: { ratio: windowSize<830 ? 0.2 : 0.5, value: 1 } },
         width: windowSize<830 ? 320 : undefined,

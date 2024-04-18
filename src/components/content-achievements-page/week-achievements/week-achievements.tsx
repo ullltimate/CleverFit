@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
-import { formatDateDDMM } from '@constants/calendar';
+import { axisConfigPlot, styleConfigPlot } from '@constants/achievements';
 import { useResize } from '@hooks/use-resize';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
 import {
+    createData,
     createDataForList,
     createDataForPieDiagram,
     createDataForPlot,
@@ -74,33 +75,14 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     },[dataForPieDiagram])
 
 
-    const data = dataForPlot.map((e) => ({
-        date: moment(e.date).format(formatDateDDMM),
-        load: e.load,
-    }));
+    const data = createData(dataForPlot);
 
     const config = {
         data,
         xField: 'date',
         yField: 'load',
-        axis: {
-            x: {
-                title: 'Нагрузка, кг',
-                titleSpacing: 16,
-                titlePosition: 'bottom',
-                titleFontSize: 14,
-                tick: false,
-                labelSpacing: 16,
-            },
-            y: {
-                labelFormatter: (value: number) => `${value} кг`,
-                tick: false,
-                labelSpacing: 16,
-            },
-        },
-        style: {
-            fill: '#85A5FFFF',
-        },
+        axis: axisConfigPlot,
+        style: styleConfigPlot,
         sizeField: 25,
         width: windowSize<830 ? 320 : 520,
         height: windowSize<830 ? 240 : 375,

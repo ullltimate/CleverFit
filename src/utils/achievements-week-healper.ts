@@ -1,4 +1,4 @@
-import { formatDayOfWeek, invalideFormatDate } from '@constants/calendar';
+import { formatDateDDMM, formatDayOfWeek, invalideFormatDate } from '@constants/calendar';
 import { Training } from '@services/trainings';
 import moment, { Moment } from 'moment';
 
@@ -217,3 +217,8 @@ export const filterDataForPieDiagram = (dataForPieDiagram: DataForPieDiagram[]) 
 
     return newData
 }
+
+export const createData = (dataForPlot: DataForPlot[]) => dataForPlot.map((e) => ({
+        date: moment(e.date).format(formatDateDDMM),
+        load: e.load,
+    }))
