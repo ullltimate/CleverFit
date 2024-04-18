@@ -9,3 +9,40 @@
 .achiev-filter-title{
     margin-right: var(--unit-24);
 }
+.graphics-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.has-load .ant-badge-count{
+    background-color: var(--color-primary);
+    margin-right: var(--unit-16);
+}
+.hasnt-load .ant-badge-count{
+    background-color: var(--color-bg-blue);
+    color: var(--color-primary);
+    margin-right: var(--unit-16);
+}
+.graphic-list__title{
+    line-height: 18.2px;
+}
+.graphic-list-wrapper{
+    width: 200px;
+    margin-right: 285px;
+}
+.graphic-list-wrapper .ant-list-split .ant-list-item{
+    border: none;
+    padding: 7px 0;
+}
+.graphic-list-wrapper .ant-list-item{
+    justify-content: start;
+}
+.graphic-list-item span:nth-child(2){
+    margin-right: var(--unit-16);
+    color: var(--color-disabled);
+    width: 95px;
+}
+.graphic-list-item span:last-child{
+    font-weight: var(--font-weight-700);
+}

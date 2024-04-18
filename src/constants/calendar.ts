@@ -29,3 +29,4 @@ export const colorTrainings = [
 export const formatDate = 'DD.MM.YYYY';
 export const invalideFormatDate = 'YYYY-MM-DD';
 export const formatDateDDMM = 'DD.MM';
+export const formatDayOfWeek = 'dddd';

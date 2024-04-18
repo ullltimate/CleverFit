@@ -3,8 +3,15 @@ import { Column } from '@ant-design/plots';
 import { formatDateDDMM } from '@constants/calendar';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
-import { createDataForPlot, filteredTrainings, getTrainingForPeriod } from '@utils/achievements-week-healper';
-import { List, Tag } from 'antd';
+import {
+    createDataForList,
+    createDataForPlot,
+    DataForPlot,
+    filteredTrainings,
+    getTrainingForPeriod,
+} from '@utils/achievements-week-healper';
+import { Badge, List, Tag } from 'antd';
+import classNames from 'classnames';
 import moment from 'moment';
 
 import { NotFoundTrain } from './not-found-train-in-week/not-found-train';
@@ -16,16 +23,12 @@ type WeekAchievementsProps = {
     trainingList?: TrainingList[];
 };
 
-type DataForPlot = {
-	date: string,
-	load: number
-}
 export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, trainingList }) => {
     const [filterValue, setFilterValue] = useState('Все');
     const [filterOptions, setFilterOptions] = useState([filterValue]);
     const [filteredTrainForWeek, setFilteredTrainForWeek] = useState<Training[]>([]);
-	const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
-
+    const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
+    const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
 
     useEffect(() => {
         if (trainingList)
@@ -35,25 +38,31 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     }, [trainingList]);
 
     useEffect(() => {
-		const startDate = moment().subtract(6, 'days');
-		const endDate = moment();
+        const startDate = moment().subtract(6, 'days');
+        const endDate = moment();
 
-		if (trainings){
+        if (trainings) {
             const trainForWeek = getTrainingForPeriod(trainings, startDate, endDate);
 
-			if(trainForWeek) {
+            if (trainForWeek) {
                 const filteredTrain = filteredTrainings(trainForWeek, filterValue);
 
-			    setFilteredTrainForWeek(filteredTrain);
-			    setDataForPlot(createDataForPlot(startDate, endDate, filteredTrain));
+                setFilteredTrainForWeek(filteredTrain);
+                setDataForPlot(createDataForPlot(startDate, endDate, filteredTrain));
             }
-		}
+        }
     }, [trainings, filterValue]);
-    console.log(dataForPlot)
-    console.log()
 
-    const data = dataForPlot.map(e => ({date: moment(e.date).format(formatDateDDMM), load: e.load}));
-    console.log(data)
+    useEffect(() => {
+        setDataForList(createDataForList(dataForPlot));
+    }, [dataForPlot]);
+
+    console.log(dataForList);
+
+    const data = dataForPlot.map((e) => ({
+        date: moment(e.date).format(formatDateDDMM),
+        load: e.load,
+    }));
 
     const config = {
         data,
@@ -86,21 +95,43 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         <React.Fragment>
             <div>
                 <span className='achiev-filter-title'>Тип тренировки :</span>
-                {filterOptions && filterOptions?.map((e) => (
-                    <Tag
-                        key={e}
-                        color={e === filterValue ? 'blue' : 'default'}
-                        onClick={() => setFilterValue(e)}
-                    >
-                        {e}
-                    </Tag>
-                ))}
+                {filterOptions &&
+                    filterOptions?.map((e) => (
+                        <Tag
+                            key={e}
+                            color={e === filterValue ? 'blue' : 'default'}
+                            onClick={() => setFilterValue(e)}
+                        >
+                            {e}
+                        </Tag>
+                    ))}
             </div>
-            {(filteredTrainForWeek?.length)? (
-                <div>
-                    <Column {...config} />
-                    <List />
-                </div>
+            {filteredTrainForWeek?.length ? (
+                <React.Fragment>
+                    <div className='graphics-wrapper'>
+                        <Column {...config} />
+                        <div className='graphic-list-wrapper'>
+                            <p className='graphic-list__title'>Средняя нагрузка по дням недели</p>
+                            <List
+                                dataSource={dataForList}
+                                renderItem={(item, index) => (
+                                    <List.Item className='graphic-list-item'>
+                                        <Badge
+                                            count={index + 1}
+                                            className={classNames({
+                                                'has-load': item.load,
+                                                'hasnt-load': !item.load,
+                                            })}
+                                        />
+                                        <span className=''>{item.date}</span>
+                                        <span>{item.load ? `${item.load} кг` : ''}</span>
+                                    </List.Item>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div>cards</div>
+                </React.Fragment>
             ) : (
                 <NotFoundTrain />
             )}

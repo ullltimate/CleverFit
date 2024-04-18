@@ -1,6 +1,11 @@
-import { invalideFormatDate } from '@constants/calendar';
+import { formatDayOfWeek, invalideFormatDate } from '@constants/calendar';
 import { Training } from '@services/trainings';
 import moment, { Moment } from 'moment';
+
+export type DataForPlot = {
+	date: string,
+	load: number
+}
 
 export const getTrainingForPeriod = (trainings: Training[], startDate: Moment, endDate: Moment) =>
     trainings?.filter(
@@ -33,7 +38,7 @@ export const averageLoad = (trainings: Training[]) => {
         averLoad = totalLoad / allExercicesForDay.length;
     }
 
-    return averLoad;
+    return Math.round(averLoad);
 };
 
 export const createDataForPlot = (startDate: Moment, endDate: Moment, trainings: Training[]) => {
@@ -49,3 +54,41 @@ export const createDataForPlot = (startDate: Moment, endDate: Moment, trainings:
 
     return data;
 };
+
+export const changeNameDayOfWeek = (name: string) => {
+    let nameDay = name;
+
+    switch(name){
+        case 'Monday':
+            nameDay = 'Понедельник';
+            break;
+        case 'Tuesday':
+            nameDay = 'Вторник';
+            break;
+        case 'Wednesday':
+            nameDay = 'Среда';
+            break;
+        case 'Thursday':
+            nameDay = 'Четверг';
+            break;
+        case 'Friday':
+            nameDay = 'Пятница';
+            break;
+        case 'Saturday':
+            nameDay = 'Суббота';
+            break;
+        case 'Sunday':
+            nameDay = 'Воскресенье';
+            break;
+    }
+
+    return nameDay
+}
+
+export const createDataForList = (data: DataForPlot[]) => {
+    const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    const dataForDayOfWeek = data.map(e => ({date: changeNameDayOfWeek(moment(e.date).format(formatDayOfWeek)), load: e.load}));
+    const sortedDataForDayOfWeek = [...dataForDayOfWeek].sort((a,b) => daysOfWeek.indexOf(a.date) - daysOfWeek.indexOf(b.date));
+
+    return sortedDataForDayOfWeek;
+}
