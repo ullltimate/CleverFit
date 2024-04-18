@@ -1,0 +1,24 @@
+.reapeted-block{
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--unit-16);
+}
+.reapeted-block__title{
+    font-size: var(--unit-24);
+    font-weight: var(--font-weight-500);
+}
+.reapeted-block__subtitle{
+    color: var(--color-disabled);
+    margin-right: 56px;
+    max-width: 100px;
+    display: inline-block;
+}
+.reapeted-block p{
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 370px) {
+    .reapeted-block__title{
+        font-size: 20px;
+    }
+}

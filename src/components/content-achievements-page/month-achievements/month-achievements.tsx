@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
 import { formatDate, formatDateDDMM } from '@constants/calendar';
+import { useResize } from '@hooks/use-resize';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
 import { createDataForListMonthExerc, splitMonthIntoWeeks } from '@utils/achievements-month-healper';
@@ -13,9 +14,10 @@ import {
     filteredTrainings,
     getTrainingForPeriod,
 } from '@utils/achievements-week-healper';
-import { Badge, List, Space } from 'antd';
+import { Badge, List } from 'antd';
 import classNames from 'classnames';
 import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 
 import { CardsAchievements } from '../cards-achievements/cards-achievements';
 import { ExerciseListAchievements } from '../exercise-list-achievements/exercise-list-achievements';
@@ -23,6 +25,8 @@ import { FilterPanelAchievements } from '../filters-panel-achievements/filters-p
 import { MostReapetedBlock } from '../most-reapeted-block/most-reapeted-block';
 import { NotFoundTrain } from '../week-achievements/not-found-train-in-week/not-found-train';
 import { PieDiagram } from '../week-achievements/pie-diagram/pie-diagram';
+
+import { CollapsedLoadList } from './collapsed-load-list/collapsed-load-list';
 
 import './month-achievements.css';
 
@@ -40,6 +44,7 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
     const [dataForPieDiagram, setDataForPieDiagram] = useState<DataForPieDiagram[]>([]);
     const [dataExercForDayOfWeek, setDataExercForDayOfWeek] = useState<DataForPieDiagram[]>([]);
     const [dataForListExerc, setDataForListExerc] = useState<DataForPieDiagram[]>([]);
+    const { windowSize } = useResize();
 
     useEffect(() => {
         const endDate = moment().endOf('isoWeek');
@@ -119,9 +124,11 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
                     <div>
                         <Column {...config} />
                     </div>
-                    <Space>
+                    {
+                        windowSize > 370 ?
+                        <div className='graphic-lists-wrapper'>
                         {dataForList.map((e) => (
-                            <div>
+                            <div key={uuidv4()} className='graphic-list-wrapper'>
                                 <p className='graphic-list__title'>Неделя {moment(e[0].date).format(formatDateDDMM)}-{moment(e[e.length-1].date).format(formatDateDDMM)}</p>
                                 <List
                                     dataSource={e}
@@ -141,16 +148,18 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
                                 />
                             </div>
                         ))}
-                    </Space>
+                    </div>
+                    : <CollapsedLoadList dataForList={dataForList} />
+                    }
                     <CardsAchievements filteredTrain={filteredTrainForMonth} />
                     <MostReapetedBlock filteredTrain={filteredTrainForMonth} filterValue={filterValue} />
-                    <div style={{display: 'flex'}}>
+                    <div className='pie-graphics-wrapper'>
                         <PieDiagram dataForPieDiagram={dataForListExerc}/>
                         <ExerciseListAchievements dataForListExerc={dataForListExerc} isMonth={true}/>
                     </div>
                 </React.Fragment>
             ) : (
-                <NotFoundTrain />
+                <NotFoundTrain isMonth={true}/>
             )}
         </React.Fragment>
     );

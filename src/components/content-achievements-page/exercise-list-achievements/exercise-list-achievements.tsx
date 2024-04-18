@@ -20,7 +20,7 @@ export const ExerciseListAchievements: React.FC<ExerciseListAchievementsProps> =
                 <List.Item className='graphic-list-item'>
                     <Badge
                         count={index + 1}
-                        className={classNames({
+                        className={classNames('has-type', {
                             'hasnt-type': !item.type,
                         })}
                     />

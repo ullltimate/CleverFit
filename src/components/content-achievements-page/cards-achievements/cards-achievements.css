@@ -1,0 +1,48 @@
+.achiev-cards{
+    display: flex;
+    flex-wrap: wrap;
+    margin: var(--unit-24) 0;
+}
+.achiev-cards .achiev-card{
+    width: 200px;
+    margin: 0 var(--unit-24) var(--unit-16) 0;
+}
+.achiev-card__title{
+    margin-bottom: var(--unit-8);
+    font-size: 38px;
+    font-weight: var(--font-weight-700);
+    text-align: center;
+}
+.achiev-card__subtitle{
+    width: 115px;
+    margin: 0;
+    color: var(--color-disabled);
+    text-align: center;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 370px) {
+    .achiev-cards .achiev-card{
+        width: 100%;
+        margin-right: 0;
+        text-align: left;
+    }
+    .achiev-card .ant-card-body{
+        padding: var(--unit-16);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .achiev-card .ant-card-body::after,
+    .achiev-card .ant-card-body::before{
+        display: none;
+    }
+    .achiev-card__title{
+        text-align: left;
+    }
+    .achiev-card__subtitle{
+        text-align: right;
+        width: 100%;
+    }
+}

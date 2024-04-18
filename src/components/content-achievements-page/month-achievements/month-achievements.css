@@ -1,0 +1,8 @@
+.graphic-lists-wrapper .graphic-list-wrapper{
+    margin: var(--unit-24) 0 0;
+}
+.graphic-lists-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

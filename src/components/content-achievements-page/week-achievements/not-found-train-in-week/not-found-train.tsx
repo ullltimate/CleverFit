@@ -2,9 +2,13 @@ import React from 'react';
 
 import './not-found-train.css';
 
-export const NotFoundTrain: React.FC = () => (
+type NotFoundTrainProps = {
+    isMonth?: boolean;
+}
+
+export const NotFoundTrain: React.FC<NotFoundTrainProps> = ({isMonth}) => (
         <div className='not-found-train'>
             <div className='not-found-train__img'/>
-            <h3>Ой, такой тренировки на этой неделе не было.</h3>
+            <h3 className='not-found-train__title'>Ой, такой тренировки {isMonth ? <span>в этом месяце</span> : <span>на этой неделе</span>} не было.</h3>
         </div>
     );

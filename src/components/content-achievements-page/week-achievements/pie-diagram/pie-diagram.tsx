@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pie } from '@ant-design/plots';
+import { useResize } from '@hooks/use-resize';
 import { DataForPieDiagram, filterDataForPieDiagram } from '@utils/achievements-week-healper';
 
 
@@ -9,15 +10,15 @@ type PieDiagramProps = {
 
 
 export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => {
-
+	const {windowSize} = useResize();
     const data = filterDataForPieDiagram(dataForPieDiagram);
 
     const config = {
         data,
         angleField: 'count',
         colorField: 'type',
-        margin: 80,
-        innerRadius: 0.75,
+        innerRadius: 0.37,
+        radius: 0.5,
         label: {
           text: 'type',
           position: 'outside',
@@ -30,6 +31,8 @@ export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => 
         interaction: { tooltip: false },
         scale: { color: { palette: 'rainbow' } },
         legend: false,
+        width: windowSize<830 ? 330 : 520,
+        height: windowSize<830 ? 210 : 340
     };
 
     return <Pie {...config} />

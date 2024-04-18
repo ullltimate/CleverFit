@@ -5,6 +5,8 @@ import {
     getMostRepitedExercise,
 } from '@utils/achievements-week-healper';
 
+import './most-reapeted-block.css'
+
 type MostReapetedBlockProps = {
     filteredTrain: Training[];
     filterValue: string
@@ -22,14 +24,14 @@ export const MostReapetedBlock: React.FC<MostReapetedBlockProps> = ({ filteredTr
     return (
         <div>
             {filterValue === 'Все' && (
-                <div>
-                    <span>Самая частая тренировка </span>
-                    <span>{train?.toLocaleLowerCase()}</span>
+                <div className='reapeted-block'>
+                    <p className='reapeted-block__subtitle'>Самая частая тренировка </p>
+                    <p className='reapeted-block__title'>{train?.toLocaleLowerCase()}</p>
                 </div>
             )}
-            <div>
-                <span>Самое частое упражнение </span>
-                <span>{exercise}</span>
+            <div className='reapeted-block'>
+                <p className='reapeted-block__subtitle'>Самое частое упражнение </p>
+                <p className='reapeted-block__title'>{exercise.toLocaleLowerCase()}</p>
             </div>
         </div>
     );

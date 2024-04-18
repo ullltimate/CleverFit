@@ -24,6 +24,9 @@
     color: var(--color-primary);
     margin-right: var(--unit-16);
 }
+.has-type .ant-badge-count{
+    margin-right: var(--unit-16);
+}
 .hasnt-type .ant-badge-count{
     background-color: #ffd9d9;
     color: var(--color-error);
@@ -49,4 +52,16 @@
 }
 .graphic-list-item span:last-child{
     font-weight: var(--font-weight-700);
+}
+.pie-graphics-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 800px) {
+    .graphic-list-wrapper{
+        width: 330px;
+        margin-right: 0;
+    }
 }

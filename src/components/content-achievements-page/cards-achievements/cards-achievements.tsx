@@ -3,6 +3,8 @@ import { Training } from '@services/trainings';
 import { generalLoadForPeriod, getTotalApproaches, getTotalReplays } from '@utils/achievements-week-healper';
 import { Card } from 'antd';
 
+import './cards-achievements.css'
+
 type CardsAchievementsProps = {
     filteredTrain: Training[],
 };
@@ -25,22 +27,22 @@ export const CardsAchievements: React.FC<CardsAchievementsProps> = ({ filteredTr
     },[totalLoad])
 
     return (
-        <div style={{ display: 'flex' }}>
-            <Card>
-                <p>{totalLoad}</p>
-                <p>Общая нагрузка, кг</p>
+        <div className='achiev-cards'>
+            <Card className='achiev-card' bordered={true}>
+                <p className='achiev-card__title'>{totalLoad}</p>
+                <p className='achiev-card__subtitle'>Общая нагрузка, кг</p>
             </Card>
-            <Card>
-                <p>{dayLoad.toFixed(1)}</p>
-                <p>Нагрузка в день, кг</p>
+            <Card className='achiev-card' bordered={true}>
+                <p className='achiev-card__title'>{(dayLoad % 1) === 0 ? dayLoad : dayLoad.toFixed(1)}</p>
+                <p className='achiev-card__subtitle'>Нагрузка в день, кг</p>
             </Card>
-            <Card>
-                <p>{countReplays}</p>
-                <p>Количество повторений, раз</p>
+            <Card className='achiev-card' bordered={true}>
+                <p className='achiev-card__title'>{countReplays}</p>
+                <p className='achiev-card__subtitle'> Количество повторений, раз</p>
             </Card>
-            <Card>
-                <p>{countApproaches}</p>
-                <p>Подходы, раз</p>
+            <Card className='achiev-card' bordered={true}>
+                <p className='achiev-card__title'>{countApproaches}</p>
+                <p className='achiev-card__subtitle'>Подходы, раз</p>
             </Card>
         </div>
     );

@@ -5,12 +5,16 @@ import { Tag } from 'antd';
 import './filters-panel-achievements.css';
 
 type FilterPanelAchievementsProps = {
-    filterValue: string,
-    setFilterValue: Dispatch<SetStateAction<string>>,
+    filterValue: string;
+    setFilterValue: Dispatch<SetStateAction<string>>;
     trainingList?: TrainingList[];
 };
 
-export const FilterPanelAchievements: React.FC<FilterPanelAchievementsProps> = ({ trainingList, filterValue, setFilterValue }) => {
+export const FilterPanelAchievements: React.FC<FilterPanelAchievementsProps> = ({
+    trainingList,
+    filterValue,
+    setFilterValue,
+}) => {
     const [filterOptions, setFilterOptions] = useState([filterValue]);
 
     useEffect(() => {
@@ -21,8 +25,9 @@ export const FilterPanelAchievements: React.FC<FilterPanelAchievementsProps> = (
     }, [trainingList]);
 
     return (
-            <div>
-                <span className='achiev-filter-title'>Тип тренировки :</span>
+        <div className='achiev-filter-wrapper'>
+            <p className='achiev-filter-title'>Тип тренировки :</p>
+            <div className='tags-wrapper'>
                 {filterOptions &&
                     filterOptions?.map((e) => (
                         <Tag
@@ -34,5 +39,6 @@ export const FilterPanelAchievements: React.FC<FilterPanelAchievementsProps> = (
                         </Tag>
                     ))}
             </div>
+        </div>
     );
 };

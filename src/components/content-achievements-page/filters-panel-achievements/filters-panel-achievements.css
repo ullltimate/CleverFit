@@ -1,0 +1,21 @@
+.achiev-filter-wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    margin: var(--unit-24) 0;
+}
+.achiev-filter-title{
+    min-width: 120px;
+    margin: var(--unit-8) var(--unit-24) var(--unit-8) 0;
+}
+.tags-wrapper .ant-tag{
+    margin: var(--unit-8) var(--unit-12) var(--unit-8) 0;
+}
+
+@media screen and (max-width: 370px) {
+    .achiev-filter-title{
+        margin: var(--unit-8) var(--unit-16) var(--unit-8) 0;
+    }
+    .tags-wrapper .ant-tag{
+        margin: var(--unit-8) var(--unit-8) var(--unit-8) 0;
+    }
+}

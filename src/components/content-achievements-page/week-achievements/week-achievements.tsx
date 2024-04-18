@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
 import { formatDateDDMM } from '@constants/calendar';
+import { useResize } from '@hooks/use-resize';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
 import {
@@ -38,6 +39,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
     const [dataForList, setDataForList] = useState<DataForPlot[]>([]);
     const [dataForPieDiagram, setDataForPieDiagram] = useState<DataForPieDiagram[]>([]);
     const [dataForListExerc, setDataForListExerc] = useState<DataForPieDiagram[]>([]);
+    const { windowSize } = useResize();
 
     useEffect(() => {
         const startDate = moment().subtract(6, 'days');
@@ -100,8 +102,8 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
             fill: '#85A5FFFF',
         },
         sizeField: 25,
-        width: 520,
-        height: 375,
+        width: windowSize<830 ? 330 : 520,
+        height: windowSize<830 ? 335 : 375,
     };
 
     return (
@@ -134,7 +136,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                     <CardsAchievements filteredTrain={filteredTrainForWeek} />
                     <div>
                         <MostReapetedBlock filteredTrain={filteredTrainForWeek} filterValue={filterValue} />
-                        <div style={{display: 'flex'}}>
+                        <div className='pie-graphics-wrapper'>
                             <PieDiagram dataForPieDiagram={dataForPieDiagram}/>
                             <ExerciseListAchievements dataForListExerc={dataForListExerc} />
                         </div>
