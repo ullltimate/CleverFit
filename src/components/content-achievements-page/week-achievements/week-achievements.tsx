@@ -103,7 +103,7 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
         },
         sizeField: 25,
         width: windowSize<830 ? 330 : 520,
-        height: windowSize<830 ? 335 : 375,
+        height: windowSize<830 ? 240 : 375,
     };
 
     return (

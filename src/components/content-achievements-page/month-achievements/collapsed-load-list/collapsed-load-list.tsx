@@ -1,4 +1,5 @@
 import React from 'react';
+import { DownOutlined } from '@ant-design/icons';
 import { formatDate, formatDateDDMM } from '@constants/calendar';
 import { DataForPlot } from '@utils/achievements-week-healper';
 import { Badge, Collapse, List } from 'antd';
@@ -12,7 +13,7 @@ type CollapsedLoadListProps = {
 const { Panel } = Collapse;
 
 export const CollapsedLoadList: React.FC<CollapsedLoadListProps> = ({ dataForList }) => (
-        <Collapse expandIconPosition='end' ghost={true}>
+        <Collapse expandIconPosition='end' ghost={true} expandIcon={(panelProps) => <DownOutlined rotate={panelProps.isActive ? 180 : 0} />}>
             {dataForList.map((e, i) => (
                 <Panel
                     header={`Неделя ${moment(e[0].date).format(formatDateDDMM)}-${moment(e[e.length - 1].date).format(formatDateDDMM)}`}

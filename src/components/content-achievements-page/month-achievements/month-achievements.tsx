@@ -4,7 +4,10 @@ import { formatDate, formatDateDDMM } from '@constants/calendar';
 import { useResize } from '@hooks/use-resize';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
-import { createDataForListMonthExerc, splitMonthIntoWeeks } from '@utils/achievements-month-healper';
+import {
+    createDataForListMonthExerc,
+    splitMonthIntoWeeks,
+} from '@utils/achievements-month-healper';
 import {
     createDataForList,
     createDataForPieDiagram,
@@ -71,15 +74,15 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
         const startDate = moment(endDate).subtract(27, 'days');
 
         setDataForPieDiagram(createDataForPieDiagram(startDate, endDate, filteredTrainForMonth));
-    },[filteredTrainForMonth])
-    
+    }, [filteredTrainForMonth]);
+
     useEffect(() => {
-        setDataExercForDayOfWeek(createDataForList(dataForPieDiagram))
-    },[dataForPieDiagram]);
+        setDataExercForDayOfWeek(createDataForList(dataForPieDiagram));
+    }, [dataForPieDiagram]);
 
     useEffect(() => {
         setDataForListExerc(createDataForListMonthExerc(dataExercForDayOfWeek));
-    },[dataExercForDayOfWeek])
+    }, [dataExercForDayOfWeek]);
 
     const data = dataForPlot.map((e) => ({
         date: moment(e.date).format(formatDateDDMM),
@@ -109,7 +112,9 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
             fill: '#85A5FFFF',
         },
         sizeField: 25,
-        scrollbar: { x: { ratio: 0.5, value: 1 } },
+        scrollbar: { x: { ratio: windowSize<830 ? 0.2 : 0.5, value: 1 } },
+        width: windowSize<830 ? 320 : undefined,
+        height: windowSize<830 ? 240 : 375
     };
 
     return (
@@ -124,42 +129,53 @@ export const MonthAchievements: React.FC<WeekAchievementsProps> = ({ trainings, 
                     <div>
                         <Column {...config} />
                     </div>
-                    {
-                        windowSize > 370 ?
+                    {windowSize > 370 ? (
                         <div className='graphic-lists-wrapper'>
-                        {dataForList.map((e) => (
-                            <div key={uuidv4()} className='graphic-list-wrapper'>
-                                <p className='graphic-list__title'>Неделя {moment(e[0].date).format(formatDateDDMM)}-{moment(e[e.length-1].date).format(formatDateDDMM)}</p>
-                                <List
-                                    dataSource={e}
-                                    renderItem={(item, index) => (
-                                        <List.Item className='graphic-list-item'>
-                                            <Badge
-                                                count={index + 1}
-                                                className={classNames({
-                                                    'has-load': item.load,
-                                                    'hasnt-load': !item.load,
-                                                })}
-                                            />
-                                            <span className=''>{moment(item.date).format(formatDate)}</span>
-                                            <span>{item.load ? `${item.load} кг` : ''}</span>
-                                        </List.Item>
-                                    )}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                    : <CollapsedLoadList dataForList={dataForList} />
-                    }
+                            {dataForList.map((e) => (
+                                <div key={uuidv4()} className='graphic-list-wrapper'>
+                                    <p className='graphic-list__title'>
+                                        Неделя {moment(e[0].date).format(formatDateDDMM)}-
+                                        {moment(e[e.length - 1].date).format(formatDateDDMM)}
+                                    </p>
+                                    <List
+                                        dataSource={e}
+                                        renderItem={(item, index) => (
+                                            <List.Item className='graphic-list-item'>
+                                                <Badge
+                                                    count={index + 1}
+                                                    className={classNames({
+                                                        'has-load': item.load,
+                                                        'hasnt-load': !item.load,
+                                                    })}
+                                                />
+                                                <span className=''>
+                                                    {moment(item.date).format(formatDate)}
+                                                </span>
+                                                <span>{item.load ? `${item.load} кг` : ''}</span>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <CollapsedLoadList dataForList={dataForList} />
+                    )}
                     <CardsAchievements filteredTrain={filteredTrainForMonth} />
-                    <MostReapetedBlock filteredTrain={filteredTrainForMonth} filterValue={filterValue} />
+                    <MostReapetedBlock
+                        filteredTrain={filteredTrainForMonth}
+                        filterValue={filterValue}
+                    />
                     <div className='pie-graphics-wrapper'>
-                        <PieDiagram dataForPieDiagram={dataForListExerc}/>
-                        <ExerciseListAchievements dataForListExerc={dataForListExerc} isMonth={true}/>
+                        <PieDiagram dataForPieDiagram={dataForListExerc} />
+                        <ExerciseListAchievements
+                            dataForListExerc={dataForListExerc}
+                            isMonth={true}
+                        />
                     </div>
                 </React.Fragment>
             ) : (
-                <NotFoundTrain isMonth={true}/>
+                <NotFoundTrain isMonth={true} />
             )}
         </React.Fragment>
     );

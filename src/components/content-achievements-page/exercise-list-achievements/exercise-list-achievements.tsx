@@ -12,7 +12,7 @@ export const ExerciseListAchievements: React.FC<ExerciseListAchievementsProps> =
     dataForListExerc,
     isMonth,
 }) => (
-    <div className='graphic-list-wrapper'>
+    <div className='graphic-list-wrapper exerc-list__margin'>
         <p className='graphic-list__title'>Самые частые упражнения по дням недели {isMonth && <span>за месяц</span>}</p>
         <List
             dataSource={dataForListExerc}

@@ -17,6 +17,7 @@ export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => 
         data,
         angleField: 'count',
         colorField: 'type',
+        marginTop: windowSize<370 ? -200 : 0,
         innerRadius: 0.37,
         radius: 0.5,
         label: {
@@ -25,14 +26,18 @@ export const PieDiagram: React.FC<PieDiagramProps> = ({ dataForPieDiagram }) => 
           formatter: (text: string) => text,
           connector: false,
           style: {
-            fontWeight: 'bold',
+            style: {
+              fontSize: 12,
+              fontFamily: "'Inter', 'sans-serif'",
+              fontWeight: 400,
+              color: '#000000',
+          },
           },
         },
         interaction: { tooltip: false },
         scale: { color: { palette: 'rainbow' } },
         legend: false,
-        width: windowSize<830 ? 330 : 520,
-        height: windowSize<830 ? 210 : 340
+        width: windowSize<830 ? 320 : 520,
     };
 
     return <Pie {...config} />

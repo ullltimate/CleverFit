@@ -35,7 +35,7 @@
     line-height: 18.2px;
 }
 .graphic-list-wrapper{
-    width: 200px;
+    width: 205px;
     margin-right: 285px;
 }
 .graphic-list-wrapper .ant-list-split .ant-list-item{
@@ -63,5 +63,8 @@
     .graphic-list-wrapper{
         width: 330px;
         margin-right: 0;
+    }
+    .exerc-list__margin{
+        margin-top: -200px;
     }
 }
