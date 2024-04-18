@@ -1,0 +1,5 @@
+.not-found-train__img{
+    width: 200px;
+    height: 175px;
+    background: center / contain no-repeat url(/not-found-train.png);
+}

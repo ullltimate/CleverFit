@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
-import { Tag } from 'antd';
+import { createDataForPlot, filteredTrainings, getTrainingForPeriod } from '@utils/achievements-week-healper';
+import { List, Tag } from 'antd';
 import moment from 'moment';
+
+import { NotFoundTrain } from './not-found-train-in-week/not-found-train';
 
 import './week-achievements.css';
 
@@ -12,9 +15,16 @@ type WeekAchievementsProps = {
     trainingList?: TrainingList[];
 };
 
+type DataForPlot = {
+	date: string,
+	load: number
+}
 export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, trainingList }) => {
     const [filterValue, setFilterValue] = useState('Все');
     const [filterOptions, setFilterOptions] = useState([filterValue]);
+    const [filteredTrainForWeek, setFilteredTrainForWeek] = useState<Training[]>([]);
+	const [dataForPlot, setDataForPlot] = useState<DataForPlot[]>([]);
+
 
     useEffect(() => {
         if (trainingList)
@@ -23,52 +33,57 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
             );
     }, [trainingList]);
 
-    const currentDay = moment();
-    
-    const data = [
-        { type: '1-3秒', value: 0.16 },
-        { type: '4-10秒', value: 0.125 },
-        { type: '11-30秒', value: 0.24 },
-        { type: '31-60秒', value: 0.19 },
-        { type: '1-3分', value: 0.22 },
-        { type: '3-10分', value: 0.05 },
-        { type: '10-30分', value: 0.01 },
-      ];
-      const config = {
+    useEffect(() => {
+		const startDate = moment().subtract(6, 'days');
+		const endDate = moment();
+
+		if (trainings){
+            const trainForWeek = getTrainingForPeriod(trainings, startDate, endDate);
+
+			if(trainForWeek) {
+                const filteredTrain = filteredTrainings(trainForWeek, filterValue);
+
+			    setFilteredTrainForWeek(filteredTrain);
+			    setDataForPlot(createDataForPlot(startDate, endDate, filteredTrain));
+            }
+		}
+    }, [trainings, filterValue]);
+    console.log(dataForPlot)
+
+    const data = dataForPlot;
+
+    const config = {
         data,
-        xField: 'type',
-        yField: 'value',
+        xField: 'date',
+        yField: 'load',
+        axis: {
+            x: {
+                title: 'Нагрузка, кг',
+                titleSpacing: 16,
+                titlePosition: 'bottom',
+                titleFontSize: 14,
+                tick: false,
+                labelSpacing: 16,
+            },
+            y: {
+                labelFormatter: (value: number) => `${value} кг`,
+                tick: false,
+                labelSpacing: 16,
+            },
+        },
         style: {
-          fill: ({ type }) => {
-            if (type === '10-30分' || type === '30+分') {
-              return '#22CBCC';
-            }
-
-            return '#2989FF';
-          },
+            fill: '#85A5FFFF',
         },
-        label: {
-          text: (originData) => {
-            const val = parseFloat(originData.value);
-
-            if (val < 0.05) {
-              return `${(val * 100).toFixed(1)  }%`;
-            }
-
-            return '';
-          },
-          offset: 10,
-        },
-        legend: false,
+        sizeField: 25,
         width: 520,
         height: 375,
-      };
+    };
 
     return (
         <React.Fragment>
             <div>
                 <span className='achiev-filter-title'>Тип тренировки :</span>
-                {filterOptions.map((e) => (
+                {filterOptions && filterOptions?.map((e) => (
                     <Tag
                         key={e}
                         color={e === filterValue ? 'blue' : 'default'}
@@ -78,9 +93,14 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
                     </Tag>
                 ))}
             </div>
-            <div style={{ height: 375}}>
-                <Column {...config} />
-            </div>
+            {(filteredTrainForWeek?.length)? (
+                <div>
+                    <Column {...config} />
+                    <List />
+                </div>
+            ) : (
+                <NotFoundTrain />
+            )}
         </React.Fragment>
     );
 };
