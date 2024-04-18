@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
+import { formatDateDDMM } from '@constants/calendar';
 import { TrainingList } from '@services/catalogs';
 import { Training } from '@services/trainings';
 import { createDataForPlot, filteredTrainings, getTrainingForPeriod } from '@utils/achievements-week-healper';
@@ -49,8 +50,10 @@ export const WeekAchievements: React.FC<WeekAchievementsProps> = ({ trainings, t
 		}
     }, [trainings, filterValue]);
     console.log(dataForPlot)
+    console.log()
 
-    const data = dataForPlot;
+    const data = dataForPlot.map(e => ({date: moment(e.date).format(formatDateDDMM), load: e.load}));
+    console.log(data)
 
     const config = {
         data,

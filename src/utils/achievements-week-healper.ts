@@ -1,4 +1,4 @@
-import { formatDateDDMM } from '@constants/calendar';
+import { invalideFormatDate } from '@constants/calendar';
 import { Training } from '@services/trainings';
 import moment, { Moment } from 'moment';
 
@@ -18,33 +18,29 @@ export const filteredTrainings = (trainings: Training[], filter: string) => {
 };
 
 export const filteredTrainingsForDay = (day: string, trainings: Training[]) =>
-    trainings.filter((e) => moment(e.date).format(formatDateDDMM) === day);
-
+    trainings.filter((e) => moment(e.date).format(invalideFormatDate) === day);
 
 export const averageLoad = (trainings: Training[]) => {
-   let totalLoadAlltrain = 0;
-   let averLoad = 0;
+    const allExercicesForDay = trainings.map((e) => e.exercises).flat();
+    let totalLoad = 0;
+    let averLoad = 0;
 
-   if(trainings.length){
-       totalLoadAlltrain = trainings.reduce((accum, e) => {
-           const totalLoad = accum +
-               e.exercises.reduce((acc, exer) => 
-                   acc + ((exer.approaches || 0) * (exer.weight || 0) * (exer.replays || 0)),0);
+    if (trainings.length) {
+        totalLoad = allExercicesForDay.reduce(
+            (acc, curr) => acc + (curr.approaches || 0) * (curr.weight || 0) * (curr.replays || 0),
+            0,
+        );
+        averLoad = totalLoad / allExercicesForDay.length;
+    }
 
-           return totalLoad
-       },0);
-
-       averLoad = totalLoadAlltrain / trainings.length
-   }
-
-   return averLoad;
+    return averLoad;
 };
 
 export const createDataForPlot = (startDate: Moment, endDate: Moment, trainings: Training[]) => {
     const data = [];
 
     while (startDate.isSameOrBefore(endDate, 'day')) {
-        const date = startDate.format(formatDateDDMM);
+        const date = startDate.format(invalideFormatDate);
 
         data.push({ date, load: averageLoad(filteredTrainingsForDay(date, trainings)) });
 
