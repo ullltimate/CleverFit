@@ -1,0 +1,24 @@
+.result {
+    text-align: center;
+}
+.result .result-icon {
+    font-size: 80px;
+    margin-bottom: var(--unit-24);
+}
+.result .icon-warning {
+    color: var(--color-warning);
+}
+.result .icon-success {
+    color: var(--color-success);
+}
+.result .icon-error {
+    color: var(--color-error);
+}
+.result .result-title {
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+.result .result-button {
+    margin-top: var(--unit-24);
+    width: 100%;
+}

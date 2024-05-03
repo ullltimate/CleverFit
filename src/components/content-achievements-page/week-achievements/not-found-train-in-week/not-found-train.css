@@ -1,0 +1,19 @@
+.not-found-train{
+    margin-top: 110px;
+}
+.not-found-train__img{
+    width: 200px;
+    height: 175px;
+    margin: 0 auto;
+    background: center / contain no-repeat url(/not-found-train.png);
+}
+.not-found-train__title{
+    font-size: var(--unit-24);
+    text-align: center;
+}
+
+@media screen and (max-width: 370px) {
+    .not-found-train{
+        margin-top: 0;
+    }
+}

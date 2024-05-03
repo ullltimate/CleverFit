@@ -1,0 +1,11 @@
+.my-traning-empty{
+    margin: 150px auto;
+    text-align: center;
+}
+.my-traning-empty__title{
+    padding: 56px;
+    font-size: var(--font-size-20);
+}
+.my-traning-empty__btn{
+    margin-top: 20px;
+}

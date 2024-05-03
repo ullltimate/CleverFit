@@ -1,0 +1,6 @@
+.modal-tariff-result .modal-tariff-email{
+    font-weight: var(--font-weight-700);
+}
+.modal-tariff-result .modal-tariff-spam{
+    margin: var(--unit-24);
+}

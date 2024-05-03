@@ -1,0 +1,35 @@
+.training-page-wrapper{
+    padding: var(--unit-24);
+}
+.my-trainings{
+    height: 100%;
+}
+.my-trainings .ant-tabs-tab,
+.my-trainings .ant-tabs-tab .ant-badge,
+.achievements .ant-tabs-tab {
+    font-size: var(--unit-24);
+    font-weight: var(--font-weight-500);
+}
+.my-trainings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.my-trainings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .ant-badge,
+.achievements .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--color-primary);
+}
+.my-trainings .ant-tabs-ink-bar,
+.achievements .ant-tabs-ink-bar {
+    background: var(--color-primary);
+}
+
+@media screen and (max-width: 1300px) {
+    .my-trainings .ant-tabs-tab,
+    .my-trainings .ant-tabs-tab .ant-badge,
+    .achievements .ant-tabs-tab {
+        font-size: var(--font-size-14);
+        font-weight: 400;
+    }
+}
+@media screen and (max-width: 370px) {
+    .training-page-wrapper{
+        padding: var(--unit-24) 0;
+    }
+}

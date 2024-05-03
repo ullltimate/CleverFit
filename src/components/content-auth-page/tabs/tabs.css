@@ -1,0 +1,39 @@
+.logo {
+    display: block;
+    width: 245px;
+    height: 55px;
+    margin: 0px auto 48px;
+    background: center / contain no-repeat url(/logo.png);
+}
+
+.auth-wrapper .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--color-primary);
+}
+
+.auth-wrapper .ant-tabs-ink-bar {
+    background: var(--color-primary);
+}
+
+.auth-wrapper .ant-tabs-tab {
+    width: 184px;
+    justify-content: center;
+}
+
+.auth-wrapper .ant-tabs-nav {
+    margin-bottom: var(--unit-24);
+}
+
+.auth-wrapper .ant-btn-text {
+    border-color: var(--color-grey);
+}
+
+@media screen and (max-width: 570px) {
+    .logo {
+        width: 160px;
+        height: 35px;
+        margin: 0px auto var(--unit-32);
+    }
+    .auth-wrapper .ant-tabs-tab {
+        width: 148px;
+    }
+}

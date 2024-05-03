@@ -1,0 +1,15 @@
+.graphic-lists-wrapper .graphic-list-wrapper{
+    margin: var(--unit-24) 0 0;
+}
+.graphic-lists-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.achievements .ant-collapse{
+    max-width: 200px;
+}
+.achievements .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow svg{
+    width: var(--unit-16);
+    height: var(--unit-16);
+}

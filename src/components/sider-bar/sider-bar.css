@@ -1,0 +1,137 @@
+.trapezoid-wrapper {
+    position: absolute;
+    right: 0;
+    left: auto;
+    z-index: 2;
+    transition: all 0.3s;
+}
+
+.trapezoid-wrapper-collapsed {
+    transform: translate(208px, 0);
+}
+
+.trapezoid {
+    height: 66px;
+    position: fixed;
+    top: 47%;
+    border-left: 20px solid var(--color-bg-card);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+.trigger {
+    position: absolute;
+    top: 18px;
+    left: -17px;
+    width: 14px;
+    height: 14px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
+}
+
+.logo-full {
+    max-width: 133px;
+    height: 33px;
+    margin: 49px 30px;
+}
+
+.logo-hidden {
+    margin: 25px 18px 60px 18px;
+}
+.logo-clever{
+    display: inline-block;
+    width: 75px;
+    height: 18px;
+    background: center / contain no-repeat url(/Clever.png);
+}
+.logo-collapsed{
+    display: inline-block;
+    width: 26px;
+    height: 20px;
+    margin-left: -5px;
+    background: center / contain no-repeat url(/fit.png);
+}
+
+.logo-clever,
+.logo-fit {
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.menu .ant-menu-item:not(:last-child) {
+    margin-top: var(--unit-16);
+}
+
+.menu .ant-menu-item:last-child {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #f0f0f0;
+}
+.menu .ant-menu-item:last-child .ant-menu-title-content {
+    margin-left: 25px;
+}
+.menu .menu-item-icon svg{
+    color: #061178;
+}
+
+.sider-wrapper {
+    position: relative;
+}
+
+.sider-wrapper .ant-layout-sider{
+    height: 100%;
+}
+
+@media screen and (max-width: 576px) {
+    .sider-wrapper {
+        position: fixed;
+        z-index: 10;
+    }
+    .sider-wrapper .ant-layout-sider {
+        position: absolute;
+        z-index: 1;
+        height: 100vh;
+    }
+    .trapezoid {
+        top: var(--unit-24);
+        height: 48px;
+        border-left: var(--unit-32) solid var(--color-bg-card);
+    }
+    .trigger {
+        top: 10px;
+        left: -23px;
+    }
+    .trapezoid-wrapper-collapsed {
+        transform: translate(106px, 0);
+    }
+    .logo-clever {
+        width: 40px;
+        height: 10px;
+    }
+    .logo-collapsed {
+        width: 14px;
+        height: 12px;
+    }
+    .logo-full {
+        margin: var(--unit-16);
+    }
+    .menu .ant-menu-item:not(:last-child) {
+        padding-right: 8px;
+        margin-top: 6px;
+    }
+    .menu .ant-menu-item:last-child .ant-menu-title-content {
+        margin-left: 23px;
+    }
+    .sider-wrapper .menu-item-icon{
+        display: none;
+    }
+    .sider-wrapper .menu .ant-menu-title-content{
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,56 @@
+.modal-training{
+    position: fixed;
+    background: var(--color-bg-card);
+    padding: 0 12px;
+    z-index: 2;
+}
+.modal-title{
+    padding: var(--unit-16) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.title{
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    margin-bottom: 0;
+}
+.modal-content{
+    min-height: 64px;
+}
+.modal-subtitle{
+    color: var(--color-disabled);
+    font-size: 14px;
+    margin-bottom: var(--unit-16);
+}
+.modal-btn{
+    width: 100%;
+    margin: 12px 0; 
+}
+.modal-training .btn-text{
+    margin-bottom: 0;
+    border: 1px solid var(--color-bg-grey);
+}
+.modal-events{
+    padding: var(--unit-16) 0;
+}
+.create-exercise{
+    display: flex;
+}
+.list-item{
+    display: flex;
+    justify-content: space-between;
+}
+.drawer-name{
+    display: flex;
+    justify-content: space-between;
+}
+.drawer-buttons{
+    background: var(--color-bg-grey);
+}
+.btn-text{
+    border: 1px solid var(--color-bg-grey);
+}
+.modal-training .ant-btn-link{
+    color: var(--color-primary);
+}

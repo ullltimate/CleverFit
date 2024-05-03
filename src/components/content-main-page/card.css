@@ -1,0 +1,43 @@
+.card-wrap .ant-card-head-title {
+    padding: 12px 0;
+}
+
+.card-wrap .ant-btn-link {
+    color: var(--color-primary);
+}
+
+.card-wrap .ant-btn-link:hover {
+    color: #597ef7;
+}
+
+.card-wrap .ant-card {
+    text-align: center;
+}
+
+.card-wrap .ant-card p {
+    margin-bottom: 0;
+    font-size: var(--unit-16);
+    font-weight: 400;
+    line-height: 21px;
+    color: #262626;
+}
+
+.card-wrap .ant-card-body {
+    padding: 12px 14px;
+}
+
+.card-wrap {
+    width: 240px;
+}
+
+@media screen and (max-width: 850px) {
+    .card-wrap .ant-card-body {
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .card-wrap .ant-card-body {
+        text-align: center;
+    }
+}

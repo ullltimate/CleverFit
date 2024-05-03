@@ -1,0 +1,16 @@
+.achievements-page-wrapper .achievements{
+    margin: var(--unit-24);
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 370px) {
+    .achievements-page-wrapper .achievements{
+        margin: var(--unit-24) 0;
+        height: 98%;
+        overflow-y: hidden;
+    }
+    .achievements-page-wrapper .achievements .ant-card-body{
+        padding: var(--unit-16);
+    }
+}

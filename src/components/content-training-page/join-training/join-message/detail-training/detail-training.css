@@ -1,0 +1,39 @@
+.my-trainings .join-message .modal-training{
+    width: 315px;
+    left: 0px;
+    top: 0px;
+}
+.join-message .create-exercise{
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-bg-grey);
+}
+.join-message .modal-content{
+    padding: var(--unit-24) var(--unit-12);
+}
+.join-message .modal-content .period-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.join-message .modal-content .parametrs-exer{
+    font-size: var(--unit-12);
+    color: var(--color-primary);
+}
+.join-message .modal-training .create-exercise svg{
+    width: var(--unit-16);
+    height: var(--unit-16);
+}
+.join-message .modal-training .modal-content ul{
+    padding: var(--unit-12) 0;
+    margin: 0 
+}
+.join-message .modal-training .modal-content ul .exers-name-disabled{
+    color: var(--color-disabled);
+}
+
+@media screen and (max-width: 370px) {
+    .my-trainings .join-message .modal-training{
+        width: 280px;
+        left: -20px;
+    }
+}

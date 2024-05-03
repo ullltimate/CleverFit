@@ -1,0 +1,101 @@
+.comments-page-wrapper{
+    margin: var(--unit-24);
+}
+
+.comments-btns {
+    margin-top: 132px;
+}
+
+.comments-btns .ant-btn-link {
+    color: var(--color-primary);
+}
+
+.comments-list {
+    max-height: 730px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.comments-list::-webkit-scrollbar {
+    width: 0px;
+}
+
+.comments-modal .ant-result {
+    padding: 40px 8px;
+}
+
+.comments-modal .ant-result-title {
+    line-height: 31.2px;
+}
+.comments-modal .ant-result-subtitle {
+    line-height: 18.2px;
+}
+
+.modal-form .ant-rate-star-full .anticon svg path:last-child,
+.modal-form .ant-rate-star-full .anticon svg path:first-child,
+.modal-form .ant-rate-star-zero .anticon svg path:last-child,
+.modal-form .ant-rate-star-focused .anticon svg path:last-child,
+.modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:last-child,
+.modal-form .ant-rate-star-full.ant-rate-star-focused .anticon svg path:first-child {
+    fill: var(--color-warning);
+}
+.modal-form .ant-rate-star-zero .anticon svg path:first-child,
+.modal-form .ant-rate-star-focused .anticon svg path:first-child {
+    fill: transparent;
+}
+
+.modal-error .ant-btn-text,
+.modal-error .ant-btn-primary {
+    width: 180px;
+}
+.modal-error .ant-btn-text {
+    height: 40px;
+    border: 1px solid var(--color-grey);
+}
+
+.modal-error .ant-result {
+    padding: 40px var(--unit-32);
+}
+
+.modal-success .ant-btn-primary {
+    width: 100%;
+}
+
+.modal-success .ant-result {
+    padding: 40px 52px;
+}
+
+@media screen and (max-width: 510px) {
+    .comments-btns button {
+        width: 100%;
+    }
+
+    .comments-btns {
+        margin-top: 48px;
+    }
+
+    .comments-btns .ant-btn-primary {
+        margin-bottom: var(--unit-16);
+    }
+    .modal-error .ant-btn-text,
+    .modal-error .ant-btn-primary {
+        width: 144px;
+    }
+
+    .modal-error .ant-result {
+        padding: 8px 0px;
+    }
+    .ant-modal-body {
+        padding: var(--unit-24) var(--unit-16) !important;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .modal-success .ant-result {
+        padding: 8px 0px;
+    }
+    .comments-modal .ant-result-subtitle {
+        max-width: 150px;
+        margin: 0 auto;
+    }
+}

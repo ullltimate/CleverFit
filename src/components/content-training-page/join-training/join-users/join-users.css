@@ -1,0 +1,46 @@
+.join-users .ant-list-pagination{
+    text-align: left;
+}
+.join-users-header{
+    display: flex;
+    margin-bottom: var(--unit-24);
+    align-items: center;
+}
+.join-users-header .ant-input-group-wrapper{
+    max-width: 485px;
+    margin-left: 15%;
+}
+.join-users-header .ant-btn-text{
+    font-size: var(--font-size-20);
+    font-weight: var(--font-weight-500);
+    padding: 0;
+}
+.join-users-header .ant-btn-text svg{
+    width: var(--font-size-14);
+    height: var(--font-size-14);
+    margin-right: var(--unit-16);
+}
+.join-users .ant-list-items{
+    display: flex;
+    flex-wrap: wrap;
+}
+.join-users .ant-list-items .ant-list-item,
+.join-users .ant-list-items .ant-list-item:last-child {
+    border-bottom: none;
+}
+.drawer-users-info-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--unit-24);
+}
+
+@media screen and (max-width: 370px) {
+    .join-users-header{
+        flex-wrap: wrap;
+    }
+    .join-users-header .ant-input-group-wrapper{
+        max-width: 485px;
+        margin-left: 0;
+    }
+}
